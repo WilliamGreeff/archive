@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">class</span> <span class=\"n\">foo</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"bp\">.</span>\n\n<span class=\"kn\">theorem</span> <span class=\"n\">zero_eq_zero_of_foo</span> <span class=\"o\">[</span><span class=\"n\">foo</span><span class=\"o\">]</span> <span class=\"o\">:</span> <span class=\"mi\">0</span> <span class=\"bp\">=</span> <span class=\"mi\">0</span> <span class=\"o\">:=</span> <span class=\"n\">rfl</span>\n\n<span class=\"kn\">example</span> <span class=\"o\">:</span> <span class=\"mi\">0</span> <span class=\"bp\">=</span> <span class=\"mi\">0</span> <span class=\"o\">:=</span> <span class=\"k\">by</span> <span class=\"n\">rw</span> <span class=\"n\">zero_eq_zero_of_foo</span>\n</code></pre></div>",
+        "id": 204996128,
+        "sender_full_name": "Kenny Lau",
+        "timestamp": 1595668325
+    },
+    {
+        "content": "<p>error:</p>\n<div class=\"codehilite\"><pre><span></span><code>invalid rewrite tactic, failed to synthesize type class instance\nstate:\n⊢ 0 = 0\n</code></pre></div>",
+        "id": 204996136,
+        "sender_full_name": "Kenny Lau",
+        "timestamp": 1595668351
+    },
+    {
+        "content": "<p>is it possible to know which type class instance it failed to synthesize?</p>",
+        "id": 204996140,
+        "sender_full_name": "Kenny Lau",
+        "timestamp": 1595668364
+    },
+    {
+        "content": "<p>I think it failed to synthesize <code>foo</code></p>",
+        "id": 205010769,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1595694653
+    },
+    {
+        "content": "<p>more to the point, you can just provide the explicit args to the rewrite, and that should be enough to get typeclass inference to trigger</p>",
+        "id": 205010840,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1595694752
+    },
+    {
+        "content": "<p>I think you can also write something like <code>rw @zero_eq_zero_of_foo _</code> so that the typeclass inference is done beforehand instead of in the rewrite</p>",
+        "id": 205010860,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1595694797
+    }
+]

@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>I'm working on some point-free topology, and was struggling to find a notion of a lattice homomorphism anywhere.</p>",
+        "id": 209936773,
+        "sender_full_name": "Reed Mullanix",
+        "timestamp": 1600011846
+    },
+    {
+        "content": "<p>The file <code>order/rel_iso.lean</code> has everything relevant that we have</p>",
+        "id": 209944580,
+        "sender_full_name": "Aaron Anderson",
+        "timestamp": 1600023166
+    },
+    {
+        "content": "<p>In short, we have order embeddings and order isomorphisms, and we know how those relate to lattices, and a general relation homomorphism that generalizes monotone maps, but we don’t have a dedicated type for maps that may not be embeddings/isos but do preserve all lattice operations.</p>",
+        "id": 209944678,
+        "sender_full_name": "Aaron Anderson",
+        "timestamp": 1600023344
+    },
+    {
+        "content": "<p>I don’t know your background, but if you’re looking for a place to start/first PR, studying that file and writing a definition of lattice homomorphism seems to me like a decent place to start</p>",
+        "id": 209945020,
+        "sender_full_name": "Aaron Anderson",
+        "timestamp": 1600023757
+    },
+    {
+        "content": "<p>I'll probably pester you all with some more silly questions, but I'll give that a go later today :)</p>",
+        "id": 209947741,
+        "sender_full_name": "Reed Mullanix",
+        "timestamp": 1600027858
+    },
+    {
+        "content": "<p>Note that there is in fact <code>preorder_hom</code></p>",
+        "id": 209977995,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1600072700
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"266262\">@Reed Mullanix</span> <span class=\"user-mention\" data-user-id=\"302826\">@Aaron Anderson</span> see <code>order/preorder_hom.lean</code></p>",
+        "id": 209978034,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1600072729
+    }
+]

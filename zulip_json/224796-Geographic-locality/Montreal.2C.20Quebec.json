@@ -1,0 +1,80 @@
+[
+    {
+        "content": "<p>I just realized I should probably introduce myself properly now that I'm making PRs :-) I'm an assistant prof in CS at the University of Montreal, working in quantum information theory. I don't know anything about formal verification despite being in CS however, so I guess here that makes me some sort of very applied mathematician.</p>",
+        "id": 204874669,
+        "sender_full_name": "Frédéric Dupuis",
+        "timestamp": 1595559128
+    },
+    {
+        "content": "<p>Ah! I thought your name sounded familiar --- I've used your entropy accumulation stuff before</p>",
+        "id": 204874813,
+        "sender_full_name": "Jalex Stark",
+        "timestamp": 1595559384
+    },
+    {
+        "content": "<p>or, rather, Thomas used it and I only kind of understood it</p>",
+        "id": 204874836,
+        "sender_full_name": "Jalex Stark",
+        "timestamp": 1595559461
+    },
+    {
+        "content": "<p>Yes, I remember seeing your name on the list of QIP speakers at some point I think!</p>",
+        "id": 204877986,
+        "sender_full_name": "Frédéric Dupuis",
+        "timestamp": 1595564162
+    },
+    {
+        "content": "<p>:) the main theorem of the talk i gave at QIP 2018 is false</p>",
+        "id": 204878820,
+        "sender_full_name": "Jalex Stark",
+        "timestamp": 1595565317
+    },
+    {
+        "content": "<p>that's a big reason that I'm here</p>",
+        "id": 204878827,
+        "sender_full_name": "Jalex Stark",
+        "timestamp": 1595565330
+    },
+    {
+        "content": "<p>Bienvenue, Frédéric ! I'm from Warwick, Qc.</p>",
+        "id": 204881694,
+        "sender_full_name": "Jasmin Blanchette",
+        "timestamp": 1595569505
+    },
+    {
+        "content": "<p>Bienvenue! Je viens de Gatineau, Qc :)</p>",
+        "id": 204910861,
+        "sender_full_name": "Simon Hudon",
+        "timestamp": 1595595025
+    },
+    {
+        "content": "<p>Yuck. Could somebody (-ies?) make that ugly maple leaf go away? ;) <span aria-label=\"fleur de lis\" class=\"emoji emoji-269c\" role=\"img\" title=\"fleur de lis\">:fleur_de_lis:</span> <span aria-label=\"fleur de lis\" class=\"emoji emoji-269c\" role=\"img\" title=\"fleur de lis\">:fleur_de_lis:</span> <span aria-label=\"fleur de lis\" class=\"emoji emoji-269c\" role=\"img\" title=\"fleur de lis\">:fleur_de_lis:</span></p>",
+        "id": 204915084,
+        "sender_full_name": "Jasmin Blanchette",
+        "timestamp": 1595597448
+    },
+    {
+        "content": "<p>Merci! En fait je travaillais au LORIA à Nancy jusqu'à récemment, j'avais entendu ton nom à plusieurs reprises :-)</p>",
+        "id": 204981504,
+        "sender_full_name": "Frédéric Dupuis",
+        "timestamp": 1595640234
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"252300\">@Jalex Stark</span>, actually one of the reasons why I'm here is that the entropy accumulation paper took a solid three years to get through the refereeing process, by which time there were several other results built on top. The referees didn't find any bugs in the end, but it makes you think...</p>",
+        "id": 204981837,
+        "sender_full_name": "Frédéric Dupuis",
+        "timestamp": 1595640735
+    },
+    {
+        "content": "<p>yeah there's a lot of bookkeeping there which seems like a computer really ought to be good at</p>",
+        "id": 204981852,
+        "sender_full_name": "Jalex Stark",
+        "timestamp": 1595640795
+    },
+    {
+        "content": "<p>Yeah, and when you take into account the amount of proofreading you have to do, formalizing the result suddenly seems a lot less time-consuming...</p>",
+        "id": 204981990,
+        "sender_full_name": "Frédéric Dupuis",
+        "timestamp": 1595640998
+    }
+]

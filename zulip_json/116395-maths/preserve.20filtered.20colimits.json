@@ -1,0 +1,464 @@
+[
+    {
+        "content": "<p>I've been trying to show that <code>forget CommRing</code> preserves filtered colimits (as this is something now blocking schemes).</p>\n<p>I'm completely stuck, however, on the <a href=\"https://github.com/leanprover-community/mathlib/compare/preserves_filtered_colimits?expand=1#diff-d27a630fd2328a19457dfb973f26891bR487\">following lemma</a>:</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"kn\">lemma</span> <span class=\"n\">filtered_exact</span> <span class=\"o\">[</span><span class=\"n\">is_filtered</span> <span class=\"n\">J</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">F</span> <span class=\"o\">:</span> <span class=\"n\">J</span> <span class=\"err\">⥤</span> <span class=\"n\">CommRing</span><span class=\"bp\">.</span><span class=\"o\">{</span><span class=\"n\">v</span><span class=\"o\">})</span> <span class=\"o\">{</span><span class=\"n\">jx</span> <span class=\"n\">jy</span> <span class=\"o\">:</span> <span class=\"n\">J</span><span class=\"o\">}</span> <span class=\"o\">{</span><span class=\"n\">x</span> <span class=\"o\">:</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">obj</span> <span class=\"n\">jx</span><span class=\"o\">}</span> <span class=\"o\">{</span><span class=\"n\">y</span> <span class=\"o\">:</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">obj</span> <span class=\"n\">jy</span><span class=\"o\">}</span>\n  <span class=\"o\">(</span><span class=\"n\">w</span> <span class=\"o\">:</span> <span class=\"n\">quot</span><span class=\"bp\">.</span><span class=\"n\">mk</span> <span class=\"o\">(</span><span class=\"n\">relation</span> <span class=\"n\">F</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">of</span> <span class=\"n\">jx</span> <span class=\"n\">x</span><span class=\"o\">)</span> <span class=\"bp\">=</span> <span class=\"n\">quot</span><span class=\"bp\">.</span><span class=\"n\">mk</span> <span class=\"bp\">_</span> <span class=\"o\">(</span><span class=\"n\">of</span> <span class=\"n\">jy</span> <span class=\"n\">y</span><span class=\"o\">))</span> <span class=\"o\">:</span>\n  <span class=\"bp\">∃</span> <span class=\"o\">(</span><span class=\"n\">j</span> <span class=\"o\">:</span> <span class=\"n\">J</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">ix</span> <span class=\"o\">:</span> <span class=\"n\">jx</span> <span class=\"err\">⟶</span> <span class=\"n\">j</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">iy</span> <span class=\"o\">:</span> <span class=\"n\">jy</span> <span class=\"err\">⟶</span> <span class=\"n\">j</span><span class=\"o\">),</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">map</span> <span class=\"n\">ix</span> <span class=\"n\">x</span> <span class=\"bp\">=</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">map</span> <span class=\"n\">iy</span> <span class=\"n\">y</span> <span class=\"o\">:=</span>\n<span class=\"k\">begin</span>\n\n<span class=\"kn\">end</span>\n</code></pre></div>\n\n\n<p>at <a href=\"https://github.com/leanprover-community/mathlib/tree/preserves_filtered_colimits\">branch#preserves_filtered_colimits</a></p>\n<p>Here <code>of</code> is building the big inductive type we use to build colimits, and <code>relation F</code> is the relation on it.</p>\n<p>I want to do something like:</p>\n<ol>\n<li>generalize one side of <code>w</code></li>\n<li>use <code>quot.exact</code> to get an <code>eqv_gen (relation F)</code> hypothesis</li>\n<li>do induction on that, obtaining a huge case base.</li>\n</ol>\n<p>I don't mind having to do a big case bash: I'd just like to get to the point I can start. All my attempts to generalize and/or induct so far quickly lose the connection with the <code>x</code> and <code>y</code> terms.</p>",
+        "id": 207962735,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598362310
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"110032\">@Reid Barton</span>, any suggestions? It this or similar something you did previously when you were looking at filtered colimits? I don't remember seeing this.</p>",
+        "id": 207962837,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598362351
+    },
+    {
+        "content": "<p>(<span class=\"user-mention\" data-user-id=\"110087\">@Scott Morrison</span> The period at the end of the branch link breaks the link.)</p>",
+        "id": 207963625,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598362783
+    },
+    {
+        "content": "<p>I don't remember proving anything like this.</p>",
+        "id": 207963934,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598362953
+    },
+    {
+        "content": "<p>I think I understand your problem. It might be worth keeping in mind that the fact that <code>comm_ring</code> only has finitary operations is required for this to be true.</p>",
+        "id": 207964472,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598363275
+    },
+    {
+        "content": "<p>Yes.</p>",
+        "id": 207964562,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598363306
+    },
+    {
+        "content": "<p>(I should have done the <code>Mon</code> case instead, if I knew I was going to need to ask for help, just to keep the clutter down.)</p>",
+        "id": 207964633,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598363355
+    },
+    {
+        "content": "<p>Maybe you would need to generalize to something like: for any two terms in the free algebra that become equal in the quotient, there's some <code>j : J</code> and a bunch of maps to it from all the places where the <code>of</code>s live, such that if you map all those guys forward to <code>j</code>, the two terms are already equal there.</p>",
+        "id": 207964878,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598363473
+    },
+    {
+        "content": "<p>Which sounds pretty dreadful</p>",
+        "id": 207964901,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598363484
+    },
+    {
+        "content": "<p>Another approach that might be easier would be to instead put a ring structure on the Set-colimit and prove it has the right universal property</p>",
+        "id": 207964959,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598363515
+    },
+    {
+        "content": "<p>That does sound rather more pleasant, I guess. (Now that you say it I think I've tried that before... I guess time for another go.)</p>",
+        "id": 207965194,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598363616
+    },
+    {
+        "content": "<p>I think there is or was a direct construction of most of this in the algebra library</p>",
+        "id": 207965197,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598363618
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"110032\">Reid Barton</span> <a href=\"#narrow/stream/116395-maths/topic/preserve.20filtered.20colimits/near/207964959\">said</a>:</p>\n<blockquote>\n<p>Another approach that might be easier would be to instead put a ring structure on the Set-colimit and prove it has the right universal property</p>\n</blockquote>\n<p>I think the law of \"conservation of work\" will apply here :-/</p>",
+        "id": 207965341,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598363673
+    },
+    {
+        "content": "<p>I want to try out the lemma from this branch, but I'm just waiting for the oleans to be available.</p>",
+        "id": 207965461,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598363722
+    },
+    {
+        "content": "<p>can you get away with directed instead of filtered, btw? Should be okay for now right?</p>",
+        "id": 207965648,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598363796
+    },
+    {
+        "content": "<p>Yeah that should be fine for sheaves on topological spaces</p>",
+        "id": 207965786,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598363869
+    },
+    {
+        "content": "<p>yes</p>",
+        "id": 207965854,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598363889
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"110032\">Reid Barton</span> <a href=\"#narrow/stream/116395-maths/topic/preserve.20filtered.20colimits/near/207965197\">said</a>:</p>\n<blockquote>\n<p>I think there is or was a direct construction of most of this in the algebra library</p>\n</blockquote>\n<p>oh no I'm wrong, it was always using the free ring-style construction even though it assumed directedness</p>",
+        "id": 207965988,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598363951
+    },
+    {
+        "content": "<p>oh but actually it might prove the result you wanted originally</p>",
+        "id": 207966186,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598364047
+    },
+    {
+        "content": "<p><a href=\"https://leanprover-community.github.io/mathlib_docs/find/ring.direct_limit.of.zero_exact\">docs#ring.direct_limit.of.zero_exact</a></p>",
+        "id": 207966320,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598364108
+    },
+    {
+        "content": "<p>The docstring should say \"some bigger ring\" not \"some bigger module\"</p>",
+        "id": 207966464,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598364161
+    },
+    {
+        "content": "<p>It looks like Kenny used the argument I was sketching</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"kn\">lemma</span> <span class=\"n\">of</span><span class=\"bp\">.</span><span class=\"n\">zero_exact_aux</span> <span class=\"o\">{</span><span class=\"n\">x</span> <span class=\"o\">:</span> <span class=\"n\">free_comm_ring</span> <span class=\"err\">Σ</span> <span class=\"n\">i</span><span class=\"o\">,</span> <span class=\"n\">G</span> <span class=\"n\">i</span><span class=\"o\">}</span> <span class=\"o\">(</span><span class=\"n\">H</span> <span class=\"o\">:</span> <span class=\"n\">ideal</span><span class=\"bp\">.</span><span class=\"n\">quotient</span><span class=\"bp\">.</span><span class=\"n\">mk</span> <span class=\"bp\">_</span> <span class=\"n\">x</span> <span class=\"bp\">=</span> <span class=\"o\">(</span><span class=\"mi\">0</span> <span class=\"o\">:</span> <span class=\"n\">direct_limit</span> <span class=\"n\">G</span> <span class=\"n\">f</span><span class=\"o\">))</span> <span class=\"o\">:</span>\n  <span class=\"bp\">∃</span> <span class=\"n\">j</span> <span class=\"n\">s</span><span class=\"o\">,</span> <span class=\"bp\">∃</span> <span class=\"n\">H</span> <span class=\"o\">:</span> <span class=\"o\">(</span><span class=\"bp\">∀</span> <span class=\"n\">k</span> <span class=\"o\">:</span> <span class=\"err\">Σ</span> <span class=\"n\">i</span><span class=\"o\">,</span> <span class=\"n\">G</span> <span class=\"n\">i</span><span class=\"o\">,</span> <span class=\"n\">k</span> <span class=\"err\">∈</span> <span class=\"n\">s</span> <span class=\"bp\">→</span> <span class=\"n\">k</span><span class=\"bp\">.</span><span class=\"mi\">1</span> <span class=\"bp\">≤</span> <span class=\"n\">j</span><span class=\"o\">),</span> <span class=\"n\">is_supported</span> <span class=\"n\">x</span> <span class=\"n\">s</span> <span class=\"bp\">∧</span>\n    <span class=\"n\">lift</span> <span class=\"o\">(</span><span class=\"bp\">λ</span> <span class=\"n\">ix</span> <span class=\"o\">:</span> <span class=\"n\">s</span><span class=\"o\">,</span> <span class=\"n\">f</span> <span class=\"n\">ix</span><span class=\"bp\">.</span><span class=\"mi\">1</span><span class=\"bp\">.</span><span class=\"mi\">1</span> <span class=\"n\">j</span> <span class=\"o\">(</span><span class=\"n\">H</span> <span class=\"n\">ix</span> <span class=\"n\">ix</span><span class=\"bp\">.</span><span class=\"mi\">2</span><span class=\"o\">)</span> <span class=\"n\">ix</span><span class=\"bp\">.</span><span class=\"mi\">1</span><span class=\"bp\">.</span><span class=\"mi\">2</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">restriction</span> <span class=\"n\">s</span> <span class=\"n\">x</span><span class=\"o\">)</span> <span class=\"bp\">=</span> <span class=\"o\">(</span><span class=\"mi\">0</span> <span class=\"o\">:</span> <span class=\"n\">G</span> <span class=\"n\">j</span><span class=\"o\">)</span> <span class=\"o\">:=</span>\n</code></pre></div>",
+        "id": 207966504,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598364195
+    },
+    {
+        "content": "<p>So here's a gigantic case-by-case start:</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"kn\">lemma</span> <span class=\"n\">filtered_exact</span> <span class=\"o\">[</span><span class=\"n\">is_filtered</span> <span class=\"n\">J</span><span class=\"o\">]</span> <span class=\"o\">{</span><span class=\"n\">jx</span> <span class=\"n\">jy</span> <span class=\"o\">:</span> <span class=\"n\">J</span><span class=\"o\">}</span> <span class=\"o\">{</span><span class=\"n\">x</span> <span class=\"o\">:</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">obj</span> <span class=\"n\">jx</span><span class=\"o\">}</span> <span class=\"o\">{</span><span class=\"n\">y</span> <span class=\"o\">:</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">obj</span> <span class=\"n\">jy</span><span class=\"o\">}</span>\n  <span class=\"o\">(</span><span class=\"n\">w</span> <span class=\"o\">:</span> <span class=\"n\">quot</span><span class=\"bp\">.</span><span class=\"n\">mk</span> <span class=\"o\">(</span><span class=\"n\">relation</span> <span class=\"n\">F</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">of</span> <span class=\"n\">jx</span> <span class=\"n\">x</span><span class=\"o\">)</span> <span class=\"bp\">=</span> <span class=\"n\">quot</span><span class=\"bp\">.</span><span class=\"n\">mk</span> <span class=\"bp\">_</span> <span class=\"o\">(</span><span class=\"n\">of</span> <span class=\"n\">jy</span> <span class=\"n\">y</span><span class=\"o\">))</span> <span class=\"o\">:</span>\n  <span class=\"bp\">∃</span> <span class=\"o\">(</span><span class=\"n\">j</span> <span class=\"o\">:</span> <span class=\"n\">J</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">ix</span> <span class=\"o\">:</span> <span class=\"n\">jx</span> <span class=\"err\">⟶</span> <span class=\"n\">j</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">iy</span> <span class=\"o\">:</span> <span class=\"n\">jy</span> <span class=\"err\">⟶</span> <span class=\"n\">j</span><span class=\"o\">),</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">map</span> <span class=\"n\">ix</span> <span class=\"n\">x</span> <span class=\"bp\">=</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">map</span> <span class=\"n\">iy</span> <span class=\"n\">y</span> <span class=\"o\">:=</span>\n<span class=\"k\">begin</span>\n  <span class=\"n\">replace</span> <span class=\"n\">w</span> <span class=\"o\">:=</span> <span class=\"n\">quot</span><span class=\"bp\">.</span><span class=\"n\">exact</span> <span class=\"bp\">_</span> <span class=\"n\">w</span><span class=\"o\">,</span>\n  <span class=\"n\">cases</span> <span class=\"n\">w</span><span class=\"o\">,</span>\n  <span class=\"n\">cases</span> <span class=\"n\">w_a</span><span class=\"o\">,</span>\n  <span class=\"n\">repeat</span> <span class=\"o\">{</span><span class=\"n\">sorry</span><span class=\"o\">}</span>\n<span class=\"kn\">end</span>\n</code></pre></div>",
+        "id": 207967854,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598364864
+    },
+    {
+        "content": "<p>won't this generate subgoals involving stuff to which the inductive hypothesis won't apply?</p>",
+        "id": 207968359,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598365116
+    },
+    {
+        "content": "<p>yeah... look at the third goal, for example</p>",
+        "id": 207968410,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598365141
+    },
+    {
+        "content": "<p>because you're using <code>cases</code>, not <code>induction</code>, you've got nothing to work with there</p>",
+        "id": 207968442,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598365155
+    },
+    {
+        "content": "<p>but even using induction won't work, because you'll get <code>relation</code>s between stuff not of the form <code>of jz z</code></p>",
+        "id": 207968570,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598365208
+    },
+    {
+        "content": "<p>yes, hence the idea to somehow generalize one side...?</p>",
+        "id": 207968764,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598365301
+    },
+    {
+        "content": "<p>but I don't see it.</p>",
+        "id": 207968784,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598365312
+    },
+    {
+        "content": "<p>Basically you need to do what Kenny did</p>",
+        "id": 207969015,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598365408
+    },
+    {
+        "content": "<p>I think the viable options are to reuse Kenny's construction, or build the ring structure on the Set-colimit (I really think this is a lot easier if you're going to build from scratch, but maybe just because I am bad at <code>finset</code>)</p>",
+        "id": 207969286,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598365508
+    },
+    {
+        "content": "<p>For the latter it might be a good idea to prove first that <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>X</mi><mo>↦</mo><mi>X</mi><mo>×</mo><mi>X</mi></mrow><annotation encoding=\"application/x-tex\">X \\mapsto X \\times X</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.69433em;vertical-align:-0.011em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.07847em;\">X</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span><span class=\"mrel\">↦</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.76666em;vertical-align:-0.08333em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.07847em;\">X</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">×</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.68333em;vertical-align:0em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.07847em;\">X</span></span></span></span> (and <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>X</mi><mo>↦</mo><mo>∗</mo></mrow><annotation encoding=\"application/x-tex\">X \\mapsto *</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.69433em;vertical-align:-0.011em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.07847em;\">X</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span><span class=\"mrel\">↦</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.46528em;vertical-align:0em;\"></span><span class=\"mord\">∗</span></span></span></span>) preserves filtered colimits</p>",
+        "id": 207969559,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598365621
+    },
+    {
+        "content": "<p>Then I feel like the rest is just a series of diagram chases</p>",
+        "id": 207970230,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598365927
+    },
+    {
+        "content": "<p>Would it perhaps make sense to replace <code>relation.map</code> by this:</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"bp\">|</span> <span class=\"n\">map</span> <span class=\"o\">:</span> <span class=\"bp\">Π</span> <span class=\"o\">(</span><span class=\"n\">jx</span> <span class=\"n\">jy</span> <span class=\"n\">j</span> <span class=\"o\">:</span> <span class=\"n\">J</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">x</span> <span class=\"o\">:</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">obj</span> <span class=\"n\">jx</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">y</span> <span class=\"o\">:</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">obj</span> <span class=\"n\">jy</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">ix</span> <span class=\"o\">:</span> <span class=\"n\">jx</span> <span class=\"err\">⟶</span> <span class=\"n\">j</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">iy</span> <span class=\"o\">:</span> <span class=\"n\">jy</span> <span class=\"err\">⟶</span> <span class=\"n\">j</span><span class=\"o\">),</span>\n    <span class=\"n\">relation</span> <span class=\"o\">(</span><span class=\"n\">of</span> <span class=\"bp\">_</span> <span class=\"o\">(</span><span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">map</span> <span class=\"n\">ix</span> <span class=\"n\">x</span><span class=\"o\">))</span> <span class=\"o\">(</span><span class=\"n\">of</span> <span class=\"bp\">_</span> <span class=\"o\">(</span><span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">map</span> <span class=\"n\">iy</span> <span class=\"n\">y</span><span class=\"o\">))</span> <span class=\"bp\">→</span> <span class=\"n\">relation</span> <span class=\"o\">(</span><span class=\"n\">of</span> <span class=\"n\">jx</span> <span class=\"n\">x</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">of</span> <span class=\"n\">jy</span> <span class=\"n\">y</span><span class=\"o\">)</span>\n</code></pre></div>",
+        "id": 207972192,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598366845
+    },
+    {
+        "content": "<p>Okay, I think I have something working... <del>what's the easiest way to obtain a common <code>j</code> with maps <code>jx \\hom j</code> and <code>jy \\hom j</code> given <code>jx jy : J</code> and <code>is_filtered J</code> ?</del> found it: <code>is_filtered_or_empty.cocone_objs</code>.</p>",
+        "id": 207993075,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598376232
+    },
+    {
+        "content": "<p>Oh no! I ran into a point where I have to prove that <code>prequotient.of</code>is injective. That's unprovable right?</p>",
+        "id": 207998996,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598378726
+    },
+    {
+        "content": "<p>No, rather there should be an automatically generated lemma for it.</p>",
+        "id": 208038496,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598399374
+    },
+    {
+        "content": "<p><code>prequotient.of.inj</code></p>",
+        "id": 208038568,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598399413
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"110087\">@Scott Morrison</span>  I tried doing something like this:</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"kn\">lemma</span> <span class=\"n\">filtered_exact</span> <span class=\"o\">[</span><span class=\"n\">is_filtered</span> <span class=\"n\">J</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">a</span> <span class=\"n\">b</span> <span class=\"o\">:</span> <span class=\"n\">prequotient</span> <span class=\"n\">F</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">w</span> <span class=\"o\">:</span> <span class=\"n\">relation</span> <span class=\"n\">F</span> <span class=\"n\">a</span> <span class=\"n\">b</span><span class=\"o\">)</span> <span class=\"o\">:</span>\n  <span class=\"bp\">Π</span> <span class=\"o\">(</span><span class=\"n\">jx</span> <span class=\"n\">jy</span> <span class=\"o\">:</span> <span class=\"n\">J</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">x</span> <span class=\"o\">:</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">obj</span> <span class=\"n\">jx</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">y</span> <span class=\"o\">:</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">obj</span> <span class=\"n\">jy</span><span class=\"o\">),</span>\n  <span class=\"n\">a</span> <span class=\"bp\">=</span> <span class=\"n\">of</span> <span class=\"n\">jx</span> <span class=\"n\">x</span> <span class=\"bp\">→</span> <span class=\"n\">b</span> <span class=\"bp\">=</span> <span class=\"n\">of</span> <span class=\"n\">jy</span> <span class=\"n\">y</span> <span class=\"bp\">→</span>\n  <span class=\"o\">(</span><span class=\"bp\">∃</span> <span class=\"o\">(</span><span class=\"n\">j</span> <span class=\"o\">:</span> <span class=\"n\">J</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">ix</span> <span class=\"o\">:</span> <span class=\"n\">jx</span> <span class=\"err\">⟶</span> <span class=\"n\">j</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">iy</span> <span class=\"o\">:</span> <span class=\"n\">jy</span> <span class=\"err\">⟶</span> <span class=\"n\">j</span><span class=\"o\">),</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">map</span> <span class=\"n\">ix</span> <span class=\"n\">x</span> <span class=\"bp\">=</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">map</span> <span class=\"n\">iy</span> <span class=\"n\">y</span><span class=\"o\">)</span> <span class=\"o\">:=</span>\n<span class=\"k\">begin</span>\n  <span class=\"n\">induction</span> <span class=\"n\">w</span><span class=\"o\">,</span>\n  <span class=\"n\">sorry</span>\n<span class=\"kn\">end</span>\n</code></pre></div>\n\n\n<p>At least the induction gets started this way.</p>",
+        "id": 208040497,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598401296
+    },
+    {
+        "content": "<p>That lemma does seem provable. But can we actually deduce the lemma I was after from it?</p>",
+        "id": 208042889,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598403636
+    },
+    {
+        "content": "<p>I haven't tried. I didn't have much time for lean today.</p>",
+        "id": 208043178,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598403995
+    },
+    {
+        "content": "<p>I think it may be. There's actually something pretty stupid going on in the construction of colimits here --- we go to all the effort of making <code>relation F</code> an equivalence relation, and then use <code>quot</code> instead of <code>quotient</code>.</p>",
+        "id": 208043296,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598404111
+    },
+    {
+        "content": "<p>oh, this isn't a problem in the construction, just in the lemmas I'm trying to prove now. maybe not a big deal</p>",
+        "id": 208043410,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598404309
+    },
+    {
+        "content": "<p>It's possible to just get rid of refl, symm and trans in the definition of relation</p>",
+        "id": 208043784,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598404797
+    },
+    {
+        "content": "<p>It is strange that <code>quot.mk</code> is used sometimes as opposed to <code>quotient.mk</code>, given that there is a setoid around</p>",
+        "id": 208043887,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598404896
+    },
+    {
+        "content": "<p>Renaming your <code>filtered_exact</code> to <code>filtered_exact'</code>, the original <code>filtered_exact</code> is indeed provable from it:</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"kn\">lemma</span> <span class=\"n\">filtered_exact</span> <span class=\"o\">[</span><span class=\"n\">is_filtered</span> <span class=\"n\">J</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">F</span> <span class=\"o\">:</span> <span class=\"n\">J</span> <span class=\"err\">⥤</span> <span class=\"n\">CommRing</span><span class=\"bp\">.</span><span class=\"o\">{</span><span class=\"n\">v</span><span class=\"o\">})</span> <span class=\"o\">{</span><span class=\"n\">jx</span> <span class=\"n\">jy</span> <span class=\"o\">:</span> <span class=\"n\">J</span><span class=\"o\">}</span> <span class=\"o\">{</span><span class=\"n\">x</span> <span class=\"o\">:</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">obj</span> <span class=\"n\">jx</span><span class=\"o\">}</span> <span class=\"o\">{</span><span class=\"n\">y</span> <span class=\"o\">:</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">obj</span> <span class=\"n\">jy</span><span class=\"o\">}</span>\n  <span class=\"o\">(</span><span class=\"n\">w</span> <span class=\"o\">:</span> <span class=\"n\">quotient</span><span class=\"bp\">.</span><span class=\"n\">mk</span> <span class=\"o\">(</span><span class=\"n\">of</span> <span class=\"n\">jx</span> <span class=\"n\">x</span><span class=\"o\">)</span> <span class=\"bp\">=</span> <span class=\"n\">quotient</span><span class=\"bp\">.</span><span class=\"n\">mk</span> <span class=\"o\">(</span><span class=\"n\">of</span> <span class=\"n\">jy</span> <span class=\"n\">y</span><span class=\"o\">))</span> <span class=\"o\">:</span>\n  <span class=\"bp\">∃</span> <span class=\"o\">(</span><span class=\"n\">j</span> <span class=\"o\">:</span> <span class=\"n\">J</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">ix</span> <span class=\"o\">:</span> <span class=\"n\">jx</span> <span class=\"err\">⟶</span> <span class=\"n\">j</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">iy</span> <span class=\"o\">:</span> <span class=\"n\">jy</span> <span class=\"err\">⟶</span> <span class=\"n\">j</span><span class=\"o\">),</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">map</span> <span class=\"n\">ix</span> <span class=\"n\">x</span> <span class=\"bp\">=</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">map</span> <span class=\"n\">iy</span> <span class=\"n\">y</span> <span class=\"o\">:=</span>\n<span class=\"k\">begin</span>\n  <span class=\"n\">cases</span> <span class=\"n\">quotient</span><span class=\"bp\">.</span><span class=\"n\">exact</span> <span class=\"n\">w</span> <span class=\"k\">with</span> <span class=\"bp\">_</span> <span class=\"bp\">_</span> <span class=\"bp\">_</span> <span class=\"n\">h</span> <span class=\"bp\">_</span> <span class=\"n\">tz</span> <span class=\"bp\">_</span> <span class=\"n\">h₁</span> <span class=\"n\">h₂</span><span class=\"o\">,</span>\n  <span class=\"o\">{</span> <span class=\"n\">apply</span> <span class=\"n\">filtered_exact&#39;</span> <span class=\"n\">F</span> <span class=\"o\">(</span><span class=\"n\">relation</span><span class=\"bp\">.</span><span class=\"n\">refl</span> <span class=\"bp\">_</span><span class=\"o\">)</span> <span class=\"bp\">_</span> <span class=\"bp\">_</span> <span class=\"n\">rfl</span> <span class=\"n\">rfl</span><span class=\"o\">,</span> <span class=\"o\">},</span>\n  <span class=\"o\">{</span> <span class=\"k\">let</span> <span class=\"n\">h</span> <span class=\"o\">:=</span> <span class=\"n\">relation</span><span class=\"bp\">.</span><span class=\"n\">symm</span> <span class=\"bp\">_</span> <span class=\"bp\">_</span> <span class=\"n\">h</span><span class=\"o\">,</span>\n    <span class=\"n\">apply</span> <span class=\"n\">filtered_exact&#39;</span> <span class=\"n\">F</span> <span class=\"n\">h</span> <span class=\"bp\">_</span> <span class=\"bp\">_</span> <span class=\"n\">rfl</span> <span class=\"n\">rfl</span><span class=\"o\">,</span> <span class=\"o\">},</span>\n  <span class=\"o\">{</span> <span class=\"k\">let</span> <span class=\"n\">h</span> <span class=\"o\">:=</span> <span class=\"n\">relation</span><span class=\"bp\">.</span><span class=\"n\">trans</span> <span class=\"bp\">_</span> <span class=\"bp\">_</span> <span class=\"bp\">_</span> <span class=\"n\">h₁</span> <span class=\"n\">h₂</span><span class=\"o\">,</span>\n    <span class=\"n\">apply</span> <span class=\"n\">filtered_exact&#39;</span> <span class=\"n\">F</span> <span class=\"n\">h</span> <span class=\"bp\">_</span> <span class=\"bp\">_</span> <span class=\"n\">rfl</span> <span class=\"n\">rfl</span><span class=\"o\">,</span> <span class=\"o\">},</span>\n  <span class=\"o\">{</span> <span class=\"n\">exact</span> <span class=\"n\">filtered_exact&#39;</span> <span class=\"n\">F</span> <span class=\"bp\">_</span><span class=\"n\">x</span> <span class=\"o\">((</span><span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">map</span> <span class=\"n\">f</span><span class=\"o\">)</span> <span class=\"n\">y</span><span class=\"o\">)</span> <span class=\"n\">y</span> <span class=\"n\">rfl</span> <span class=\"n\">rfl</span><span class=\"o\">,</span> <span class=\"o\">},</span>\n<span class=\"kn\">end</span>\n</code></pre></div>",
+        "id": 208044605,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598405821
+    },
+    {
+        "content": "<p>Ah, no, but the <code>trans</code> case of your lemma is simply not provable. I don't think this is going to work.</p>",
+        "id": 208045217,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598406696
+    },
+    {
+        "content": "<p>What of we get rid of trans from relation?</p>",
+        "id": 208045607,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598407118
+    },
+    {
+        "content": "<p>And just never define a setoid?</p>",
+        "id": 208045611,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598407129
+    },
+    {
+        "content": "<p>(same with symm and refl)</p>",
+        "id": 208045623,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598407149
+    },
+    {
+        "content": "<p>This would be a hack anyway... There must be a better way!</p>",
+        "id": 208045728,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598407241
+    },
+    {
+        "content": "<p>I don't think that the setoid business is an issue.</p>",
+        "id": 208046278,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598407842
+    },
+    {
+        "content": "<p>You have a choice whether you deal with transitivity as a case of the relation, or as a case of <code>eqv_gen</code> if you decide not to use a setoid.</p>",
+        "id": 208046319,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598407902
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"110032\">@Reid Barton</span> or <span class=\"user-mention\" data-user-id=\"246273\">@Bhavik Mehta</span>, I can prove the diagonal functor preserves filtered colimits. But could you sketch out for me a bit more detail how you thought that would be useful defining a ring structure on the type level colimit?</p>",
+        "id": 208053206,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598418191
+    },
+    {
+        "content": "<p>Oh, I see, multiplication gives a natural transformation <code>F ⋙ Δ ⟶ F</code>, and we can take the induced map on colimits, and since <code>Δ</code> preserves filtered colimits, we can turn that into a morphism <code>Δ (colimit F) ⟶ colimit F</code>, which is what we wanted.</p>",
+        "id": 208060739,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598427303
+    },
+    {
+        "content": "<p>I can use this to construct <code>one</code> and <code>mul</code> quite slickly on the type level colimit, but so far my efforts to check the axioms just result in big messes. :-(</p>",
+        "id": 208070049,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598434319
+    },
+    {
+        "content": "<p>Now you should prove that, say, <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>X</mi><mo>↦</mo><mi>X</mi><mo>×</mo><mi>X</mi><mo>×</mo><mi>X</mi></mrow><annotation encoding=\"application/x-tex\">X \\mapsto X \\times X \\times X</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.69433em;vertical-align:-0.011em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.07847em;\">X</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span><span class=\"mrel\">↦</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.76666em;vertical-align:-0.08333em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.07847em;\">X</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">×</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.76666em;vertical-align:-0.08333em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.07847em;\">X</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">×</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.68333em;vertical-align:0em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.07847em;\">X</span></span></span></span> also preserves filtered colimits and therefore any axiom involving 3 variables follows from the fact that, by construction, the maps to the colimit preserve the addition and multiplication you just defined.</p>",
+        "id": 208081117,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598442648
+    },
+    {
+        "content": "<p>That is, if we switch to a more comfortable notation denoting a typical input ring as <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msub><mi>R</mi><mi>i</mi></msub></mrow><annotation encoding=\"application/x-tex\">R_i</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.83333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.31166399999999994em;\"><span style=\"top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">i</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> and their colimit in Set as <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>R</mi></mrow><annotation encoding=\"application/x-tex\">R</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.68333em;vertical-align:0em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span></span></span></span>, you've constructed addition on <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>R</mi></mrow><annotation encoding=\"application/x-tex\">R</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.68333em;vertical-align:0em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span></span></span></span> as the map <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>R</mi><mo>×</mo><mi>R</mi><mo>→</mo><mi>R</mi></mrow><annotation encoding=\"application/x-tex\">R \\times R \\to R</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.76666em;vertical-align:-0.08333em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">×</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.68333em;vertical-align:0em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span><span class=\"mrel\">→</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.68333em;vertical-align:0em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span></span></span></span> such that the squares formed together with <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msub><mi>R</mi><mi>i</mi></msub><mo>×</mo><msub><mi>R</mi><mi>i</mi></msub><mo>→</mo><msub><mi>R</mi><mi>i</mi></msub></mrow><annotation encoding=\"application/x-tex\">R_i \\times R_i \\to R_i</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.83333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.31166399999999994em;\"><span style=\"top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">i</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">×</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.83333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.31166399999999994em;\"><span style=\"top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">i</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span><span class=\"mrel\">→</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.83333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.31166399999999994em;\"><span style=\"top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">i</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span> commute, and similarly for multiplication. In other words, each map <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msub><mi>R</mi><mi>i</mi></msub><mo>→</mo><mi>R</mi></mrow><annotation encoding=\"application/x-tex\">R_i \\to R</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.83333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.31166399999999994em;\"><span style=\"top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">i</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span><span class=\"mrel\">→</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.68333em;vertical-align:0em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span></span></span></span> now preserves <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mo>+</mo></mrow><annotation encoding=\"application/x-tex\">+</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.66666em;vertical-align:-0.08333em;\"></span><span class=\"mord\">+</span></span></span></span> and <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mo>∗</mo></mrow><annotation encoding=\"application/x-tex\">*</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.46528em;vertical-align:0em;\"></span><span class=\"mord\">∗</span></span></span></span>.</p>",
+        "id": 208081467,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598442915
+    },
+    {
+        "content": "<p>Now, suppose we want to prove that say <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>a</mi><mo>∗</mo><mo stretchy=\"false\">(</mo><mi>b</mi><mo>+</mo><mi>c</mi><mo stretchy=\"false\">)</mo><mo>=</mo><mi>a</mi><mo>∗</mo><mi>b</mi><mo>+</mo><mi>a</mi><mo>∗</mo><mi>c</mi></mrow><annotation encoding=\"application/x-tex\">a * (b + c) = a * b + a * c</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.46528em;vertical-align:0em;\"></span><span class=\"mord mathnormal\">a</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">c</span><span class=\"mclose\">)</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.46528em;vertical-align:0em;\"></span><span class=\"mord mathnormal\">a</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.77777em;vertical-align:-0.08333em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.46528em;vertical-align:0em;\"></span><span class=\"mord mathnormal\">a</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.43056em;vertical-align:0em;\"></span><span class=\"mord mathnormal\">c</span></span></span></span> is satisfied in <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>R</mi></mrow><annotation encoding=\"application/x-tex\">R</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.68333em;vertical-align:0em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span></span></span></span>. Look at the diagram formed by the maps <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mo stretchy=\"false\">(</mo><mi>a</mi><mo separator=\"true\">,</mo><mi>b</mi><mo separator=\"true\">,</mo><mi>c</mi><mo stretchy=\"false\">)</mo><mo>↦</mo><mi>a</mi><mo>∗</mo><mo stretchy=\"false\">(</mo><mi>b</mi><mo>+</mo><mi>c</mi><mo stretchy=\"false\">)</mo><mo>:</mo><msub><mi>R</mi><mi>i</mi></msub><mo>×</mo><msub><mi>R</mi><mi>i</mi></msub><mo>×</mo><msub><mi>R</mi><mi>i</mi></msub><mo>→</mo><msub><mi>R</mi><mi>i</mi></msub></mrow><annotation encoding=\"application/x-tex\">(a, b, c) \\mapsto a * (b + c) : R_i \\times R_i \\times R_i \\to R_i</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">a</span><span class=\"mpunct\">,</span><span class=\"mspace\" style=\"margin-right:0.16666666666666666em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mpunct\">,</span><span class=\"mspace\" style=\"margin-right:0.16666666666666666em;\"></span><span class=\"mord mathnormal\">c</span><span class=\"mclose\">)</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span><span class=\"mrel\">↦</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.46528em;vertical-align:0em;\"></span><span class=\"mord mathnormal\">a</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\">c</span><span class=\"mclose\">)</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span><span class=\"mrel\">:</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.83333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.31166399999999994em;\"><span style=\"top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">i</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">×</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.83333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.31166399999999994em;\"><span style=\"top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">i</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">×</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.83333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.31166399999999994em;\"><span style=\"top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">i</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span><span class=\"mrel\">→</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.83333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.31166399999999994em;\"><span style=\"top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">i</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>. Because the maps <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msub><mi>R</mi><mi>i</mi></msub><mo>→</mo><mi>R</mi></mrow><annotation encoding=\"application/x-tex\">R_i \\to R</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.83333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.31166399999999994em;\"><span style=\"top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">i</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span><span class=\"mrel\">→</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.68333em;vertical-align:0em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span></span></span></span> preserve addition and multiplication, we can extend this diagram to include the corresponding map <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>R</mi><mo>×</mo><mi>R</mi><mo>×</mo><mi>R</mi><mo>→</mo><mi>R</mi></mrow><annotation encoding=\"application/x-tex\">R \\times R \\times R \\to R</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.76666em;vertical-align:-0.08333em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">×</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.76666em;vertical-align:-0.08333em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">×</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.68333em;vertical-align:0em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span><span class=\"mrel\">→</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.68333em;vertical-align:0em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span></span></span></span>.</p>",
+        "id": 208081684,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598443072
+    },
+    {
+        "content": "<p>If we instead used the expression <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>a</mi><mo>∗</mo><mi>b</mi><mo>+</mo><mi>a</mi><mo>∗</mo><mi>c</mi></mrow><annotation encoding=\"application/x-tex\">a * b + a * c</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.46528em;vertical-align:0em;\"></span><span class=\"mord mathnormal\">a</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.77777em;vertical-align:-0.08333em;\"></span><span class=\"mord mathnormal\">b</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.46528em;vertical-align:0em;\"></span><span class=\"mord mathnormal\">a</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.43056em;vertical-align:0em;\"></span><span class=\"mord mathnormal\">c</span></span></span></span>, we'd get the same maps for all the <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msub><mi>R</mi><mi>i</mi></msub></mrow><annotation encoding=\"application/x-tex\">R_i</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.83333em;vertical-align:-0.15em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.31166399999999994em;\"><span style=\"top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">i</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></span></span></span>, of course, and a priori a different map <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>R</mi><mo>×</mo><mi>R</mi><mo>×</mo><mi>R</mi><mo>→</mo><mi>R</mi></mrow><annotation encoding=\"application/x-tex\">R \\times R \\times R \\to R</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.76666em;vertical-align:-0.08333em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">×</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.76666em;vertical-align:-0.08333em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">×</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.68333em;vertical-align:0em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span><span class=\"mrel\">→</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.68333em;vertical-align:0em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span></span></span></span>, but we can conclude that they're actually equal because there's only one map that fits there by the universal property of the colimit.</p>",
+        "id": 208081768,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598443130
+    },
+    {
+        "content": "<p>The same kind of argument will appear later when you want to verify the universal property, whicih amounts to showing that the map you get from the universal property in Set is also a ring homomorphism.</p>",
+        "id": 208081813,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598443170
+    },
+    {
+        "content": "<p>I'm a bit confused as to how this solves the original issue of proving the <code>filtered_exact</code> lemma from before. It seems that one would just have to prove a similar lemma for colimits in the category <code>Type*</code> (which is certainly a sensible thing to do), and it seems to me that this would have similar issues with getting the induction right. That is unless mathlib already has an analogue of <code>filtered_exact</code> for colimits in <code>Type*</code>?</p>",
+        "id": 208082094,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598443339
+    },
+    {
+        "content": "<p>Also, with this formulation it feels like we should just define sheaves of rings to be internal ring objects in the category of sheaves of sets.</p>",
+        "id": 208082130,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598443367
+    },
+    {
+        "content": "<p>The point is that in Set, any element of a colimit (even one that isn't filtered) is actually of the form <code>of _</code></p>",
+        "id": 208082195,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598443417
+    },
+    {
+        "content": "<p>and so the corresponding fact for Set is very easy</p>",
+        "id": 208082211,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598443431
+    },
+    {
+        "content": "<p>Well, we already know this for colimits (in the filtered case) in CRing from <code>of_surjective</code> which is a lemma in the file that Scott was working with.</p>",
+        "id": 208082327,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598443502
+    },
+    {
+        "content": "<p>Ok, I think I see why it is easier in the <code>Type*</code>. The point is that we would define the relation whose quotient is the colimit directly on the disjoint union of the components, as opposed to working with an auxiliary <code>prequotient</code> type.</p>",
+        "id": 208082803,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598443831
+    },
+    {
+        "content": "<p>And yes I agree the induction would be much smoother.</p>",
+        "id": 208082823,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598443848
+    },
+    {
+        "content": "<p>Hmm, it's possible you could use the surjectivity somehow, but it's not clear to me. The relations are also more complicated, involving multiple variables.</p>",
+        "id": 208082971,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598443925
+    },
+    {
+        "content": "<p>I might be misunderstanding the root of the issue, but it seems to be coming from using this auxiliary <code>prequotient</code> thing.</p>",
+        "id": 208083032,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598443964
+    },
+    {
+        "content": "<p>Ha, I guess there is not induction at all in the case of <code>Type*</code>:</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"kn\">import</span> <span class=\"n\">category_theory</span><span class=\"bp\">.</span><span class=\"n\">limits</span><span class=\"bp\">.</span><span class=\"n\">limits</span>\n<span class=\"kn\">import</span> <span class=\"n\">category_theory</span><span class=\"bp\">.</span><span class=\"n\">limits</span><span class=\"bp\">.</span><span class=\"n\">types</span>\n\n<span class=\"n\">universes</span> <span class=\"n\">u</span> <span class=\"n\">v</span>\n\n<span class=\"kn\">open</span> <span class=\"n\">category_theory</span>\n<span class=\"kn\">open</span> <span class=\"n\">category_theory</span><span class=\"bp\">.</span><span class=\"n\">limits</span>\n\n<span class=\"kn\">variables</span> <span class=\"o\">{</span><span class=\"n\">J</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span> <span class=\"n\">v</span><span class=\"o\">}</span> <span class=\"o\">[</span><span class=\"n\">small_category</span> <span class=\"n\">J</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">F</span> <span class=\"o\">:</span> <span class=\"n\">J</span> <span class=\"err\">⥤</span> <span class=\"kt\">Type</span> <span class=\"n\">u</span><span class=\"o\">)</span>\n\n<span class=\"kn\">namespace</span> <span class=\"n\">colimit</span>\n<span class=\"n\">def</span> <span class=\"n\">relation</span> <span class=\"o\">:</span> <span class=\"o\">(</span><span class=\"err\">Σ</span> <span class=\"o\">(</span><span class=\"n\">j</span> <span class=\"o\">:</span> <span class=\"n\">J</span><span class=\"o\">),</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">obj</span> <span class=\"n\">j</span><span class=\"o\">)</span> <span class=\"bp\">→</span> <span class=\"o\">(</span><span class=\"err\">Σ</span> <span class=\"o\">(</span><span class=\"n\">j</span> <span class=\"o\">:</span> <span class=\"n\">J</span><span class=\"o\">),</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">obj</span> <span class=\"n\">j</span><span class=\"o\">)</span> <span class=\"bp\">→</span> <span class=\"kt\">Prop</span> <span class=\"o\">:=</span>\n  <span class=\"bp\">λ</span> <span class=\"bp\">⟨</span><span class=\"n\">j₁</span><span class=\"o\">,</span><span class=\"n\">x₁</span><span class=\"bp\">⟩</span> <span class=\"bp\">⟨</span><span class=\"n\">j₂</span><span class=\"o\">,</span><span class=\"n\">x₂</span><span class=\"bp\">⟩</span><span class=\"o\">,</span> <span class=\"bp\">∃</span> <span class=\"o\">(</span><span class=\"n\">i</span> <span class=\"o\">:</span> <span class=\"n\">j₁</span> <span class=\"err\">⟶</span> <span class=\"n\">j₂</span><span class=\"o\">),</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">map</span> <span class=\"n\">i</span> <span class=\"n\">x₁</span> <span class=\"bp\">=</span> <span class=\"n\">x₂</span>\n<span class=\"kn\">end</span> <span class=\"n\">colimit</span>\n\n<span class=\"n\">def</span> <span class=\"n\">colimit</span> <span class=\"o\">:=</span> <span class=\"n\">quot</span> <span class=\"o\">(</span><span class=\"n\">colimit</span><span class=\"bp\">.</span><span class=\"n\">relation</span> <span class=\"n\">F</span><span class=\"o\">)</span>\n</code></pre></div>\n\n\n<p>I think that's the right construction?</p>",
+        "id": 208083627,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598444369
+    },
+    {
+        "content": "<p>Okay, it works for colimits of types :)</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"kn\">import</span> <span class=\"n\">category_theory</span><span class=\"bp\">.</span><span class=\"n\">limits</span><span class=\"bp\">.</span><span class=\"n\">limits</span>\n<span class=\"kn\">import</span> <span class=\"n\">category_theory</span><span class=\"bp\">.</span><span class=\"n\">limits</span><span class=\"bp\">.</span><span class=\"n\">types</span>\n\n<span class=\"n\">universes</span> <span class=\"n\">u</span> <span class=\"n\">v</span>\n\n<span class=\"kn\">open</span> <span class=\"n\">category_theory</span>\n<span class=\"kn\">open</span> <span class=\"n\">category_theory</span><span class=\"bp\">.</span><span class=\"n\">limits</span>\n\n<span class=\"kn\">variables</span> <span class=\"o\">{</span><span class=\"n\">J</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span> <span class=\"n\">v</span><span class=\"o\">}</span> <span class=\"o\">[</span><span class=\"n\">small_category</span> <span class=\"n\">J</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">F</span> <span class=\"o\">:</span> <span class=\"n\">J</span> <span class=\"err\">⥤</span> <span class=\"kt\">Type</span> <span class=\"n\">u</span><span class=\"o\">)</span>\n\n<span class=\"kn\">namespace</span> <span class=\"n\">colimit</span>\n<span class=\"bp\">@</span><span class=\"o\">[</span><span class=\"kn\">reducible</span><span class=\"o\">]</span>\n<span class=\"n\">def</span> <span class=\"n\">relation</span> <span class=\"o\">:</span> <span class=\"o\">(</span><span class=\"err\">Σ</span> <span class=\"o\">(</span><span class=\"n\">j</span> <span class=\"o\">:</span> <span class=\"n\">J</span><span class=\"o\">),</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">obj</span> <span class=\"n\">j</span><span class=\"o\">)</span> <span class=\"bp\">→</span> <span class=\"o\">(</span><span class=\"err\">Σ</span> <span class=\"o\">(</span><span class=\"n\">j</span> <span class=\"o\">:</span> <span class=\"n\">J</span><span class=\"o\">),</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">obj</span> <span class=\"n\">j</span><span class=\"o\">)</span> <span class=\"bp\">→</span> <span class=\"kt\">Prop</span> <span class=\"o\">:=</span>\n  <span class=\"bp\">λ</span> <span class=\"n\">x</span> <span class=\"n\">y</span><span class=\"o\">,</span> <span class=\"bp\">∃</span> <span class=\"o\">(</span><span class=\"n\">i</span> <span class=\"o\">:</span> <span class=\"n\">x</span><span class=\"bp\">.</span><span class=\"mi\">1</span> <span class=\"err\">⟶</span> <span class=\"n\">y</span><span class=\"bp\">.</span><span class=\"mi\">1</span><span class=\"o\">),</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">map</span> <span class=\"n\">i</span> <span class=\"n\">x</span><span class=\"bp\">.</span><span class=\"mi\">2</span> <span class=\"bp\">=</span> <span class=\"n\">y</span><span class=\"bp\">.</span><span class=\"mi\">2</span>\n<span class=\"kn\">end</span> <span class=\"n\">colimit</span>\n\n<span class=\"n\">def</span> <span class=\"n\">colimit</span> <span class=\"o\">:=</span> <span class=\"n\">quot</span> <span class=\"o\">(</span><span class=\"n\">colimit</span><span class=\"bp\">.</span><span class=\"n\">relation</span> <span class=\"n\">F</span><span class=\"o\">)</span>\n\n<span class=\"kn\">lemma</span> <span class=\"n\">filtered_exact</span> <span class=\"o\">[</span><span class=\"n\">is_filtered</span> <span class=\"n\">J</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">x</span> <span class=\"n\">y</span> <span class=\"o\">:</span> <span class=\"err\">Σ</span> <span class=\"o\">(</span><span class=\"n\">j</span> <span class=\"o\">:</span> <span class=\"n\">J</span><span class=\"o\">),</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">obj</span> <span class=\"n\">j</span><span class=\"o\">)</span>\n  <span class=\"o\">(</span><span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"n\">quot</span><span class=\"bp\">.</span><span class=\"n\">mk</span> <span class=\"o\">(</span><span class=\"n\">colimit</span><span class=\"bp\">.</span><span class=\"n\">relation</span> <span class=\"n\">F</span><span class=\"o\">)</span> <span class=\"n\">x</span> <span class=\"bp\">=</span> <span class=\"n\">quot</span><span class=\"bp\">.</span><span class=\"n\">mk</span> <span class=\"o\">(</span><span class=\"n\">colimit</span><span class=\"bp\">.</span><span class=\"n\">relation</span> <span class=\"n\">F</span><span class=\"o\">)</span> <span class=\"n\">y</span><span class=\"o\">)</span> <span class=\"o\">:</span>\n  <span class=\"o\">(</span><span class=\"bp\">∃</span> <span class=\"o\">(</span><span class=\"n\">j</span> <span class=\"o\">:</span> <span class=\"n\">J</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">i1</span> <span class=\"o\">:</span> <span class=\"n\">x</span><span class=\"bp\">.</span><span class=\"mi\">1</span> <span class=\"err\">⟶</span> <span class=\"n\">j</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">i2</span> <span class=\"o\">:</span> <span class=\"n\">y</span><span class=\"bp\">.</span><span class=\"mi\">1</span> <span class=\"err\">⟶</span> <span class=\"n\">j</span><span class=\"o\">),</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">map</span> <span class=\"n\">i1</span> <span class=\"n\">x</span><span class=\"bp\">.</span><span class=\"mi\">2</span> <span class=\"bp\">=</span> <span class=\"n\">F</span><span class=\"bp\">.</span><span class=\"n\">map</span> <span class=\"n\">i2</span> <span class=\"n\">y</span><span class=\"bp\">.</span><span class=\"mi\">2</span><span class=\"o\">)</span> <span class=\"o\">:=</span>\n<span class=\"k\">begin</span>\n  <span class=\"n\">cases</span> <span class=\"n\">x</span> <span class=\"k\">with</span> <span class=\"n\">j1</span> <span class=\"n\">x</span><span class=\"o\">,</span>\n  <span class=\"n\">cases</span> <span class=\"n\">y</span> <span class=\"k\">with</span> <span class=\"n\">j2</span> <span class=\"n\">y</span><span class=\"o\">,</span>\n  <span class=\"n\">replace</span> <span class=\"n\">h</span> <span class=\"o\">:=</span> <span class=\"n\">quot</span><span class=\"bp\">.</span><span class=\"n\">exact</span> <span class=\"bp\">_</span> <span class=\"n\">h</span><span class=\"o\">,</span>\n  <span class=\"n\">induction</span> <span class=\"n\">h</span><span class=\"o\">,</span>\n  <span class=\"o\">{</span> <span class=\"n\">cases</span> <span class=\"n\">h_a</span><span class=\"o\">,</span>\n    <span class=\"n\">refine</span> <span class=\"bp\">⟨</span><span class=\"n\">h_y</span><span class=\"bp\">.</span><span class=\"mi\">1</span><span class=\"o\">,</span><span class=\"n\">h_a_w</span><span class=\"o\">,</span><span class=\"mi\">𝟙</span> <span class=\"bp\">_</span><span class=\"o\">,</span><span class=\"bp\">_⟩</span><span class=\"o\">,</span>\n    <span class=\"n\">simpa</span> <span class=\"o\">},</span>\n  <span class=\"o\">{</span> <span class=\"n\">refine</span> <span class=\"bp\">⟨</span><span class=\"n\">h</span><span class=\"bp\">.</span><span class=\"mi\">1</span><span class=\"o\">,</span><span class=\"mi\">𝟙</span> <span class=\"bp\">_</span><span class=\"o\">,</span> <span class=\"mi\">𝟙</span> <span class=\"bp\">_</span><span class=\"o\">,</span> <span class=\"bp\">_⟩</span><span class=\"o\">,</span>\n    <span class=\"n\">simp</span> <span class=\"o\">},</span>\n  <span class=\"o\">{</span> <span class=\"n\">rcases</span> <span class=\"n\">h_ih</span> <span class=\"k\">with</span> <span class=\"bp\">⟨</span><span class=\"n\">j</span><span class=\"o\">,</span><span class=\"n\">i1</span><span class=\"o\">,</span><span class=\"n\">i2</span><span class=\"o\">,</span><span class=\"n\">h</span><span class=\"bp\">⟩</span><span class=\"o\">,</span>\n    <span class=\"n\">refine</span> <span class=\"bp\">⟨</span><span class=\"n\">j</span><span class=\"o\">,</span><span class=\"n\">i2</span><span class=\"o\">,</span><span class=\"n\">i1</span><span class=\"o\">,</span><span class=\"bp\">_⟩</span><span class=\"o\">,</span>\n    <span class=\"n\">symmetry</span><span class=\"o\">,</span> <span class=\"n\">assumption</span> <span class=\"o\">},</span>\n  <span class=\"o\">{</span> <span class=\"n\">rcases</span> <span class=\"n\">h_ih_a</span> <span class=\"k\">with</span> <span class=\"bp\">⟨</span><span class=\"n\">j1</span><span class=\"o\">,</span><span class=\"n\">i11</span><span class=\"o\">,</span><span class=\"n\">i12</span><span class=\"o\">,</span><span class=\"n\">h1</span><span class=\"bp\">⟩</span><span class=\"o\">,</span>\n    <span class=\"n\">rcases</span> <span class=\"n\">h_ih_a_1</span> <span class=\"k\">with</span> <span class=\"bp\">⟨</span><span class=\"n\">j2</span><span class=\"o\">,</span><span class=\"n\">i21</span><span class=\"o\">,</span><span class=\"n\">i22</span><span class=\"o\">,</span><span class=\"n\">h2</span><span class=\"bp\">⟩</span><span class=\"o\">,</span>\n    <span class=\"n\">rcases</span> <span class=\"n\">is_filtered_or_empty</span><span class=\"bp\">.</span><span class=\"n\">cocone_objs</span> <span class=\"n\">j1</span> <span class=\"n\">j2</span> <span class=\"k\">with</span> <span class=\"bp\">⟨</span><span class=\"n\">j</span><span class=\"o\">,</span><span class=\"n\">i1</span><span class=\"o\">,</span><span class=\"n\">i2</span><span class=\"o\">,</span><span class=\"bp\">_⟩</span><span class=\"o\">,</span>\n    <span class=\"n\">rcases</span> <span class=\"n\">is_filtered_or_empty</span><span class=\"bp\">.</span><span class=\"n\">cocone_maps</span> <span class=\"o\">(</span><span class=\"n\">i12</span> <span class=\"err\">≫</span> <span class=\"n\">i1</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">i21</span> <span class=\"err\">≫</span> <span class=\"n\">i2</span><span class=\"o\">)</span> <span class=\"k\">with</span> <span class=\"bp\">⟨</span><span class=\"n\">jj</span><span class=\"o\">,</span><span class=\"n\">i</span><span class=\"o\">,</span><span class=\"n\">hh</span><span class=\"bp\">⟩</span><span class=\"o\">,</span>\n    <span class=\"n\">use</span> <span class=\"n\">jj</span><span class=\"o\">,</span>\n    <span class=\"n\">use</span> <span class=\"n\">i11</span> <span class=\"err\">≫</span> <span class=\"n\">i1</span> <span class=\"err\">≫</span> <span class=\"n\">i</span><span class=\"o\">,</span>\n    <span class=\"n\">use</span> <span class=\"n\">i22</span> <span class=\"err\">≫</span> <span class=\"n\">i2</span> <span class=\"err\">≫</span> <span class=\"n\">i</span><span class=\"o\">,</span>\n    <span class=\"n\">simp</span> <span class=\"n\">only</span> <span class=\"o\">[</span><span class=\"n\">functor_to_types</span><span class=\"bp\">.</span><span class=\"n\">map_comp_apply</span><span class=\"o\">],</span>\n    <span class=\"n\">rw</span> <span class=\"o\">[</span><span class=\"n\">h1</span><span class=\"o\">,</span><span class=\"err\">←</span><span class=\"n\">h2</span><span class=\"o\">],</span>\n    <span class=\"n\">simp_rw</span> <span class=\"err\">←</span><span class=\"n\">functor_to_types</span><span class=\"bp\">.</span><span class=\"n\">map_comp_apply</span><span class=\"o\">,</span>\n    <span class=\"n\">rw</span> <span class=\"n\">hh</span> <span class=\"o\">}</span>\n<span class=\"kn\">end</span>\n</code></pre></div>",
+        "id": 208087405,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598446798
+    },
+    {
+        "content": "<p>right, I think that's what I proved <a href=\"https://github.com/leanprover-community/mathlib/commit/bc457fb5716fbffe63cbcc10b4ce7a253c720f84#diff-b99529211f61cfc9437470fc7ea6ed1aR131-R132\">here</a></p>",
+        "id": 208087745,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598447002
+    },
+    {
+        "content": "<p>By the way, isn't there some general category theory voodoo which tells us that the underlying type of the colimits in CRing are the same as the colimits of the underlying type, using the fact that the forgetful functor from CRing to Set is a right adjoint?</p>",
+        "id": 208088001,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598447161
+    },
+    {
+        "content": "<p>Oh, no, right adjoints preserve limits.</p>",
+        "id": 208088518,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598447476
+    },
+    {
+        "content": "<p>And anyway, this is only true for filtered colimits.</p>",
+        "id": 208088660,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598447560
+    },
+    {
+        "content": "<p>I guess there is some general-nonsense type theorem that this fits into (something about algebras for Lawvere theories, etc.) but the proof seems to boil down to the fact that filtered colimits commute with finite limits in Set, so one would have to do the work that Reid is suggesting anyway :)</p>",
+        "id": 208097181,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1598451567
+    }
+]

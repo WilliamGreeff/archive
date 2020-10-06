@@ -1,0 +1,86 @@
+[
+    {
+        "content": "<p>There's been some suggestion to get rid of the \"maybe a couple of nights\" section of the installation instructions:<br>\n<a href=\"https://leanprover-community.github.io/get_started.html#maybe-a-couple-of-nights\">https://leanprover-community.github.io/get_started.html#maybe-a-couple-of-nights</a><br>\nmostly for the sake of simplifying the options.</p>\n<p>Without any suggest that this is meant to be binding, I'll put a poll up, and hopefully get some discussion.</p>",
+        "id": 209165934,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1599290579
+    },
+    {
+        "content": "<p>/poll What should we do with the <code>trylean</code> bundles on the installation page?<br>\nRemove them<br>\nKeep them as they are<br>\nKeep them, but lower down the page / less prominent</p>",
+        "id": 209165944,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1599290613
+    },
+    {
+        "content": "<p>In favour of keeping them --- some people may find them useful! Do we have data on this? Even anecdotal?</p>",
+        "id": 209165953,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1599290641
+    },
+    {
+        "content": "<p>In favour of removing them:</p>\n<ul>\n<li>reducing the amount of text on the installation page</li>\n<li>hopefully getting people to the default install instructions (which are currently at the bottom) faster</li>\n<li>reducing the maintenance burden by abandoning these bundles</li>\n</ul>",
+        "id": 209166008,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1599290717
+    },
+    {
+        "content": "<p>I personally do not mind that there is the <em>option</em> of a <code>trylean</code>, but I have actually not taken that option.  Another choice could be \"Do not have a view, but would not use <code>trylean</code>\"?</p>",
+        "id": 209166075,
+        "sender_full_name": "Damiano Testa",
+        "timestamp": 1599290871
+    },
+    {
+        "content": "<p>I made <a href=\"https://github.com/leanprover-community/leanprover-community.github.io/pull/126\">a PR suggesting some changes to the installation page</a>, that moves \"regular install\" to the top, and makes everything a bit terser. Comments welcome. We can do the textual changes and rearrangements independently, etc.</p>",
+        "id": 209166680,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1599292087
+    },
+    {
+        "content": "<p>Just to be clear -- I'm not complaining about the individual OS instructions <em>at all</em> -- far from it. I just want to be able to say e.g. on Twitter \"here is a Lean thing. Want to play with it? Click here &lt;blah&gt; to install lean and mathlib.\" Currently the <a href=\"https://leanprover-community.github.io/get_started.html#regular-install\">best link I know</a> is misleading because it links to a small number of comments at the very bottom of a web page (so is easy to misunderstand) as opposed to the very top of a web page (which Scott's PR seems to do).</p>",
+        "id": 209167402,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1599293535
+    },
+    {
+        "content": "<p>yes -- this doesn't touch the actual instructions for installing, just tries to get people to them faster</p>",
+        "id": 209167485,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1599293752
+    },
+    {
+        "content": "<p>I like Scott's PR, although I would probably have kept the first sentence explaining there are several options.</p>",
+        "id": 209167726,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1599294164
+    },
+    {
+        "content": "<p>I'd be curious to know whether our GitHub pages experts have access to any kind of download statistics for the bundled versions.</p>",
+        "id": 209167738,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1599294224
+    },
+    {
+        "content": "<p>I know I want to keep bundles for use with students. There is no way I can ask my regular 1st year students (who have a mandatory course using Lean, not a club like Kevin) to follow any installation procedure that has more than one step or require admin rights. The key point here is the existence of the python script building the bundles, and I could run them on my computer once per year when new students arrive. And maybe in a couple of years I'll use Lean 4 and everything will be different, who knows? But then these scripts will be very hard to discover for people who would be tempted to also use Lean for teaching.</p>",
+        "id": 209167840,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1599294419
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"110031\">@Patrick Massot</span> I've added a summary at the top of the page.</p>",
+        "id": 209169176,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1599296843
+    },
+    {
+        "content": "<p>Merged</p>",
+        "id": 209169556,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1599297619
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"110031\">Patrick Massot</span> <a href=\"#narrow/stream/113488-general/topic/abandoning.20the.20.22trylean.22.20bundles.3F/near/209167738\">said</a>:</p>\n<blockquote>\n<p>I'd be curious to know whether our GitHub pages experts have access to any kind of download statistics for the bundled versions.</p>\n</blockquote>\n<p>The bundles are hosted on Azure. I don't know a way to get per-click analytics in Azure, but Azure is so confusing I could easily be missing it. GH Pages has no built in analytics AFAIK.</p>",
+        "id": 209169939,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1599298219
+    }
+]

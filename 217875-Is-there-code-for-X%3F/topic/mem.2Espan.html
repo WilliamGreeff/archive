@@ -1,0 +1,90 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/217875-Is-there-code-for-X%3F/topic/mem.2Espan.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/index.html">Is there code for X?</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/mem.2Espan.html">mem.span</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="209370529"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/mem.span/near/209370529" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/mem.2Espan.html#209370529">(Sep 08 2020 at 10:51)</a>:</h4>
+<p>(The linear algebra code makes me so sad...)</p>
+<p>I have <code>x ∈ submodule.span R S</code> for some <code>S : set M</code>, and <code>module R M</code>.</p>
+<p>How to I obtain a formula for <code>x</code> as a linear combination of finitely many elements of <code>S</code>? (Ideally in a way that it's then convenient to do induction on the size of that linear combination?)</p>
+
+
+
+<a name="209370544"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/mem.span/near/209370544" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/mem.2Espan.html#209370544">(Sep 08 2020 at 10:51)</a>:</h4>
+<p>I feel like grepping for <code>linear combination</code> should reveal this, but ...</p>
+
+
+
+<a name="209370609"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/mem.span/near/209370609" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/mem.2Espan.html#209370609">(Sep 08 2020 at 10:52)</a>:</h4>
+<p>The fact that the word "combination" doesn't even appear in <code>linear_algebra.basic</code> seems worrying.</p>
+
+
+
+<a name="209370615"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/mem.span/near/209370615" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/mem.2Espan.html#209370615">(Sep 08 2020 at 10:52)</a>:</h4>
+<p>Isn't there something like <code>finsupp.total</code> or something like that?</p>
+
+
+
+<a name="209370690"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/mem.span/near/209370690" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Markus Himmel <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/mem.2Espan.html#209370690">(Sep 08 2020 at 10:53)</a>:</h4>
+<p>Does <a href="https://leanprover-community.github.io/mathlib_docs/find/submodule.span_induction">docs#submodule.span_induction</a> help?</p>
+
+
+
+<a name="209370789"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/mem.span/near/209370789" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Anne Baanen <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/mem.2Espan.html#209370789">(Sep 08 2020 at 10:54)</a>:</h4>
+<p>This is called <a href="https://leanprover-community.github.io/mathlib_docs/find/finsupp.mem_span_iff_total">docs#finsupp.mem_span_iff_total</a></p>
+
+
+
+<a name="209370940"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/mem.span/near/209370940" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Anne Baanen <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/mem.2Espan.html#209370940">(Sep 08 2020 at 10:57)</a>:</h4>
+<p><code>finsupp.total</code> does mention the words "linear combination" in its docstring, by the way :)</p>
+
+
+
+<a name="209371368"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/mem.span/near/209371368" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/mem.2Espan.html#209371368">(Sep 08 2020 at 11:03)</a>:</h4>
+<p>But even this has some business about an image of a set <code>v '' s</code>...</p>
+
+
+
+<a name="209371468"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/mem.span/near/209371468" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/mem.2Espan.html#209371468">(Sep 08 2020 at 11:04)</a>:</h4>
+<p>I have to make my set look like that? :-(</p>
+
+
+
+<a name="209371620"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/mem.span/near/209371620" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/mem.2Espan.html#209371620">(Sep 08 2020 at 11:06)</a>:</h4>
+<p>It seems <code>submodule.span_induction</code> will work smoothly for me.</p>
+
+
+
+<a name="209377320"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/mem.span/near/209377320" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/mem.2Espan.html#209377320">(Sep 08 2020 at 12:12)</a>:</h4>
+<p>I got frustrated with something like this a little while ago for another project I was working on, and ended up proving this </p>
+<p><a href="https://github.com/adamtopaz/comb_geom/blob/e16b629d6de3fbdea54a528755e7305dfb51e902/src/linear_algebra/lincomb.lean#L145">https://github.com/adamtopaz/comb_geom/blob/e16b629d6de3fbdea54a528755e7305dfb51e902/src/linear_algebra/lincomb.lean#L145</a></p>
+<p>I could try to clean it up and integrate it into mathlib with a small PR if people think it is actually useful.</p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

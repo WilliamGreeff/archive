@@ -1,0 +1,56 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/113488-general/topic/Using.20type.20classes.20in.20an.20extends.20clause.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/113488-general/index.html">general</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/Using.20type.20classes.20in.20an.20extends.20clause.html">Using type classes in an extends clause</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="212324362"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/Using%20type%20classes%20in%20an%20extends%20clause/near/212324362" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Eric Wieser <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/Using.20type.20classes.20in.20an.20extends.20clause.html#212324362">(Oct 05 2020 at 16:31)</a>:</h4>
+<p>I'm finding that this code:</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="kd">universe</span> <span class="n">u</span>
+
+<span class="c1">-- works fine without this</span>
+<span class="kd">set_option</span> <span class="n">old_structure_cmd</span> <span class="n">true</span>
+
+<span class="sd">/-- A semigroup is a type with an associative op. -/</span>
+<span class="kd">class</span> <span class="n">base_semigroup</span> <span class="o">(</span><span class="n">G</span> <span class="o">:</span> <span class="kt">Type</span> <span class="n">u</span><span class="o">)</span> <span class="o">(</span><span class="n">op</span> <span class="o">:</span> <span class="n">G</span> <span class="bp">→</span> <span class="n">G</span> <span class="bp">→</span> <span class="n">G</span><span class="o">)</span> <span class="o">:=</span>
+<span class="o">(</span><span class="n">op_assoc'</span> <span class="o">:</span> <span class="bp">∀</span> <span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="o">:</span> <span class="n">G</span><span class="o">,</span> <span class="n">op</span> <span class="o">(</span><span class="n">op</span> <span class="n">a</span> <span class="n">b</span><span class="o">)</span> <span class="n">c</span> <span class="bp">=</span> <span class="n">op</span> <span class="n">a</span> <span class="o">(</span><span class="n">op</span> <span class="n">b</span> <span class="n">c</span><span class="o">))</span>
+
+<span class="kd">class</span> <span class="n">mul_semigroup</span> <span class="o">(</span><span class="n">G</span> <span class="o">:</span> <span class="kt">Type</span> <span class="n">u</span><span class="o">)</span> <span class="kd">extends</span> <span class="n">has_mul</span> <span class="n">G</span><span class="o">,</span> <span class="n">base_semigroup</span> <span class="n">G</span> <span class="o">(</span><span class="bp">*</span><span class="o">)</span>
+</code></pre></div>
+
+<p>gives me the weird error</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="n">type</span> <span class="n">mismatch</span> <span class="n">at</span> <span class="n">application</span>
+  <span class="bp">@</span><span class="n">has_mul.mul</span> <span class="n">G</span> <span class="n">mul</span>
+<span class="n">term</span>
+  <span class="n">mul</span>
+<span class="n">has</span> <span class="n">type</span>
+  <span class="n">G</span> <span class="bp">→</span> <span class="n">G</span> <span class="bp">→</span> <span class="n">G</span>
+<span class="n">but</span> <span class="n">is</span> <span class="n">expected</span> <span class="n">to</span> <span class="k">have</span> <span class="n">type</span>
+  <span class="n">has_mul</span> <span class="n">G</span>
+</code></pre></div>
+
+<p>If I remove <code>old_structure_cmd</code> then it works fine.</p>
+
+
+
+<a name="212324645"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/Using%20type%20classes%20in%20an%20extends%20clause/near/212324645" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Eric Wieser <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/Using.20type.20classes.20in.20an.20extends.20clause.html#212324645">(Oct 05 2020 at 16:34)</a>:</h4>
+<p>Using <code>(@has_mul.mul G ‹has_mul G›)</code> doesn't help either, it still infers an object of the wrong type</p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

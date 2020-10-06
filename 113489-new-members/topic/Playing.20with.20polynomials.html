@@ -1,0 +1,506 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/113489-new-members/topic/Playing.20with.20polynomials.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/index.html">new members</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html">Playing with polynomials</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="210652189"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210652189" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210652189">(Sep 20 2020 at 06:26)</a>:</h4>
+<p>Hello, in an effort to play with polynomials in Lean I came up with the following,</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="n">data</span><span class="bp">.</span><span class="n">polynomial</span>
+
+<span class="kn">open</span> <span class="n">polynomial</span>
+
+<span class="n">noncomputable</span> <span class="n">def</span> <span class="n">P</span> <span class="o">:</span> <span class="n">polynomial</span> <span class="bp">ℤ</span> <span class="o">:=</span> <span class="mi">3</span> <span class="bp">*</span> <span class="n">X</span><span class="bp">^</span><span class="mi">2</span> <span class="bp">+</span> <span class="mi">1</span>
+<span class="n">noncomputable</span> <span class="n">def</span> <span class="n">Q</span> <span class="o">:</span> <span class="n">polynomial</span> <span class="bp">ℤ</span> <span class="o">:=</span> <span class="mi">4</span> <span class="bp">*</span> <span class="n">X</span><span class="bp">^</span><span class="mi">2</span> <span class="bp">+</span> <span class="mi">7</span> <span class="bp">*</span> <span class="n">X</span> <span class="bp">+</span> <span class="mi">6</span>
+
+<span class="bp">#</span><span class="kn">check</span> <span class="n">P</span> <span class="bp">+</span> <span class="n">Q</span>
+<span class="bp">#</span><span class="kn">check</span> <span class="n">P</span> <span class="bp">-</span> <span class="n">Q</span>
+<span class="bp">#</span><span class="kn">check</span> <span class="n">P</span> <span class="bp">*</span> <span class="n">Q</span>
+<span class="bp">#</span><span class="kn">check</span> <span class="n">P</span> <span class="bp">/</span><span class="err">ₘ</span> <span class="n">Q</span>
+
+<span class="bp">#</span><span class="kn">eval</span> <span class="n">P</span> <span class="bp">+</span> <span class="n">Q</span>
+<span class="bp">#</span><span class="kn">eval</span> <span class="n">P</span> <span class="bp">-</span> <span class="n">Q</span>
+<span class="bp">#</span><span class="kn">eval</span> <span class="n">P</span> <span class="bp">*</span> <span class="n">Q</span>
+<span class="bp">#</span><span class="kn">eval</span> <span class="n">P</span> <span class="bp">/</span><span class="err">ₘ</span> <span class="n">Q</span>
+</code></pre></div>
+
+
+<p>The <code>#eval</code> lines give the error "code generation failed, VM does not have code for 'classical.choice'", and the definitions of <code>P</code> and <code>Q</code> demand the <code>noncomputable</code>. Is there some way around the noncomputability of polynomials, so that <code>#eval P + Q</code> gives <code>7 * X^2 + 7 * X + 7</code>?</p>
+
+
+
+<a name="210652610"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210652610" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kenny Lau <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210652610">(Sep 20 2020 at 06:43)</a>:</h4>
+<p>"If you want to calculate, use Python"</p>
+
+
+
+<a name="210652657"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210652657" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kenny Lau <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210652657">(Sep 20 2020 at 06:44)</a>:</h4>
+<p>(or use an older version of Lean/mathlib before we decided to make everything noncomputable)</p>
+
+
+
+<a name="210652660"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210652660" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kenny Lau <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210652660">(Sep 20 2020 at 06:44)</a>:</h4>
+<p>probably some version in 2018</p>
+
+
+
+<a name="210653077"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210653077" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210653077">(Sep 20 2020 at 06:57)</a>:</h4>
+<p>Ok.</p>
+
+
+
+<a name="210660677"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210660677" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210660677">(Sep 20 2020 at 10:51)</a>:</h4>
+<p>Or use a future version of Lean/mathlib with the <code>norm_poly</code> tactic</p>
+
+
+
+<a name="210662989"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210662989" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210662989">(Sep 20 2020 at 11:44)</a>:</h4>
+<p><span class="user-mention" data-user-id="209436">@Lucas Allen</span> can you please leave 2020, you've come to the wrong year. Please recalibrate a couple of years in either direction.</p>
+
+
+
+<a name="210663316"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210663316" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210663316">(Sep 20 2020 at 11:52)</a>:</h4>
+<p>I need a telephone booth emoji</p>
+
+
+
+<a name="210663906"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210663906" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210663906">(Sep 20 2020 at 12:06)</a>:</h4>
+<p>Polynomials used to be computable but this caused trouble with reasoning. Now they're noncomputable but apparently this causes problems with computation. Is Reid right that this can be fixed with a tactic?</p>
+
+
+
+<a name="210663966"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210663966" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210663966">(Sep 20 2020 at 12:08)</a>:</h4>
+<p>yes</p>
+
+
+
+<a name="210663969"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210663969" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210663969">(Sep 20 2020 at 12:08)</a>:</h4>
+<p>just like <code>norm_num</code> but for polynomials</p>
+
+
+
+<a name="210663990"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210663990" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210663990">(Sep 20 2020 at 12:09)</a>:</h4>
+<p>The trick is the kind of "computation" you want is not the same as the <code>noncomputable</code> kind. For example, <code>norm_num</code> works on the reals too</p>
+
+
+
+<a name="210666104"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210666104" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kenny Lau <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210666104">(Sep 20 2020 at 12:58)</a>:</h4>
+<p>that there are two meanings of "computation": the Lean meaning, which is that you write a program that does it; the mathematical meaning, which is that you reduce something to a normal form.</p>
+
+
+
+<a name="210669699"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210669699" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210669699">(Sep 20 2020 at 14:38)</a>:</h4>
+<p>There's some trickery involved though, isn't there? Because norm_num doesn't _really_ work with reals, right? It can only make progress if all the reals are rational.</p>
+
+
+
+<a name="210670016"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670016" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670016">(Sep 20 2020 at 14:48)</a>:</h4>
+<p>It really works with <code>expr</code>s that represent reals</p>
+
+
+
+<a name="210670025"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670025" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670025">(Sep 20 2020 at 14:48)</a>:</h4>
+<p>Aah!</p>
+
+
+
+<a name="210670032"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670032" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670032">(Sep 20 2020 at 14:49)</a>:</h4>
+<p>So why don't we teach it that sqrt(x)*sqrt(x)=x :-)</p>
+
+
+
+<a name="210670104"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670104" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670104">(Sep 20 2020 at 14:51)</a>:</h4>
+<p>Like this?</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="n">data</span><span class="bp">.</span><span class="n">real</span><span class="bp">.</span><span class="n">basic</span>
+<span class="kn">import</span> <span class="n">tactic</span><span class="bp">.</span><span class="n">norm_num</span>
+
+<span class="kn">example</span> <span class="o">:</span> <span class="n">real</span><span class="bp">.</span><span class="n">sqrt</span> <span class="mi">5</span> <span class="bp">*</span> <span class="n">real</span><span class="bp">.</span><span class="n">sqrt</span> <span class="mi">5</span> <span class="bp">=</span> <span class="mi">5</span> <span class="o">:=</span> <span class="k">by</span> <span class="n">norm_num</span>
+</code></pre></div>
+
+
+
+<a name="210670258"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670258" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670258">(Sep 20 2020 at 14:54)</a>:</h4>
+<p>Thanks!</p>
+
+
+
+<a name="210670266"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670266" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670266">(Sep 20 2020 at 14:55)</a>:</h4>
+<p>(I never knew it did that -- I had the wrong mental model)</p>
+
+
+
+<a name="210670344"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670344" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670344">(Sep 20 2020 at 14:57)</a>:</h4>
+<p>I think the main obstruction to turning <code>norm_num</code> into something more like a computer algebra system is that it's not obvious (at least to me) what kind of organizational framework is appropriate</p>
+
+
+
+<a name="210670350"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670350" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670350">(Sep 20 2020 at 14:57)</a>:</h4>
+<p>along with perhaps a lack of specific applications at the moment</p>
+
+
+
+<a name="210670400"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670400" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670400">(Sep 20 2020 at 14:58)</a>:</h4>
+<p>I want to prove that <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">x^2-4</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> is not irreduible without doing any work.</p>
+
+
+
+<a name="210670412"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670412" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670412">(Sep 20 2020 at 14:58)</a>:</h4>
+<p>but for any computation you can do in a CAS, provided you can give a proof that the computation is correct (when it succeeds), there's no reason that something like <code>norm_num</code> couldn't be extended to do it</p>
+
+
+
+<a name="210670417"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670417" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670417">(Sep 20 2020 at 14:59)</a>:</h4>
+<p>Actually I don't really want to prove this at all, I just want to prove stuff about DVRs etc. I don't have a specific application.</p>
+
+
+
+<a name="210670421"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670421" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670421">(Sep 20 2020 at 14:59)</a>:</h4>
+<p>This example is pretty trivial because <code>ring</code> can already do the correctness proof</p>
+
+
+
+<a name="210670434"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670434" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670434">(Sep 20 2020 at 14:59)</a>:</h4>
+<p>I guess sometimes I want to prove that y^2=x^3-4x has rank 0 (or 1 or whatever).</p>
+
+
+
+<a name="210670435"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670435" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670435">(Sep 20 2020 at 14:59)</a>:</h4>
+<p>so you can "just" do the factorization in an untrusted program</p>
+
+
+
+<a name="210670442"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670442" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670442">(Sep 20 2020 at 15:00)</a>:</h4>
+<p>and Cremona's software is not spitting out a formally verifiable thing here</p>
+
+
+
+<a name="210670484"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670484" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670484">(Sep 20 2020 at 15:00)</a>:</h4>
+<p>Right, I think you skipped over a large range of difficulties there <span aria-label="upside down" class="emoji emoji-1f643" role="img" title="upside down">:upside_down:</span></p>
+
+
+
+<a name="210670506"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670506" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670506">(Sep 20 2020 at 15:00)</a>:</h4>
+<p>Nobody can prove the algorithm terminates, for starters</p>
+
+
+
+<a name="210670523"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670523" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670523">(Sep 20 2020 at 15:01)</a>:</h4>
+<p>Well that's not actually a problem</p>
+
+
+
+<a name="210670598"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670598" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670598">(Sep 20 2020 at 15:03)</a>:</h4>
+<p>Try telling that to the equation compiler</p>
+
+
+
+<a name="210670608"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670608" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670608">(Sep 20 2020 at 15:03)</a>:</h4>
+<p>Of course I see what you mean, tactics are meta</p>
+
+
+
+<a name="210670742"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670742" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670742">(Sep 20 2020 at 15:06)</a>:</h4>
+<p>For a procedure like this, there are two relevant outcomes:</p>
+<ul>
+<li>the procedure succeeds in producing an answer along with a correct proof</li>
+<li>all other behavior: nontermination, answer but no certificate, certificate but it doesn't type check somehow</li>
+</ul>
+
+
+
+<a name="210670808"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670808" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670808">(Sep 20 2020 at 15:08)</a>:</h4>
+<p>If you can build a procedure which provably always has the first behavior then great, but in practice it's fine to have tactics that can fail, as long as they work when you need them to</p>
+
+
+
+<a name="210670844"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670844" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670844">(Sep 20 2020 at 15:09)</a>:</h4>
+<p>since our goal is to compute the ranks of elliptic curves (or whatever), not prove an internal theorem "there exists an algorithm which computes the rank of every elliptic curve"</p>
+
+
+
+<a name="210670897"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210670897" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210670897">(Sep 20 2020 at 15:10)</a>:</h4>
+<p>which is good because that's an open problem</p>
+
+
+
+<a name="210683579"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210683579" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210683579">(Sep 20 2020 at 20:24)</a>:</h4>
+<p>FYI, this was a surprise to me as well. <code>norm_num</code> doesn't know anything about square roots, that's all <code>simp</code>'s work</p>
+
+
+
+<a name="210683682"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210683682" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210683682">(Sep 20 2020 at 20:27)</a>:</h4>
+<p>aha!</p>
+
+
+
+<a name="210684454"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210684454" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Bryan Gin-ge Chen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210684454">(Sep 20 2020 at 20:42)</a>:</h4>
+<p>Returning to the initial question, right now <code>#simp [P,Q] P + Q</code> just returns <code>3 * X ^ 2 + 1 + (4 * X ^ 2 + 7 * X + 6)</code>, but maybe it's possible to add some simp lemmas (or make a simp set?) to make it more "useful".</p>
+
+
+
+<a name="210701054"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210701054" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210701054">(Sep 21 2020 at 04:40)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="110038">Kevin Buzzard</span> <a href="#narrow/stream/113489-new-members/topic/Playing.20with.20polynomials/near/210662989">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="209436">Lucas Allen</span> can you please leave 2020, you've come to the wrong year. Please recalibrate a couple of years in either direction.</p>
+</blockquote>
+<p>I think practicing the art of impeccable timing is starting to pay off.</p>
+
+
+
+<a name="210701161"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210701161" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210701161">(Sep 21 2020 at 04:42)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="123965">Bryan Gin-ge Chen</span> <a href="#narrow/stream/113489-new-members/topic/Playing.20with.20polynomials/near/210684454">said</a>:</p>
+<blockquote>
+<p>Returning to the initial question, right now <code>#simp [P,Q] P + Q</code> just returns <code>3 * X ^ 2 + 1 + (4 * X ^ 2 + 7 * X + 6)</code>, but maybe it's possible to add some simp lemmas (or make a simp set?) to make it more "useful".</p>
+</blockquote>
+<p>I had a go at adding a simp lemma to see if it worked,</p>
+<div class="codehilite"><pre><span></span><code><span class="bp">@</span><span class="o">[</span><span class="n">simp</span><span class="o">]</span> <span class="kn">lemma</span> <span class="n">X_add</span> <span class="o">:</span> <span class="o">(</span><span class="n">X</span> <span class="o">:</span> <span class="n">polynomial</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="bp">+</span> <span class="n">X</span> <span class="bp">=</span> <span class="mi">2</span> <span class="bp">*</span> <span class="n">X</span> <span class="o">:=</span> <span class="n">sorry</span>
+
+<span class="bp">#</span><span class="n">simp</span> <span class="o">[</span><span class="n">X</span><span class="o">]</span> <span class="n">X</span> <span class="bp">+</span> <span class="n">X</span>
+</code></pre></div>
+
+
+<p>It gives "monomial 1 1 + monomial 1 1", but I want "2 * X". I also tried <code>#simp [(X : polynomial ℤ)] X + X</code> but this gives "simplify tactic failed to simplify." Is there some way to get this to work?</p>
+
+
+
+<a name="210701181"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210701181" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210701181">(Sep 21 2020 at 04:43)</a>:</h4>
+<p>Ooh, you don't want to put <code>X</code> in the simpset, rather put <code>X_add</code> between the <code>[]</code></p>
+
+
+
+<a name="210701314"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210701314" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210701314">(Sep 21 2020 at 04:47)</a>:</h4>
+<p><code>#simp [X_add] X + X</code> gives "simplify tactic failed to simplify". Do I need to say something about it being a <code>ℤ</code> polynomial?</p>
+
+
+
+<a name="210701358"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210701358" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210701358">(Sep 21 2020 at 04:48)</a>:</h4>
+<p>Aah, I guess you do</p>
+
+
+
+<a name="210701372"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210701372" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210701372">(Sep 21 2020 at 04:48)</a>:</h4>
+<div class="codehilite"><pre><span></span><code><span class="bp">@</span><span class="o">[</span><span class="n">simp</span><span class="o">]</span> <span class="kn">lemma</span> <span class="n">X_add</span> <span class="o">:</span> <span class="o">(</span><span class="n">X</span> <span class="o">:</span> <span class="n">polynomial</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="bp">+</span> <span class="n">X</span> <span class="bp">=</span> <span class="mi">2</span> <span class="bp">*</span> <span class="n">X</span> <span class="o">:=</span> <span class="n">sorry</span>
+
+<span class="bp">#</span><span class="n">simp</span> <span class="o">[</span><span class="n">X_add</span><span class="o">]</span> <span class="o">(</span><span class="n">X</span> <span class="o">:</span> <span class="n">polynomial</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="bp">+</span> <span class="n">X</span>
+</code></pre></div>
+
+
+<p>does this work?</p>
+
+
+
+<a name="210701381"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210701381" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210701381">(Sep 21 2020 at 04:49)</a>:</h4>
+<p>Yes!</p>
+
+
+
+<a name="210701694"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210701694" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210701694">(Sep 21 2020 at 04:58)</a>:</h4>
+<p>Why is this an invalid simp lemma?</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">lemma</span> <span class="n">X_add</span> <span class="o">(</span><span class="n">m</span> <span class="o">:</span> <span class="bp">ℕ</span><span class="o">)</span> <span class="o">(</span><span class="n">a</span> <span class="n">b</span> <span class="o">:</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="o">:</span> <span class="o">(</span><span class="n">a</span> <span class="bp">*</span> <span class="n">X</span> <span class="o">:</span> <span class="n">polynomial</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="bp">+</span> <span class="o">(</span><span class="n">b</span> <span class="bp">*</span> <span class="n">X</span><span class="o">)</span> <span class="bp">=</span> <span class="o">(</span><span class="n">a</span> <span class="bp">+</span> <span class="n">b</span><span class="o">)</span> <span class="bp">*</span> <span class="n">X</span> <span class="o">:=</span>
+<span class="k">begin</span>
+  <span class="n">exact</span> <span class="o">(</span><span class="n">add_mul</span> <span class="err">↑</span><span class="n">a</span> <span class="err">↑</span><span class="n">b</span> <span class="n">X</span><span class="o">)</span><span class="bp">.</span><span class="n">symm</span><span class="o">,</span>
+<span class="kn">end</span>
+</code></pre></div>
+
+
+
+<a name="210701699"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210701699" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210701699">(Sep 21 2020 at 04:59)</a>:</h4>
+<p>Adding <code>@[simp]</code> gives a red squiggle.</p>
+
+
+
+<a name="210702743"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210702743" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210702743">(Sep 21 2020 at 05:29)</a>:</h4>
+<p><span class="user-mention" data-user-id="209436">@Lucas Allen</span> because the statement doesn't use <code>m</code></p>
+
+
+
+<a name="210702881"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210702881" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210702881">(Sep 21 2020 at 05:33)</a>:</h4>
+<p>Oh no.</p>
+
+
+
+<a name="210702883"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210702883" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210702883">(Sep 21 2020 at 05:33)</a>:</h4>
+<p>sorry.</p>
+
+
+
+<a name="210703131"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210703131" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210703131">(Sep 21 2020 at 05:39)</a>:</h4>
+<p>I get a deterministic timeout with the following</p>
+<div class="codehilite"><pre><span></span><code><span class="bp">@</span><span class="o">[</span><span class="n">simp</span><span class="o">]</span> <span class="kn">lemma</span> <span class="n">X_add</span> <span class="o">(</span><span class="n">a</span> <span class="n">b</span> <span class="o">:</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="o">:</span> <span class="o">(</span><span class="n">a</span> <span class="bp">*</span> <span class="n">X</span> <span class="o">:</span> <span class="n">polynomial</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="bp">+</span> <span class="o">(</span><span class="n">b</span> <span class="bp">*</span> <span class="n">X</span><span class="o">)</span> <span class="bp">=</span> <span class="o">(</span><span class="n">a</span> <span class="bp">+</span> <span class="n">b</span><span class="o">)</span> <span class="bp">*</span> <span class="n">X</span> <span class="o">:=</span>
+<span class="k">begin</span>
+  <span class="n">exact</span> <span class="o">(</span><span class="n">add_mul</span> <span class="err">↑</span><span class="n">a</span> <span class="err">↑</span><span class="n">b</span> <span class="n">X</span><span class="o">)</span><span class="bp">.</span><span class="n">symm</span><span class="o">,</span>
+<span class="kn">end</span>
+
+<span class="kn">lemma</span> <span class="n">test</span> <span class="o">:</span> <span class="o">(</span><span class="mi">3</span> <span class="bp">*</span> <span class="n">X</span> <span class="o">:</span> <span class="n">polynomial</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="bp">+</span> <span class="o">(</span><span class="mi">5</span> <span class="bp">*</span> <span class="n">X</span><span class="o">)</span> <span class="bp">=</span> <span class="mi">8</span> <span class="bp">*</span> <span class="n">X</span> <span class="o">:=</span>
+<span class="k">begin</span>
+  <span class="n">apply</span> <span class="n">X_add</span><span class="o">,</span>
+<span class="kn">end</span>
+</code></pre></div>
+
+
+<p>I don't know why, and I hope it's not obvious again...</p>
+
+
+
+<a name="210703266"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210703266" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210703266">(Sep 21 2020 at 05:42)</a>:</h4>
+<p>What happens if you <code>rw</code> instead of <code>apply</code>?</p>
+
+
+
+<a name="210703275"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210703275" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210703275">(Sep 21 2020 at 05:43)</a>:</h4>
+<p>I would have expected the apply to work though.</p>
+
+
+
+<a name="210703717"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210703717" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210703717">(Sep 21 2020 at 05:52)</a>:</h4>
+<p>"rewrite tactic failed, did not find instance of the pattern in the target expression<br>
+  ↑?m_1 * X + ↑?m_2 * X<br>
+state:<br>
+⊢ 3 * X + 5 * X = 8 * X"</p>
+<p>no deterministic timeout though.</p>
+
+
+
+<a name="210703779"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210703779" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210703779">(Sep 21 2020 at 05:54)</a>:</h4>
+<p>I'm wondering if it has something to do with the fact that <code>a * X</code> has type polynomial <code>ℤ</code>, and it's not <code>(a : ℤ) * X</code>.</p>
+
+
+
+<a name="210703788"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210703788" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210703788">(Sep 21 2020 at 05:54)</a>:</h4>
+<p>But <code>(a : ℤ) * X</code> doesn't work.</p>
+
+
+
+<a name="210703875"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210703875" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210703875">(Sep 21 2020 at 05:57)</a>:</h4>
+<p><code>lemma X_add (a b : ℤ) : a * (X : polynomial ℤ) + b * X = (a + b) * X :=</code>gives red squiggles under the <code>*</code>'s. It likes <code>lemma test : 3 * (X : polynomial ℤ) + 5 * (X) = 8 * X := </code> however.</p>
+
+
+
+<a name="210703878"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210703878" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210703878">(Sep 21 2020 at 05:57)</a>:</h4>
+<p>Try <code>(3 : \Z)</code> instead</p>
+
+
+
+<a name="210703893"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210703893" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210703893">(Sep 21 2020 at 05:57)</a>:</h4>
+<p>but rather, I think you should use <code>C</code> to create constant polynomials</p>
+
+
+
+<a name="210703940"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210703940" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210703940">(Sep 21 2020 at 05:58)</a>:</h4>
+<p>Arguably, we should consider making <code>a \bu X</code> the standard way of multiplying by scalars, instead of <code>C a * X</code>.</p>
+
+
+
+<a name="210703943"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210703943" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210703943">(Sep 21 2020 at 05:58)</a>:</h4>
+<p><code>lemma xxx : (3 : ℤ) * (X : polynomial ℤ) + (5 : ℤ) * (X) = (8 : ℤ) * X := </code>gives red squiggles under the *'s type mismatch error.</p>
+
+
+
+<a name="210703952"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210703952" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210703952">(Sep 21 2020 at 05:58)</a>:</h4>
+<p><code>((3 : \Z) * X : ...)</code> ?</p>
+
+
+
+<a name="210704020"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210704020" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210704020">(Sep 21 2020 at 06:00)</a>:</h4>
+<p>I think it was<code> (3 : \Z) * (X : ...)</code></p>
+
+
+
+<a name="210704063"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Playing%20with%20polynomials/near/210704063" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Lucas Allen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Playing.20with.20polynomials.html#210704063">(Sep 21 2020 at 06:01)</a>:</h4>
+<p>It likes the <code>\bu</code>. Everything works now.</p>
+<div class="codehilite"><pre><span></span><code><span class="bp">@</span><span class="o">[</span><span class="n">simp</span><span class="o">]</span> <span class="kn">lemma</span> <span class="n">X_add</span> <span class="o">(</span><span class="n">a</span> <span class="n">b</span> <span class="o">:</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="o">:</span> <span class="n">a</span> <span class="err">•</span> <span class="o">(</span><span class="n">X</span> <span class="o">:</span> <span class="n">polynomial</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="bp">+</span> <span class="n">b</span> <span class="err">•</span> <span class="n">X</span> <span class="bp">=</span> <span class="o">(</span><span class="n">a</span> <span class="bp">+</span> <span class="n">b</span><span class="o">)</span> <span class="err">•</span> <span class="n">X</span> <span class="o">:=</span>
+<span class="k">begin</span>
+  <span class="n">exact</span> <span class="o">(</span><span class="n">add_smul</span> <span class="n">a</span> <span class="n">b</span> <span class="n">X</span><span class="o">)</span><span class="bp">.</span><span class="n">symm</span>
+<span class="kn">end</span>
+
+<span class="kn">lemma</span> <span class="n">xxx</span> <span class="o">:</span> <span class="o">(</span><span class="mi">3</span> <span class="o">:</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="err">•</span> <span class="o">(</span><span class="n">X</span> <span class="o">:</span> <span class="n">polynomial</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="bp">+</span> <span class="o">(</span><span class="mi">5</span> <span class="o">:</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="err">•</span> <span class="o">(</span><span class="n">X</span><span class="o">)</span> <span class="bp">=</span> <span class="o">(</span><span class="mi">8</span> <span class="o">:</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="err">•</span> <span class="n">X</span> <span class="o">:=</span>
+<span class="k">begin</span>
+  <span class="n">apply</span> <span class="n">X_add</span><span class="o">,</span>
+<span class="kn">end</span>
+
+<span class="bp">#</span><span class="n">simp</span> <span class="o">[</span><span class="n">X_add</span><span class="o">]</span> <span class="o">(</span><span class="mi">3</span> <span class="o">:</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="err">•</span> <span class="o">(</span><span class="n">X</span> <span class="o">:</span> <span class="n">polynomial</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="bp">+</span> <span class="o">(</span><span class="mi">5</span> <span class="o">:</span> <span class="bp">ℤ</span><span class="o">)</span> <span class="err">•</span> <span class="o">(</span><span class="n">X</span><span class="o">)</span> <span class="c1">--(3 + 5) • X</span>
+</code></pre></div>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

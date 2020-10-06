@@ -1,0 +1,125 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/113488-general/topic/motive.20is.20not.20type.20correct.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/113488-general/index.html">general</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/motive.20is.20not.20type.20correct.html">motive is not type correct</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="204738496"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/motive%20is%20not%20type%20correct/near/204738496" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Shing Tak Lam <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/motive.20is.20not.20type.20correct.html#204738496">(Jul 23 2020 at 00:24)</a>:</h4>
+<p>I'm not sure where this belongs, probably not <a class="stream" data-stream-id="113489" href="/#narrow/stream/113489-new-members">#new members</a> , so <a class="stream" data-stream-id="113488" href="/#narrow/stream/113488-general">#general</a> it is.</p>
+<p>In <a href="https://github.com/leanprover-community/mathlib/issues/3498">#3498</a>, Floris raised the idea that an approach going through a list of digits might be nicer than strong induction on the natural numbers. However that requires the lemma that <code>0 &lt; (digits b m).last _</code>, which from what I can tell is not in mathlib yet. However, when I try to write a proof for this, I get stuck with <code>motive is not type correct</code> or just <code>failed</code> when I'm rewriting. What does this mean? and any suggestions are welcome.</p>
+<p>cc <span class="user-mention" data-user-id="304229">@Angela Li</span> </p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="n">data</span><span class="bp">.</span><span class="n">nat</span><span class="bp">.</span><span class="n">digits</span>
+
+<span class="kn">lemma</span> <span class="n">digits_ne_nil_iff_ne_zero</span> <span class="o">(</span><span class="n">b</span> <span class="n">n</span> <span class="o">:</span> <span class="bp">ℕ</span><span class="o">)</span> <span class="o">:</span> <span class="n">digits</span> <span class="n">b</span> <span class="n">n</span> <span class="bp">≠</span> <span class="o">[]</span> <span class="bp">↔</span> <span class="n">n</span> <span class="bp">≠</span> <span class="mi">0</span> <span class="o">:=</span> <span class="n">sorry</span>
+
+<span class="kn">lemma</span> <span class="n">last_digit_ne_zero</span> <span class="o">(</span><span class="n">b</span> <span class="n">m</span> <span class="o">:</span> <span class="bp">ℕ</span><span class="o">)</span> <span class="o">(</span><span class="n">hm</span> <span class="o">:</span> <span class="n">m</span> <span class="bp">≠</span> <span class="mi">0</span><span class="o">)</span> <span class="o">:</span>
+  <span class="o">(</span><span class="n">digits</span> <span class="n">b</span> <span class="n">m</span><span class="o">)</span><span class="bp">.</span><span class="n">last</span> <span class="o">((</span><span class="n">digits_ne_nil_iff_ne_zero</span> <span class="bp">_</span> <span class="bp">_</span><span class="o">)</span><span class="bp">.</span><span class="n">mpr</span> <span class="n">hm</span><span class="o">)</span> <span class="bp">≠</span> <span class="mi">0</span> <span class="o">:=</span>
+<span class="k">begin</span>
+  <span class="n">rcases</span> <span class="n">b</span> <span class="k">with</span> <span class="bp">_|_|</span><span class="n">b</span><span class="o">,</span>
+  <span class="o">{</span> <span class="n">sorry</span> <span class="c">/-</span><span class="cm"> This one is trivial, proof omitted -/</span> <span class="o">},</span>
+  <span class="o">{</span> <span class="n">sorry</span> <span class="c">/-</span><span class="cm"> This one can be done by existing lemmas, proof omitted -/</span> <span class="o">},</span>
+  <span class="o">{</span> <span class="c">/-</span><span class="cm"> This case I haven&#39;t got a clue for -/</span>
+    <span class="n">simp</span> <span class="o">[</span><span class="n">digits</span><span class="o">],</span> <span class="c">/-</span><span class="cm"> Why does `simp` work and `rw` not work? -/</span>
+    <span class="n">rw</span> <span class="o">[</span><span class="n">digits_aux_def</span><span class="o">],</span> <span class="c">/-</span><span class="cm"> motive is not type correct? But now `simp` also fails... -/</span>
+    <span class="n">sorry</span> <span class="o">}</span>
+<span class="kn">end</span>
+</code></pre></div>
+
+
+
+<a name="204738628"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/motive%20is%20not%20type%20correct/near/204738628" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Jalex Stark <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/motive.20is.20not.20type.20correct.html#204738628">(Jul 23 2020 at 00:26)</a>:</h4>
+<p>does <code>simp_rw</code> work?</p>
+
+
+
+<a name="204738680"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/motive%20is%20not%20type%20correct/near/204738680" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/motive.20is.20not.20type.20correct.html#204738680">(Jul 23 2020 at 00:27)</a>:</h4>
+<p>The problem is that the <code>_</code> in your goal also has a copy of <code>digits_aux ...</code> in it, and when you try to rewrite the visible one, Lean complains that the type-dependency might break.</p>
+
+
+
+<a name="204738696"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/motive%20is%20not%20type%20correct/near/204738696" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Shing Tak Lam <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/motive.20is.20not.20type.20correct.html#204738696">(Jul 23 2020 at 00:27)</a>:</h4>
+<p>It does work when I change the <code>simp</code> to <code>simp_rw</code>, but not when I change the <code>rw</code> to <code>simp_rw</code></p>
+
+
+
+<a name="204738794"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/motive%20is%20not%20type%20correct/near/204738794" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Shing Tak Lam <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/motive.20is.20not.20type.20correct.html#204738794">(Jul 23 2020 at 00:28)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="110087">Scott Morrison</span> <a href="#narrow/stream/113488-general/topic/motive.20is.20not.20type.20correct/near/204738680">said</a>:</p>
+<blockquote>
+<p>The problem is that the <code>_</code> in your goal also has a copy of <code>digits_aux ...</code> in it, and when you try to rewrite the visible one, Lean complains that the type-dependency might break.</p>
+</blockquote>
+<p>Right, so am I approaching this from a wrong perspective? Is the fact that <code>list.last</code> takes a proof which depends on rest of the term causing the issue here?</p>
+
+
+
+<a name="204739223"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/motive%20is%20not%20type%20correct/near/204739223" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/motive.20is.20not.20type.20correct.html#204739223">(Jul 23 2020 at 00:35)</a>:</h4>
+<p>Yes.</p>
+
+
+
+<a name="204739249"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/motive%20is%20not%20type%20correct/near/204739249" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Shing Tak Lam <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/motive.20is.20not.20type.20correct.html#204739249">(Jul 23 2020 at 00:35)</a>:</h4>
+<p>Just in case this is <a href="https://en.wikipedia.org/wiki/XY_problem">#xy</a>, <a href="https://gist.github.com/shingtaklam1324/3fe981a9162ef2b62a9e6e26226f8297">here</a> is the rest of the code in context of that PR, but this lemma is probably nice to have anyways</p>
+
+
+
+<a name="204739898"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/motive%20is%20not%20type%20correct/near/204739898" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/motive.20is.20not.20type.20correct.html#204739898">(Jul 23 2020 at 00:46)</a>:</h4>
+<p>Does this (incomplete) help:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">lemma</span> <span class="n">foo</span> <span class="o">{</span><span class="n">α</span> <span class="o">:</span> <span class="kt">Type</span><span class="bp">*</span><span class="o">}</span> <span class="o">{</span><span class="n">L</span> <span class="n">M</span> <span class="o">:</span> <span class="n">list</span> <span class="n">α</span><span class="o">}</span> <span class="o">(</span><span class="n">h</span> <span class="o">:</span> <span class="n">L</span> <span class="bp">=</span> <span class="n">M</span><span class="o">)</span> <span class="o">(</span><span class="n">p</span> <span class="n">q</span><span class="o">)</span> <span class="o">:</span> <span class="n">L</span><span class="bp">.</span><span class="n">last</span> <span class="n">p</span> <span class="bp">=</span> <span class="n">M</span><span class="bp">.</span><span class="n">last</span> <span class="n">q</span> <span class="o">:=</span>
+<span class="k">begin</span>
+  <span class="n">simp</span> <span class="o">[</span><span class="n">h</span><span class="o">],</span>
+<span class="kn">end</span>
+
+<span class="bp">@</span><span class="o">[</span><span class="n">simp</span><span class="o">]</span> <span class="kn">lemma</span> <span class="n">bar</span> <span class="o">(</span><span class="n">b</span> <span class="n">n</span> <span class="o">:</span> <span class="bp">ℕ</span><span class="o">)</span> <span class="o">(</span><span class="n">h</span> <span class="o">:</span> <span class="mi">2</span> <span class="bp">≤</span> <span class="n">b</span><span class="o">)</span> <span class="o">(</span><span class="n">w</span> <span class="o">:</span> <span class="mi">0</span> <span class="bp">&lt;</span> <span class="n">n</span><span class="o">)</span> <span class="o">:</span>
+  <span class="n">digits</span> <span class="n">b</span> <span class="n">n</span> <span class="bp">=</span> <span class="o">((</span><span class="n">n</span> <span class="err">%</span> <span class="n">b</span><span class="o">)</span> <span class="bp">::</span> <span class="n">digits</span> <span class="n">b</span> <span class="o">(</span><span class="n">n</span> <span class="bp">/</span> <span class="n">b</span><span class="o">))</span> <span class="o">:=</span>
+<span class="k">begin</span>
+  <span class="n">rcases</span> <span class="n">b</span> <span class="k">with</span> <span class="bp">_|_|</span><span class="n">b</span><span class="o">,</span> <span class="n">sorry</span><span class="o">,</span> <span class="n">sorry</span><span class="o">,</span>
+  <span class="n">rcases</span> <span class="n">n</span> <span class="k">with</span> <span class="bp">_|</span><span class="n">n</span><span class="o">,</span> <span class="n">sorry</span><span class="o">,</span>
+  <span class="n">simp</span><span class="o">,</span>
+<span class="kn">end</span>
+
+<span class="kn">lemma</span> <span class="n">digits_last</span> <span class="o">(</span><span class="n">b</span> <span class="o">:</span> <span class="bp">ℕ</span><span class="o">)</span> <span class="o">(</span><span class="n">h</span> <span class="o">:</span> <span class="mi">2</span> <span class="bp">≤</span> <span class="n">b</span><span class="o">)</span> <span class="o">(</span><span class="n">m</span> <span class="o">:</span> <span class="bp">ℕ</span><span class="o">)</span> <span class="o">(</span><span class="n">hm</span> <span class="o">:</span> <span class="mi">0</span> <span class="bp">&lt;</span> <span class="n">m</span><span class="o">)</span> <span class="o">(</span><span class="n">p</span> <span class="n">q</span><span class="o">)</span> <span class="o">:</span>
+  <span class="o">(</span><span class="n">digits</span> <span class="n">b</span> <span class="n">m</span><span class="o">)</span><span class="bp">.</span><span class="n">last</span> <span class="n">p</span> <span class="bp">=</span> <span class="o">(</span><span class="n">digits</span> <span class="n">b</span> <span class="o">(</span><span class="n">m</span><span class="bp">/</span><span class="n">b</span><span class="o">))</span><span class="bp">.</span><span class="n">last</span> <span class="n">q</span> <span class="o">:=</span>
+<span class="k">begin</span>
+  <span class="n">rw</span> <span class="n">foo</span> <span class="o">(</span><span class="n">bar</span> <span class="n">b</span> <span class="n">m</span> <span class="n">h</span> <span class="n">hm</span><span class="o">),</span>
+<span class="kn">end</span>
+</code></pre></div>
+
+
+
+<a name="204751741"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/motive%20is%20not%20type%20correct/near/204751741" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Shing Tak Lam <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/motive.20is.20not.20type.20correct.html#204751741">(Jul 23 2020 at 01:12)</a>:</h4>
+<p>It does help, but then I feel like I'm going to need strong induction for this at some point, since I would need a statement about <code>digits b (m/b)</code>. Trying <code>nat.strong_induction_on m</code> doesn't work, presumably for the same reason.  So I'm not sure what approach to take here.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">lemma</span> <span class="n">last_digit_ne_zero</span> <span class="o">(</span><span class="n">b</span> <span class="n">m</span> <span class="o">:</span> <span class="bp">ℕ</span><span class="o">)</span> <span class="o">(</span><span class="n">hm</span> <span class="o">:</span> <span class="n">m</span> <span class="bp">≠</span> <span class="mi">0</span><span class="o">)</span> <span class="o">(</span><span class="n">p</span><span class="o">):</span>
+  <span class="o">(</span><span class="n">digits</span> <span class="n">b</span> <span class="n">m</span><span class="o">)</span><span class="bp">.</span><span class="n">last</span> <span class="n">p</span> <span class="bp">≠</span> <span class="mi">0</span> <span class="o">:=</span>
+<span class="k">begin</span>
+  <span class="n">rcases</span> <span class="n">b</span> <span class="k">with</span> <span class="bp">_|_|</span><span class="n">b</span><span class="o">,</span>
+  <span class="o">{</span> <span class="n">sorry</span> <span class="c">/-</span><span class="cm"> This one is trivial, proof omitted -/</span> <span class="o">},</span>
+  <span class="o">{</span> <span class="n">sorry</span> <span class="c">/-</span><span class="cm"> This one can be done by existing lemmas, proof omitted -/</span> <span class="o">},</span>
+  <span class="o">{</span> <span class="n">apply</span> <span class="n">nat</span><span class="bp">.</span><span class="n">strong_induction_on</span> <span class="n">m</span><span class="o">,</span> <span class="c1">-- error about failed unification,kind of expected</span>
+   <span class="o">}</span>
+<span class="kn">end</span>
+</code></pre></div>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

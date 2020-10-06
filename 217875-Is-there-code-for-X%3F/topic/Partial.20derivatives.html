@@ -1,0 +1,74 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/217875-Is-there-code-for-X%3F/topic/Partial.20derivatives.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/index.html">Is there code for X?</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/Partial.20derivatives.html">Partial derivatives</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="207714038"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/Partial%20derivatives/near/207714038" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Nicolò Cavalleri <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/Partial.20derivatives.html#207714038">(Aug 22 2020 at 08:20)</a>:</h4>
+<p>What is the current state in mathlib of partial derivatives? Is anybody working on them / has suggestions on how to implement them?</p>
+
+
+
+<a name="207731762"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/Partial%20derivatives/near/207731762" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Yury G. Kudryashov <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/Partial.20derivatives.html#207731762">(Aug 22 2020 at 16:35)</a>:</h4>
+<p>What definition do you have in mind?</p>
+
+
+
+<a name="207734818"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/Partial%20derivatives/near/207734818" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Nicolò Cavalleri <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/Partial.20derivatives.html#207734818">(Aug 22 2020 at 17:52)</a>:</h4>
+<p>Well I'd want something that works on the charts of a manifold so my ideal definition would be for field valued function on a generic normed vector space and to define it as the total derivative in one variable of the function precomposed with a projection on a vector of a standard basis (a priori not necessarily orthonormal I'd say) but I'm open to any suggestion/generalization as I have no idea really</p>
+
+
+
+<a name="207734825"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/Partial%20derivatives/near/207734825" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Nicolò Cavalleri <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/Partial.20derivatives.html#207734825">(Aug 22 2020 at 17:53)</a>:</h4>
+<p>I did not really think if this is indeed a sensible idea</p>
+
+
+
+<a name="207739010"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/Partial%20derivatives/near/207739010" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Yury G. Kudryashov <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/Partial.20derivatives.html#207739010">(Aug 22 2020 at 19:36)</a>:</h4>
+<p>You can start with <code>def vec_deriv f x v := deriv (λ t, f (x + t • v)) 0</code>. Now that <code>vec_deriv f x v = deriv f x v</code> whenever <code>f</code> is differentiable at <code>x</code>.</p>
+
+
+
+<a name="207739077"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/Partial%20derivatives/near/207739077" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Yury G. Kudryashov <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/Partial.20derivatives.html#207739077">(Aug 22 2020 at 19:38)</a>:</h4>
+<p>If you do not care about partial derivatives of functions that are not differentiable, then <code>deriv f x</code> should work.</p>
+
+
+
+<a name="207739099"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/Partial%20derivatives/near/207739099" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Yury G. Kudryashov <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/Partial.20derivatives.html#207739099">(Aug 22 2020 at 19:39)</a>:</h4>
+<p>You can write this linear map in some basis but this is about linear algebra, not calculus</p>
+
+
+
+<a name="207764957"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/Partial%20derivatives/near/207764957" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Nicolò Cavalleri <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/Partial.20derivatives.html#207764957">(Aug 23 2020 at 09:47)</a>:</h4>
+<p>Ok I would also need to talk about derivatives of function defined on, say, a subset of the field only (I mean its coercion to subtype). I do not understand how to do this in mathlib as <code>deriv_within</code> assumes all the same the function to be defined on the whole field. Do you know how to do this?</p>
+
+
+
+<a name="207787243"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/217875-Is%20there%20code%20for%20X%3F/topic/Partial%20derivatives/near/207787243" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Yury G. Kudryashov <a href="https://leanprover-community.github.io/archive/stream/217875-Is-there-code-for-X%3F/topic/Partial.20derivatives.html#207787243">(Aug 23 2020 at 19:18)</a>:</h4>
+<p>The library is designed with total functions in mind. Can you just extend your function using garbage values outside of a set?</p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

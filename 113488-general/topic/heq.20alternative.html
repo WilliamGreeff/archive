@@ -1,0 +1,158 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/113488-general/topic/heq.20alternative.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/113488-general/index.html">general</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html">heq alternative</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="210378589"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/heq%20alternative/near/210378589" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html#210378589">(Sep 17 2020 at 11:59)</a>:</h4>
+<p>I found the following technique useful recently and thought it might be interesting to others.<br>
+Sometimes in a dependently-typed situation we have two expressions which are morally equal but we cannot directly state their equality because the types of the two sides are only propositionally equal. For my example I'll take associativity of <code>append</code> on <code>vector</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">variables</span> <span class="o">{</span><span class="n">α</span> <span class="o">:</span> <span class="kt">Type</span><span class="o">}</span> <span class="o">{</span><span class="n">i</span> <span class="n">j</span> <span class="n">k</span> <span class="o">:</span> <span class="bp">ℕ</span><span class="o">}</span> <span class="o">(</span><span class="n">x</span> <span class="o">:</span> <span class="n">vector</span> <span class="n">α</span> <span class="n">i</span><span class="o">)</span> <span class="o">(</span><span class="n">y</span> <span class="o">:</span> <span class="n">vector</span> <span class="n">α</span> <span class="n">j</span><span class="o">)</span> <span class="o">(</span><span class="n">z</span> <span class="o">:</span> <span class="n">vector</span> <span class="n">α</span> <span class="n">k</span><span class="o">)</span>
+
+<span class="c1">-- doesn&#39;t typecheck</span>
+<span class="c1">-- lemma bad_append : (x.append y).append z = x.append (y.append z) := ...</span>
+<span class="c">/-</span><span class="cm"></span>
+<span class="cm">error: type mismatch at application</span>
+<span class="cm">  (x.append y).append z = x.append (y.append z)</span>
+<span class="cm">term</span>
+<span class="cm">  x.append (y.append z)</span>
+<span class="cm">has type</span>
+<span class="cm">  vector α (i + (j + k))</span>
+<span class="cm">but is expected to have type</span>
+<span class="cm">  vector α (i + j + k)</span>
+<span class="cm">-/</span>
+</code></pre></div>
+
+
+
+<a name="210378730"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/heq%20alternative/near/210378730" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html#210378730">(Sep 17 2020 at 12:00)</a>:</h4>
+<p>There are a couple of ways to deal with this, including using heterogeneous equality or inserting a cast of some kind. Here is another one.  Often in the situation where you'd like to apply this equality, the term <code>(x.append y).append z</code> appears in a context that could accept a vector of any length. Then, you can apply a lemma of the following form:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="n">data</span><span class="bp">.</span><span class="n">subtype</span>
+<span class="kn">import</span> <span class="n">data</span><span class="bp">.</span><span class="n">vector</span>
+<span class="kn">import</span> <span class="n">tactic</span><span class="bp">.</span><span class="n">basic</span>
+
+<span class="kn">variables</span> <span class="o">{</span><span class="n">α</span> <span class="o">:</span> <span class="kt">Type</span><span class="o">}</span> <span class="o">{</span><span class="n">i</span> <span class="n">j</span> <span class="n">k</span> <span class="o">:</span> <span class="bp">ℕ</span><span class="o">}</span> <span class="o">(</span><span class="n">x</span> <span class="o">:</span> <span class="n">vector</span> <span class="n">α</span> <span class="n">i</span><span class="o">)</span> <span class="o">(</span><span class="n">y</span> <span class="o">:</span> <span class="n">vector</span> <span class="n">α</span> <span class="n">j</span><span class="o">)</span> <span class="o">(</span><span class="n">z</span> <span class="o">:</span> <span class="n">vector</span> <span class="n">α</span> <span class="n">k</span><span class="o">)</span>
+
+<span class="kn">lemma</span> <span class="n">good_append</span> <span class="o">{</span><span class="n">ι</span> <span class="o">:</span> <span class="n">Sort</span><span class="bp">*</span><span class="o">}</span> <span class="o">{</span><span class="n">C</span> <span class="o">:</span> <span class="bp">Π</span> <span class="o">{</span><span class="n">n</span> <span class="o">:</span> <span class="bp">ℕ</span><span class="o">},</span> <span class="n">vector</span> <span class="n">α</span> <span class="n">n</span> <span class="bp">→</span> <span class="n">ι</span><span class="o">}</span> <span class="o">:</span>
+  <span class="n">C</span> <span class="o">((</span><span class="n">x</span><span class="bp">.</span><span class="n">append</span> <span class="n">y</span><span class="o">)</span><span class="bp">.</span><span class="n">append</span> <span class="n">z</span><span class="o">)</span> <span class="bp">=</span> <span class="n">C</span> <span class="o">(</span><span class="n">x</span><span class="bp">.</span><span class="n">append</span> <span class="o">(</span><span class="n">y</span><span class="bp">.</span><span class="n">append</span> <span class="n">z</span><span class="o">))</span> <span class="o">:=</span>
+<span class="k">begin</span>
+  <span class="k">have</span> <span class="n">A</span> <span class="o">:</span> <span class="o">(</span><span class="n">i</span> <span class="bp">+</span> <span class="n">j</span><span class="o">)</span> <span class="bp">+</span> <span class="n">k</span> <span class="bp">=</span> <span class="n">i</span> <span class="bp">+</span> <span class="o">(</span><span class="n">j</span> <span class="bp">+</span> <span class="n">k</span><span class="o">)</span> <span class="o">:=</span> <span class="n">nat</span><span class="bp">.</span><span class="n">add_assoc</span> <span class="n">i</span> <span class="n">j</span> <span class="n">k</span><span class="o">,</span>
+  <span class="n">congr&#39;</span> <span class="mi">1</span><span class="o">,</span> <span class="o">{</span> <span class="n">exact</span> <span class="n">A</span> <span class="o">},</span>
+  <span class="k">have</span> <span class="o">:</span> <span class="bp">∀</span> <span class="o">{</span><span class="n">n</span> <span class="n">m</span> <span class="o">:</span> <span class="bp">ℕ</span><span class="o">}</span> <span class="o">(</span><span class="n">h</span> <span class="o">:</span> <span class="n">n</span> <span class="bp">=</span> <span class="n">m</span><span class="o">)</span> <span class="o">(</span><span class="n">v</span> <span class="o">:</span> <span class="n">vector</span> <span class="n">α</span> <span class="n">n</span><span class="o">)</span> <span class="o">(</span><span class="n">w</span> <span class="o">:</span> <span class="n">vector</span> <span class="n">α</span> <span class="n">m</span><span class="o">),</span>
+    <span class="n">v</span> <span class="bp">==</span> <span class="n">w</span> <span class="bp">↔</span> <span class="n">v</span><span class="bp">.</span><span class="n">to_list</span> <span class="bp">=</span> <span class="n">w</span><span class="bp">.</span><span class="n">to_list</span><span class="o">,</span>
+  <span class="o">{</span> <span class="n">rintros</span> <span class="bp">_</span> <span class="bp">_</span> <span class="n">rfl</span> <span class="n">v</span> <span class="n">w</span><span class="o">,</span>
+    <span class="n">rw</span> <span class="n">heq_iff_eq</span><span class="o">,</span>
+    <span class="n">exact</span> <span class="n">subtype</span><span class="bp">.</span><span class="n">ext_iff</span> <span class="o">},</span>
+  <span class="n">rw</span> <span class="n">this</span> <span class="n">A</span><span class="o">,</span>
+  <span class="n">simp</span> <span class="n">only</span> <span class="o">[</span><span class="n">vector</span><span class="bp">.</span><span class="n">to_list_append</span><span class="o">],</span>
+  <span class="n">apply</span> <span class="n">list</span><span class="bp">.</span><span class="n">append_assoc</span>
+<span class="kn">end</span>
+</code></pre></div>
+
+
+
+<a name="210378971"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/heq%20alternative/near/210378971" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html#210378971">(Sep 17 2020 at 12:03)</a>:</h4>
+<p>For example <code>C</code> might be something like <code>is_palindrome : Π {n : ℕ}, vector α n → Prop</code>. Or in other situations, <code>C</code> might be some general property like continuity. Then you can rewrite under <code>C</code> using something like <code>refine (good_append x y z).mpr _</code>. (<code>rw</code> gets confused by the form of the lemma, and couldn't know where to rewrite.)</p>
+
+
+
+<a name="210379436"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/heq%20alternative/near/210379436" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html#210379436">(Sep 17 2020 at 12:07)</a>:</h4>
+<p>Could we have some sort of <code>hrw</code> (heterogenous rw) that could make using any of these tricks easier?</p>
+
+
+
+<a name="210387197"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/heq%20alternative/near/210387197" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html#210387197">(Sep 17 2020 at 13:14)</a>:</h4>
+<p>Is that <code>heq</code> <code>have</code> thing just missing API? I avoid heq like the plague.</p>
+
+
+
+<a name="210387637"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/heq%20alternative/near/210387637" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html#210387637">(Sep 17 2020 at 13:17)</a>:</h4>
+<p>I think this is equivalent to the statement that if you tuple a vector with its length you get something you can state an equality about</p>
+
+
+
+<a name="210387730"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/heq%20alternative/near/210387730" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html#210387730">(Sep 17 2020 at 13:18)</a>:</h4>
+<p>Is there a similar trick that can be done where <code>\iota</code> is a family of types that depends on a vector? It seems that <code>heq</code> would still cause issues in that case.</p>
+
+
+
+<a name="210387872"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/heq%20alternative/near/210387872" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html#210387872">(Sep 17 2020 at 13:19)</a>:</h4>
+<p>that is, <code>⟨(i + j) + k, (x.append y).append z⟩ = ⟨i + (j + k), x.append (y.append z)⟩</code> is an equality in <code>Σ n, vector A n</code></p>
+
+
+
+<a name="210387902"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/heq%20alternative/near/210387902" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html#210387902">(Sep 17 2020 at 13:19)</a>:</h4>
+<p>whch is of course true because that's equivalent to <code>list.append_assoc</code></p>
+
+
+
+<a name="210387994"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/heq%20alternative/near/210387994" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html#210387994">(Sep 17 2020 at 13:20)</a>:</h4>
+<p>Well... it's a combination of <code>list.append</code> and <code>add_assoc</code> right?</p>
+
+
+
+<a name="210388086"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/heq%20alternative/near/210388086" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html#210388086">(Sep 17 2020 at 13:21)</a>:</h4>
+<p>I mean that <code>Σ n, vector A n</code> is isomorphic to <code>list A</code>, and the two sides of that are mapped by the isomorphism to <code>(x ++ y) ++ z</code> and <code>x ++ (y ++ z)</code></p>
+
+
+
+<a name="210388107"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/heq%20alternative/near/210388107" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html#210388107">(Sep 17 2020 at 13:21)</a>:</h4>
+<p>Oh I see.</p>
+
+
+
+<a name="210388943"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/heq%20alternative/near/210388943" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html#210388943">(Sep 17 2020 at 13:27)</a>:</h4>
+<p>Right, and one way to look at it is that <code>sigma.mk</code> is the universal possible choice for <code>C</code>--but when you want to apply this lemma you probably don't have a <code>sigma.mk</code> in the term waiting to be rewritten, so it's more convenient to use in the form with <code>C</code>.</p>
+
+
+
+<a name="210389245"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/heq%20alternative/near/210389245" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html#210389245">(Sep 17 2020 at 13:29)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="243562">Adam Topaz</span> <a href="#narrow/stream/113488-general/topic/heq.20alternative/near/210387730">said</a>:</p>
+<blockquote>
+<p>Is there a similar trick that can be done where <code>\iota</code> is a family of types that depends on a vector? It seems that <code>heq</code> would still cause issues in that case.</p>
+</blockquote>
+<p>Yeah, I actually tried to do this when I wrote down the type of the lemma for the first time, and then Lean told me it wouldn't work--the purpose of <code>C</code> is to hide the problematic type index, so it can't appear in the result type of <code>C</code>.</p>
+
+
+
+<a name="210389992"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/heq%20alternative/near/210389992" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html#210389992">(Sep 17 2020 at 13:34)</a>:</h4>
+<p>In my case the type doesn't change (as some might guess my real <code>C</code> is the property of a subset of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>R</mi><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">R^n</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span> being definable in some structure, which is a <code>Prop</code>), so I didn't think about what one could do if it does change.</p>
+
+
+
+<a name="210452306"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/heq%20alternative/near/210452306" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Floris van Doorn <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/heq.20alternative.html#210452306">(Sep 17 2020 at 21:14)</a>:</h4>
+<p>Nice trick! <br>
+I still feel like the lemma should be with <code>heq</code>, and that there should be tooling to make it easy to go from the <code>heq</code> statement to the lemma <code>good_append</code>.</p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>We've had a lot of messages recently about people wanting to point their mathlib dep at a certain branch or commit. The directions have sometimes been: descend into the mathlib dep repo, git checkout the commit, make sure the toml points to that commit, leanproject get-m, possibly other steps. Should there be a <code>leanproject get-m-at ...</code> that can take a branch name, PR #, or commit hash? It would also fetch the built oleans. I'm starting to take a look at the git python library to see how leanproject currently does HEAD fetching.</p>",
+        "id": 208729247,
+        "sender_full_name": "Yakov Pechersky",
+        "timestamp": 1598985593
+    },
+    {
+        "content": "<p>I have a related request: in the <code>mathlib</code> directory, I often want to do <code>leanproject get-cache</code> at a certain commit. My current workflow is the following, but I would also like something like <code>leanproject get-cache origin/foo</code> or something. (This typically happens when I have a few commits on top of a branch <code>origin/foo</code>.)</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">git</span> <span class=\"n\">checkout</span> <span class=\"n\">origin</span><span class=\"bp\">/</span><span class=\"n\">foo</span>\n<span class=\"n\">leanproject</span> <span class=\"n\">get</span><span class=\"bp\">-</span><span class=\"n\">cache</span>\n<span class=\"n\">git</span> <span class=\"n\">checkout</span> <span class=\"bp\">&lt;</span><span class=\"n\">previous</span><span class=\"bp\">-</span><span class=\"n\">branch</span><span class=\"bp\">&gt;</span>\n</code></pre></div>",
+        "id": 208733252,
+        "sender_full_name": "Floris van Doorn",
+        "timestamp": 1598987261
+    },
+    {
+        "content": "<p>It would be great if <code>get-cache</code> could default to <code>HEAD</code> and try any of the last 10 commits.</p>",
+        "id": 208734170,
+        "sender_full_name": "Gabriel Ebner",
+        "timestamp": 1598987647
+    },
+    {
+        "content": "<p>Please open issues (or PRs!). I'll try to find some leanproject time soonish.</p>",
+        "id": 208736941,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1598989052
+    },
+    {
+        "content": "<p><a href=\"https://github.com/leanprover-community/mathlib-tools/issues/77\">https://github.com/leanprover-community/mathlib-tools/issues/77</a></p>",
+        "id": 208737975,
+        "sender_full_name": "Yakov Pechersky",
+        "timestamp": 1598989586
+    },
+    {
+        "content": "<p>I've been trying to understand how <code>get-mathlib-cache</code> works currently, there's some implicit reliance on <code>HEAD</code> that I've been trying to understand how to modify. No PR yet, unfortunately.</p>",
+        "id": 208738097,
+        "sender_full_name": "Yakov Pechersky",
+        "timestamp": 1598989649
+    }
+]

@@ -1,0 +1,90 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/113489-new-members/topic/inner.20product.20on.20subspaces.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/index.html">new members</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/inner.20product.20on.20subspaces.html">inner product on subspaces</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="212401459"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/inner%20product%20on%20subspaces/near/212401459" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Busiso Chisala <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/inner.20product.20on.20subspaces.html#212401459">(Oct 06 2020 at 09:05)</a>:</h4>
+<p>I want to have 'inheritance' of the real inner product structure of my E , but run into a problem I cant figure out. Here is my context and the code for defining the inner product from .core:</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="kn">import</span> <span class="n">algebra.module</span>
+<span class="kn">import</span> <span class="n">linear_algebra.basic</span>
+<span class="kn">import</span> <span class="n">analysis.normed_space.real_inner_product</span>
+<span class="c1">-- import data.complex.is_R_or_C</span>
+<span class="kn">import</span> <span class="n">tactic</span>
+
+
+<span class="kd">noncomputable theory</span>
+
+<span class="n">open_locale</span> <span class="n">big_operators</span> <span class="n">classical</span>
+
+<span class="kd">variables</span> <span class="o">{</span><span class="n">ι</span>  <span class="n">E</span> <span class="o">:</span> <span class="kt">Type</span><span class="bp">*</span><span class="o">}</span> <span class="o">[</span><span class="n">inner_product_space</span> <span class="n">E</span><span class="o">]</span>
+
+
+<span class="kd">variable</span> <span class="o">(</span><span class="n">K</span><span class="o">:</span> <span class="n">submodule</span> <span class="n">ℝ</span> <span class="n">E</span><span class="o">)</span>
+
+<span class="kd">instance</span> <span class="o">:</span> <span class="n">inner_product_space</span> <span class="n">K</span> <span class="o">:=</span>
+<span class="n">inner_product_space.of_core</span>
+<span class="o">{</span>
+  <span class="n">inner</span> <span class="o">:=</span> <span class="bp">λ</span> <span class="n">v</span> <span class="n">w</span><span class="o">,</span> <span class="bp">⟪</span><span class="o">(</span><span class="n">v</span><span class="o">:</span><span class="n">E</span><span class="o">)</span> <span class="o">,(</span><span class="n">w</span><span class="o">:</span><span class="n">E</span><span class="o">)</span> <span class="bp">⟫</span><span class="o">,</span>
+  <span class="n">comm</span> <span class="o">:=</span> <span class="bp">λ</span> <span class="n">_</span> <span class="n">_</span><span class="o">,</span> <span class="n">inner_comm</span> <span class="n">_</span> <span class="n">_</span> <span class="o">,</span>
+  <span class="n">nonneg</span> <span class="o">:=</span> <span class="bp">λ</span> <span class="n">x</span><span class="o">,</span> <span class="n">inner_self_nonneg</span><span class="o">,</span>
+  <span class="n">definite</span> <span class="o">:=</span> <span class="kd">by</span> <span class="o">{</span><span class="n">intros</span> <span class="n">x</span> <span class="n">h</span><span class="o">,</span> <span class="k">have</span> <span class="o">:=</span> <span class="n">inner_self_eq_zero.mp</span> <span class="n">h</span><span class="o">,</span> <span class="n">simp</span> <span class="n">at</span> <span class="n">this</span><span class="o">,</span> <span class="n">exact</span> <span class="n">this</span><span class="o">,},</span>
+  <span class="n">add_left</span> <span class="o">:=</span> <span class="bp">λ</span> <span class="n">_</span> <span class="n">_</span> <span class="n">_</span><span class="o">,</span><span class="n">inner_add_left</span><span class="o">,</span>
+  <span class="n">smul_left</span> <span class="o">:=</span> <span class="bp">λ</span> <span class="n">_</span> <span class="n">_</span> <span class="n">_</span> <span class="o">,</span> <span class="n">inner_smul_left</span><span class="o">,</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>I get the following error message in vscode, with the <code>:</code> after <code>instance</code> highlilghted as the offender:</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="n">failed</span> <span class="n">to</span> <span class="n">synthesize</span> <span class="kd">instance</span> <span class="n">name</span><span class="o">,</span> <span class="n">name</span> <span class="n">should</span> <span class="n">be</span> <span class="n">provided</span> <span class="n">explicitly</span>
+</code></pre></div>
+
+<p>Is there an alternative, more straightforward way to have submodules recognized as inner product spaces?</p>
+
+
+
+<a name="212401833"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/inner%20product%20on%20subspaces/near/212401833" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kyle Miller <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/inner.20product.20on.20subspaces.html#212401833">(Oct 06 2020 at 09:09)</a>:</h4>
+<p>According to that error message, all you have to do is provide an explicit name, like<br>
+<code>instance submodule_inner_product_space : inner_product_space K := ...</code></p>
+
+
+
+<a name="212401975"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/inner%20product%20on%20subspaces/near/212401975" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kyle Miller <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/inner.20product.20on.20subspaces.html#212401975">(Oct 06 2020 at 09:11)</a>:</h4>
+<p><code>instance</code> is like a <code>def</code> that doesn't always need a name and that lets the typeclass resolution system know this definition exists.</p>
+
+
+
+<a name="212402794"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/inner%20product%20on%20subspaces/near/212402794" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Busiso Chisala <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/inner.20product.20on.20subspaces.html#212402794">(Oct 06 2020 at 09:20)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="306601">Kyle Miller</span> <a href="#narrow/stream/113489-new-members/topic/inner.20product.20on.20subspaces/near/212401833">said</a>:</p>
+<blockquote>
+<p>According to that error message, all you have to do is provide an explicit name, like<br>
+<code>instance submodule_inner_product_space : inner_product_space K := ...</code></p>
+</blockquote>
+<p>Thanks. I also realized that if enclosed in a namespace, it goes away!</p>
+<p>But is this the way to ensure that in a lemma, every submodule used  has the inherited inner product? what invocation is required?</p>
+
+
+
+<a name="212406186"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/inner%20product%20on%20subspaces/near/212406186" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Eric Wieser <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/inner.20product.20on.20subspaces.html#212406186">(Oct 06 2020 at 09:58)</a>:</h4>
+<p>It looks to me like the code you have already does that</p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

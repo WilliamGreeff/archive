@@ -1,0 +1,138 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/index.html">Program verification</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html">RISC-V ISA in Lean</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="212017762"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212017762" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> SnowFox <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212017762">(Oct 02 2020 at 06:38)</a>:</h4>
+<p>(Migrating from 'Is there code for X?" "bidirectional maps?" = <a href="#narrow/stream/217875-Is-there.20code.20for.20X.3F/topic/bidirectional.20maps.3F/near/212013731">https://leanprover.zulipchat.com/#narrow/stream/217875-Is-there.20code.20for.20X.3F/topic/bidirectional.20maps.3F/near/212013731</a>) <span class="user-mention" data-user-id="110049">@Mario Carneiro</span></p>
+
+
+
+<a name="212039897"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212039897" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> SnowFox <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212039897">(Oct 02 2020 at 07:18)</a>:</h4>
+<p><span class="user-mention" data-user-id="110049">@Mario Carneiro</span> Can you explain why you're using inductive Props in your x86.lean?</p>
+
+
+
+<a name="212039906"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212039906" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212039906">(Oct 02 2020 at 07:18)</a>:</h4>
+<p>because it's a spec</p>
+
+
+
+<a name="212039918"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212039918" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212039918">(Oct 02 2020 at 07:18)</a>:</h4>
+<p>it's not intended to be directly executable</p>
+
+
+
+<a name="212039930"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212039930" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212039930">(Oct 02 2020 at 07:18)</a>:</h4>
+<p>but the advantage is that you don't need separate encode/decode</p>
+
+
+
+<a name="212040466"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212040466" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> SnowFox <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212040466">(Oct 02 2020 at 07:26)</a>:</h4>
+<p>Hmm. Not something I can use then.</p>
+
+
+
+<a name="212040504"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212040504" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212040504">(Oct 02 2020 at 07:26)</a>:</h4>
+<p>No, I don't expect that aspect will translate</p>
+
+
+
+<a name="212040559"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212040559" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212040559">(Oct 02 2020 at 07:27)</a>:</h4>
+<p>I wrote a proof producing disassembler for x86/ARM before which is closer to what you need, but it is at least for now closed source</p>
+
+
+
+<a name="212040724"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212040724" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> SnowFox <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212040724">(Oct 02 2020 at 07:29)</a>:</h4>
+<p>Okay.</p>
+
+
+
+<a name="212040886"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212040886" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> SnowFox <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212040886">(Oct 02 2020 at 07:31)</a>:</h4>
+<p>I've heard good things about metaprogramming in Lean but ... the documentation doesn't demonstrate how. Do you have any reference I can use for implementing <code>make_defs</code>? <a href="https://leanprover.github.io/reference/metaprogramming.html">https://leanprover.github.io/reference/metaprogramming.html</a></p>
+
+
+
+<a name="212041186"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212041186" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212041186">(Oct 02 2020 at 07:34)</a>:</h4>
+<p>for the most part it's just functional programming</p>
+
+
+
+<a name="212041200"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212041200" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212041200">(Oct 02 2020 at 07:34)</a>:</h4>
+<p>you have to interact with the lean API to make definitions</p>
+
+
+
+<a name="212041236"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212041236" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212041236">(Oct 02 2020 at 07:34)</a>:</h4>
+<p>and the API is admittedly not so well documented</p>
+
+
+
+<a name="212041265"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212041265" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212041265">(Oct 02 2020 at 07:35)</a>:</h4>
+<p>Rob Lewis made a metaprogramming tutorial that is pretty good</p>
+
+
+
+<a name="212041303"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212041303" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212041303">(Oct 02 2020 at 07:35)</a>:</h4>
+<p><a href="https://www.youtube.com/playlist?list=PLlF-CfQhukNnq2kDCw2P_vI5AfXN7egP2">https://www.youtube.com/playlist?list=PLlF-CfQhukNnq2kDCw2P_vI5AfXN7egP2</a></p>
+
+
+
+<a name="212041383"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212041383" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> SnowFox <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212041383">(Oct 02 2020 at 07:36)</a>:</h4>
+<p>Thanks. I'll watch the series.</p>
+
+
+
+<a name="212062203"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212062203" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Jannis Limperg <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212062203">(Oct 02 2020 at 11:31)</a>:</h4>
+<p>There's also the metaprogramming section of the <a href="https://raw.githubusercontent.com/blanchette/logical_verification_2020/master/hitchhikers_guide.pdf">Hitchhiker's guide</a> and, if I may be so bold, my <a href="https://limperg.de/posts/2020-08-19-lean-metaprogramming.html">blog post</a> on some gotchas of the API (but that'll only make sense once you have a bit of an overview). Beyond that, you'll have to read <code>init/meta/expr.lean</code> and <code>init/meta/tactic.lean</code>, which are reasonably documented.</p>
+
+
+
+<a name="212070231"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212070231" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> SnowFox <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212070231">(Oct 02 2020 at 12:57)</a>:</h4>
+<p>Okay. I've watched the short series linked above and bookmarked the blog post. I've adjusted the python scripts to generate at least a decent mostly-correct subset of RISC-V instruction to format with embedded constants list. <code>add_inductive</code> and <code>add_defn_equations</code> appear to be my next steps, which look straight forward. Afterwards, I may open an issue in the riscv-opcode repo proposing an alternative format and a new code generator to make certain things cleaner and better reflect the specification.</p>
+<p>Thanks for all the links everyone. I'll resume this tomorrow morning. :)</p>
+
+
+
+<a name="212077159"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/236449-Program%20verification/topic/RISC-V%20ISA%20in%20Lean/near/212077159" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> SnowFox <a href="https://leanprover-community.github.io/archive/stream/236449-Program-verification/topic/RISC-V.20ISA.20in.20Lean.html#212077159">(Oct 02 2020 at 13:52)</a>:</h4>
+<p>Okay, I couldn't resist but... ouch. <code>add_inductive</code>, as the documentation for its sibling <code>add_ginductive</code> suggests, doesn't generate the auxiliary definitions necessary for matching against it... I couldn't figure out how to use <code>add_ginductive</code> however. Could someone correct this code?</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="kd">meta</span> <span class="kd">def</span> <span class="n">make_defs</span> <span class="o">(</span><span class="n">l</span> <span class="o">:</span> <span class="n">list</span> <span class="o">(</span><span class="n">name</span> <span class="bp">×</span> <span class="n">type</span><span class="o">))</span> <span class="o">:</span> <span class="n">tactic</span> <span class="n">unit</span> <span class="o">:=</span>
+<span class="n">tactic.add_inductive</span> <span class="bp">`</span><span class="n">rvim</span> <span class="o">[]</span> <span class="mi">0</span> <span class="bp">`</span><span class="o">(</span><span class="kt">Type</span><span class="o">)</span> <span class="o">(</span><span class="n">l.map</span> <span class="o">(</span><span class="bp">λ</span> <span class="o">⟨</span><span class="n">n</span><span class="o">,</span> <span class="n">t</span><span class="o">⟩,</span> <span class="o">⟨</span><span class="n">n</span><span class="o">,</span> <span class="n">expr.const</span> <span class="bp">`</span><span class="n">rvim</span> <span class="o">[]⟩))</span>
+</code></pre></div>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

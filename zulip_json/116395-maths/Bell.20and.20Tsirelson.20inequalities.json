@@ -1,0 +1,50 @@
+[
+    {
+        "content": "<p>Do you think I should try to change it? At the moment it seems to me that it's just going to be cumbersome to restrict the ordering to the self-adjoint elements, and somehow we don't lose anything by just having a partial order on everything.</p>",
+        "id": 212151804,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1601697492
+    },
+    {
+        "content": "<p>Do you need an order on the complexes to talk about complex conjugation in this setting?</p>",
+        "id": 212160202,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1601713142
+    },
+    {
+        "content": "<p>Yes, you do. The order you want is just the one that makes each horizontal line in the complex plane incomparable with each other line. Would that be unpleasant/wrong to have as an instance? If so, that suggests we should investigate only asking for an order on the self adjoint elements.</p>",
+        "id": 212165626,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1601722123
+    },
+    {
+        "content": "<p>Are you really using the order on elements where the imaginary part is nonzero?</p>",
+        "id": 212366372,
+        "sender_full_name": "Frédéric Dupuis",
+        "timestamp": 1601938554
+    },
+    {
+        "content": "<p>If having this as an instance doesn't cause problems elsewhere, that might make a lot of things simpler, like stating inequalities involving complex numbers that we know are always real.</p>",
+        "id": 212366462,
+        "sender_full_name": "Frédéric Dupuis",
+        "timestamp": 1601938620
+    },
+    {
+        "content": "<p>No, I'm not using the order on non-self-adjoint elements at all.</p>",
+        "id": 212368334,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1601939997
+    },
+    {
+        "content": "<p>It's a question of whether it's worth the encumbrance of having to define the subtype of self-adjoint elements, and put an order just on that, and then describe how the star interacts with that order.</p>\n<p>Or to go with the current alternative, where it's much quicker to say how the order and the star structure should interact.</p>",
+        "id": 212368526,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1601940087
+    },
+    {
+        "content": "<p>I guess I better try out making <code>complex</code> a star-ordered ring, and see if anything complains.</p>",
+        "id": 212368587,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1601940122
+    }
+]

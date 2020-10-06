@@ -1,0 +1,56 @@
+[
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"238446\">Anne Baanen</span> <a href=\"#narrow/stream/113488-general/topic/.60add_comm_monoid.60.20vs.20.60add_comm_group.60.20in.20.60direct_sum.60/near/204476811\">said</a>:</p>\n<blockquote>\n<p>There should be no issues making arguments to functions more general, since any consumers must declare these arguments themselves (unless they share a <code>variables</code> statement with your definition.)</p>\n</blockquote>\n<p>This seems to fall apart once the requirements are pi-instances - see <a href=\"https://github.com/leanprover-community/mathlib/pull/3490/files\">this small PR</a> for an example</p>",
+        "id": 204532370,
+        "sender_full_name": "Eric Wieser",
+        "timestamp": 1595327679
+    },
+    {
+        "content": "<p>As far as I can tell, you can replace the first typeclass argument <code>(λ i, by apply_instance)</code> in your example with <code>infer_instance</code> in the third argument and it will still work.</p>",
+        "id": 204534326,
+        "sender_full_name": "Anne Baanen",
+        "timestamp": 1595329296
+    },
+    {
+        "content": "<p>The error comes from diamond inheritance in <code>comm_group -&gt; {comm_monoid, group} -&gt; monoid</code>, and the unifier is not smart enough to unify the <code>comm_monoid.to_monoid (comm_group.to_monoid ?)</code> that it expects with the instance <code>group.to_monoid (comm_group.to_group __inst_3)</code> that it has inferred.</p>",
+        "id": 204534564,
+        "sender_full_name": "Anne Baanen",
+        "timestamp": 1595329525
+    },
+    {
+        "content": "<p>Can priority be used to avoid needing the unifier?</p>",
+        "id": 204534665,
+        "sender_full_name": "Eric Wieser",
+        "timestamp": 1595329605
+    },
+    {
+        "content": "<p>Possibly. I'm not an expert in dealing with typeclass diamonds, though.</p>",
+        "id": 204534838,
+        "sender_full_name": "Anne Baanen",
+        "timestamp": 1595329780
+    },
+    {
+        "content": "<p>The priority was tweaked in the opposite direction in <a href=\"https://github.com/leanprover-community/mathlib/issues/2848\">#2848</a>:</p>\n<blockquote>\n<p>I have tweaked a few instance priorities to make sure that things don't go too bad: there are often additional steps in typeclass inference, going from <code>ring</code> to <code>semiring</code> and from <code>add_comm_group</code> to <code>add_comm_monoid</code>, so I have increased their priority (putting it strictly between 100 and 1000), and adjusted some other priorities to get more canonical instance paths, fixing some preexisting weirdnesses (notably in multilinear maps).</p>\n</blockquote>",
+        "id": 204535598,
+        "sender_full_name": "Anne Baanen",
+        "timestamp": 1595330371
+    },
+    {
+        "content": "<p>This is breaking my head. If we add a line to <code>direct_sum</code>:</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">local</span> <span class=\"n\">attribute</span> <span class=\"o\">[</span><span class=\"kn\">instance</span><span class=\"o\">,</span> <span class=\"n\">priority</span> <span class=\"mi\">1</span><span class=\"o\">]</span> <span class=\"n\">add_comm_group</span><span class=\"bp\">.</span><span class=\"n\">to_add_group</span>\n\n<span class=\"n\">def</span> <span class=\"n\">direct_sum</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"bp\">*</span> <span class=\"o\">:=</span> <span class=\"bp\">Π</span><span class=\"err\">₀</span> <span class=\"n\">i</span><span class=\"o\">,</span> <span class=\"n\">β</span> <span class=\"n\">i</span>\n</code></pre></div>\n\n\n<p>then the following works in <code>direct_sum_module</code>:</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"kn\">instance</span> <span class=\"o\">:</span> <span class=\"n\">semimodule</span> <span class=\"n\">R</span> <span class=\"o\">(</span><span class=\"n\">direct_sum</span> <span class=\"n\">ι</span> <span class=\"n\">M</span><span class=\"o\">)</span> <span class=\"o\">:=</span> <span class=\"bp\">@</span><span class=\"n\">dfinsupp</span><span class=\"bp\">.</span><span class=\"n\">to_semimodule</span> <span class=\"bp\">_</span> <span class=\"n\">M</span> <span class=\"bp\">_</span> <span class=\"bp\">_</span> <span class=\"bp\">_</span> <span class=\"bp\">_</span>\n</code></pre></div>\n\n\n<p>or:</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"kn\">instance</span> <span class=\"o\">:</span> <span class=\"n\">semimodule</span> <span class=\"n\">R</span> <span class=\"o\">(</span><span class=\"n\">direct_sum</span> <span class=\"n\">ι</span> <span class=\"n\">M</span><span class=\"o\">)</span> <span class=\"o\">:=</span> <span class=\"bp\">@</span><span class=\"n\">dfinsupp</span><span class=\"bp\">.</span><span class=\"n\">to_semimodule</span> <span class=\"bp\">_</span> <span class=\"bp\">_</span> <span class=\"bp\">_</span> <span class=\"bp\">_</span> <span class=\"n\">infer_instance</span> <span class=\"bp\">_</span>\n</code></pre></div>\n\n\n<p>But any other variations give a type error.</p>",
+        "id": 204536725,
+        "sender_full_name": "Anne Baanen",
+        "timestamp": 1595331295
+    },
+    {
+        "content": "<p>I don't have an understanding as to why, but relaxing a few more constraints seems to have set the linked PR on a possibly successful build... Guess I'll wait and see.</p>",
+        "id": 204544292,
+        "sender_full_name": "Eric Wieser",
+        "timestamp": 1595336598
+    },
+    {
+        "content": "<p>Yep, got it working <a href=\"https://github.com/leanprover-community/mathlib/issues/3490\">#3490</a> is now passing. There's some really ugly <code>_</code> introductions that had to happen to make it work.</p>",
+        "id": 204551224,
+        "sender_full_name": "Eric Wieser",
+        "timestamp": 1595340174
+    }
+]

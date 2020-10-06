@@ -1,0 +1,68 @@
+[
+    {
+        "content": "<p>(The linear algebra code makes me so sad...)</p>\n<p>I have <code>x ∈ submodule.span R S</code> for some <code>S : set M</code>, and <code>module R M</code>.</p>\n<p>How to I obtain a formula for <code>x</code> as a linear combination of finitely many elements of <code>S</code>? (Ideally in a way that it's then convenient to do induction on the size of that linear combination?)</p>",
+        "id": 209370529,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1599562281
+    },
+    {
+        "content": "<p>I feel like grepping for <code>linear combination</code> should reveal this, but ...</p>",
+        "id": 209370544,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1599562302
+    },
+    {
+        "content": "<p>The fact that the word \"combination\" doesn't even appear in <code>linear_algebra.basic</code> seems worrying.</p>",
+        "id": 209370609,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1599562348
+    },
+    {
+        "content": "<p>Isn't there something like <code>finsupp.total</code> or something like that?</p>",
+        "id": 209370615,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1599562354
+    },
+    {
+        "content": "<p>Does <a href=\"https://leanprover-community.github.io/mathlib_docs/find/submodule.span_induction\">docs#submodule.span_induction</a> help?</p>",
+        "id": 209370690,
+        "sender_full_name": "Markus Himmel",
+        "timestamp": 1599562435
+    },
+    {
+        "content": "<p>This is called <a href=\"https://leanprover-community.github.io/mathlib_docs/find/finsupp.mem_span_iff_total\">docs#finsupp.mem_span_iff_total</a></p>",
+        "id": 209370789,
+        "sender_full_name": "Anne Baanen",
+        "timestamp": 1599562499
+    },
+    {
+        "content": "<p><code>finsupp.total</code> does mention the words \"linear combination\" in its docstring, by the way :)</p>",
+        "id": 209370940,
+        "sender_full_name": "Anne Baanen",
+        "timestamp": 1599562641
+    },
+    {
+        "content": "<p>But even this has some business about an image of a set <code>v '' s</code>...</p>",
+        "id": 209371368,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1599563025
+    },
+    {
+        "content": "<p>I have to make my set look like that? :-(</p>",
+        "id": 209371468,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1599563068
+    },
+    {
+        "content": "<p>It seems <code>submodule.span_induction</code> will work smoothly for me.</p>",
+        "id": 209371620,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1599563179
+    },
+    {
+        "content": "<p>I got frustrated with something like this a little while ago for another project I was working on, and ended up proving this </p>\n<p><a href=\"https://github.com/adamtopaz/comb_geom/blob/e16b629d6de3fbdea54a528755e7305dfb51e902/src/linear_algebra/lincomb.lean#L145\">https://github.com/adamtopaz/comb_geom/blob/e16b629d6de3fbdea54a528755e7305dfb51e902/src/linear_algebra/lincomb.lean#L145</a></p>\n<p>I could try to clean it up and integrate it into mathlib with a small PR if people think it is actually useful.</p>",
+        "id": 209377320,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1599567138
+    }
+]

@@ -1,0 +1,500 @@
+[
+    {
+        "content": "<p>Hi! I installed Lean maybe a few months ago (via a nonstandard install in a few ways I wanted to modify) and then didn't touch it much, but am about to try again --  on macOS, it looks like the version that's in the Homebrew core repo is the 3.4.2 non-community version -- does anyone know if there's someone maintaining a tap for the community-maintained one that I can use? (If not I guess I'll try making one...)</p>",
+        "id": 204027245,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1594856633
+    },
+    {
+        "content": "<p>The recommended install on mac is via, <a href=\"https://leanprover-community.github.io/install/macos.html\">https://leanprover-community.github.io/install/macos.html</a> the homebrew tap is completely outdated if you want to use mathlib at this point, as the community version is on 3.17.1. Nobody is maintaining a tap, as we use the lean specific elan to manage lean versions rather than brew.</p>",
+        "id": 204027528,
+        "sender_full_name": "Alex J. Best",
+        "timestamp": 1594856833
+    },
+    {
+        "content": "<p>Got it, yeah I found that page, ok cool, will figure something out. Appreciated!</p>",
+        "id": 204029173,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1594857994
+    },
+    {
+        "content": "<p>We're planning, starting hopefully next week, to try to remove the 3.4.2 packages in <code>apt-get</code>, <code>homebrew</code>, etc. Ideally these packages would instead install elan+leanproject, and leave it to <code>elan</code> to obtain Lean versions.</p>",
+        "id": 204042575,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1594872128
+    },
+    {
+        "content": "<p>I guess we never did this (try to boot Lean 3.4.2 out of <code>apt-get</code>, <code>homebrew</code>, etc, replacing them instead with <code>elan</code>). Does anyone have experience with this who could take on at least one of these package managers?</p>",
+        "id": 207007689,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1597471548
+    },
+    {
+        "content": "<p>(even if we don't replace with <code>elan</code>, getting rid of them would be a step forward)</p>",
+        "id": 207007731,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1597471566
+    },
+    {
+        "content": "<p>Lean doesn't seem to be in the Ubuntu repository, so we should be okay in that respect?<br>\n<a href=\"https://packages.ubuntu.com/search?keywords=lean&amp;searchon=names&amp;suite=eoan&amp;section=all\">https://packages.ubuntu.com/search?keywords=lean&amp;searchon=names&amp;suite=eoan&amp;section=all</a></p>",
+        "id": 207008446,
+        "sender_full_name": "Chris Wong",
+        "timestamp": 1597473311
+    },
+    {
+        "content": "<p>There was a PPA but it's gone now<br>\n<a href=\"https://github.com/leanprover/ppa-updater\">https://github.com/leanprover/ppa-updater</a></p>",
+        "id": 207008449,
+        "sender_full_name": "Chris Wong",
+        "timestamp": 1597473352
+    },
+    {
+        "content": "<p>And the homebrew one is using the community version (3.18)<br>\n<a href=\"https://github.com/Homebrew/homebrew-core/blob/master/Formula/lean.rb\">https://github.com/Homebrew/homebrew-core/blob/master/Formula/lean.rb</a></p>",
+        "id": 207008495,
+        "sender_full_name": "Chris Wong",
+        "timestamp": 1597473446
+    },
+    {
+        "content": "<p>I would say that the homebrew one is not ideal. We'd like people to have <code>elan</code> manage their <code>lean</code> installation, providing whatever a  <code>leanpkg.toml</code>asks for.</p>",
+        "id": 207008682,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1597473871
+    },
+    {
+        "content": "<p>Probably should have came back to check on this thread for activity before putting the comment I just put on that ticket (which maybe I'll go delete), but yeah if it at all counts (which legitimately it shouldn't count for much given how new I am), I'd way rather <em>not</em> use elan for that personally, which is why I initially asked the question here.</p>",
+        "id": 207730499,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1598112548
+    },
+    {
+        "content": "<p>Out of curiosity, why do you prefer not to use elan?</p>",
+        "id": 207730598,
+        "sender_full_name": "Bryan Gin-ge Chen",
+        "timestamp": 1598112648
+    },
+    {
+        "content": "<p>(And again ignore me if need be :D) -- but in general I want my OS's package manager installing things, including compilers, and then use the language's package manager for installing language packages but not making arbitrary modifications to the system (this is what I do for Python, ruby, clojure, etc.)</p>",
+        "id": 207730611,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1598112658
+    },
+    {
+        "content": "<p>elan installs stuff to <code>~/.elan</code></p>",
+        "id": 207730630,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598112692
+    },
+    {
+        "content": "<p>OK cool! That's good to know -- (two other reasons as well then just to fully list them out)</p>",
+        "id": 207730721,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1598112815
+    },
+    {
+        "content": "<p>One is quite petty but I didn't want to carefully read <a href=\"http://elan-init.sh\">elan-init.sh</a> to see what it was doing</p>",
+        "id": 207730724,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1598112831
+    },
+    {
+        "content": "<p>If there was just a self-contained pre-built thing (as e.g. proposed on that ticket -- if elan was bottled as part of Homebrew) that'd make that go away</p>",
+        "id": 207730769,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1598112860
+    },
+    {
+        "content": "<p>What ticket are you talking about?</p>",
+        "id": 207730783,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598112907
+    },
+    {
+        "content": "<p>And the second one (also would be solved by having elan in homebrew) is that I manage all my OS packages via a Brewfile (so when I get a new machine, running <code>brew bundle install</code>) sets up a full development environment with all the packages I want</p>",
+        "id": 207730786,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1598112910
+    },
+    {
+        "content": "<p>Uh sorry, it's not actually linked above, my mistake. It's...</p>",
+        "id": 207730798,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1598112955
+    },
+    {
+        "content": "<p><a href=\"https://github.com/Homebrew/homebrew-core/pull/59612\">https://github.com/Homebrew/homebrew-core/pull/59612</a></p>",
+        "id": 207730842,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1598112966
+    },
+    {
+        "content": "<p>I'm not really familiar with the Mac OS software ecosystem, but packaging elan (and not lean) in brew makes sense to me.</p>",
+        "id": 207731050,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598113251
+    },
+    {
+        "content": "<p>And then he will complain he doesn't want to use <code>pip</code> (or any variation on <code>pip</code>)...</p>",
+        "id": 207731135,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1598113328
+    },
+    {
+        "content": "<p>Hopefully none of the above is complaining!</p>",
+        "id": 207731171,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1598113361
+    },
+    {
+        "content": "<p>But as I say I'm quite fine with having a package manager manage packages for the language (I'm a python developer, so I'm quite OK with pip, and I <em>don't</em> want homebrew managing python packages)</p>",
+        "id": 207731195,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1598113396
+    },
+    {
+        "content": "<p>I just don't want things modifying PATH in the background, or asking to run arbitrary shell code in a shell rc (I don't know if elan does the latter? Seemed like it might, e.g. pyenv and rbenv do)</p>",
+        "id": 207731249,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1598113452
+    },
+    {
+        "content": "<p>In any case, you simply have to use elan to keep up with mathlib, or else take everything into your own hands. Otherwise, you'll be stuck after a week or two.</p>",
+        "id": 207731298,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598113552
+    },
+    {
+        "content": "<p>Julian, I hope you don't find this unwelcoming. People tried hard to find something easy to install which is able to keep up with the crazy pace and full backward incompatibility. But we do have some docs for people who want to understand how things fit together and bundle it their way: <a href=\"https://leanprover-community.github.io/toolchain.html\">https://leanprover-community.github.io/toolchain.html</a></p>",
+        "id": 207731396,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1598113665
+    },
+    {
+        "content": "<p>This is the best we can currently do to accommodate as many habits as we can (for instance your desire to use brew for Lean but not for python is a rather uncommon combination, I don't think we ever met it before).</p>",
+        "id": 207731476,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1598113746
+    },
+    {
+        "content": "<p>I don't find it unwelcoming at all :) -- I know I'm in that bucket (of \"rolled my own\". And I've read that page). I would have kept quiet too :), I just mentioned it since I saw someone else was the same kind of crazy obviously (given someone else other than me submitted that PR)</p>",
+        "id": 207731479,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1598113752
+    },
+    {
+        "content": "<p>I do the same for Python as what I'm talking about</p>",
+        "id": 207731493,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1598113775
+    },
+    {
+        "content": "<p>Homebrew installs Python, from that point forward I use Python's package manager</p>",
+        "id": 207731496,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1598113786
+    },
+    {
+        "content": "<p>Python generally doesn't release new versions of <code>python</code> with breaking changes every 1-2 weeks, though.</p>",
+        "id": 207731547,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598113813
+    },
+    {
+        "content": "<p>Yeah, fair.</p>",
+        "id": 207731560,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1598113836
+    },
+    {
+        "content": "<p>I wonder if we should package <code>elan</code> on <code>brew</code>, <code>apt-get</code>, <code>chocolate</code>, what have you, and name it <code>lean</code>. It's really the standard and strongly encouraged way of using Lean</p>",
+        "id": 207731732,
+        "sender_full_name": "Simon Hudon",
+        "timestamp": 1598114052
+    },
+    {
+        "content": "<p>(/me -&gt; back to actually trying to learn lean instead of cause trouble. Hopefully again none of the above is complaining, and I'm happy to come back with egg on my face if/when my setup gets me stuck.)</p>",
+        "id": 207731851,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1598114232
+    },
+    {
+        "content": "<p>Don't worry and have fun!</p>",
+        "id": 207731869,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1598114253
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"110026\">Simon Hudon</span> <a href=\"#narrow/stream/113488-general/topic/Homebrew.20Tap/near/207731732\">said</a>:</p>\n<blockquote>\n<p>I wonder if we should package <code>elan</code> on <code>brew</code>, <code>apt-get</code>, <code>chocolate</code>, what have you, and name it <code>lean</code>. It's really the standard and strongly encouraged way of using Lean</p>\n</blockquote>\n<p>This sounds ideal.</p>",
+        "id": 207744336,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1598134599
+    },
+    {
+        "content": "<p>For homebrew, is there more to this than editing <a href=\"https://github.com/Homebrew/homebrew-core/blob/master/Formula/lean.rb#L27\">https://github.com/Homebrew/homebrew-core/blob/master/Formula/lean.rb#L27</a> to stick in the elan install script?</p>",
+        "id": 209067456,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1599208205
+    },
+    {
+        "content": "<p>I'm not sure I'm happy with packaging elan under the name <code>lean</code>. It would be very confusing if updating a package named <code>lean</code> did not, you know, update Lean. As long as \"Lean\" is mentioned in the package description, and there is no other \"lean\" package, should that not be sufficient?</p>",
+        "id": 209068176,
+        "sender_full_name": "Sebastian Ullrich",
+        "timestamp": 1599208789
+    },
+    {
+        "content": "<p>I'm not sure I follow -- are you proposing to delete the <code>lean</code> package I linked and add an <code>elan</code> package that mentions \"Lean\" in the description? That seems fine too. Anything that avoids people installing a fixed version of Lean is good.</p>",
+        "id": 209068599,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1599209080
+    },
+    {
+        "content": "<p>As long as that current package exists, people will type <code>brew install lean</code> or whatever without reading anything and get confused.</p>",
+        "id": 209068787,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1599209172
+    },
+    {
+        "content": "<p>Yes, I would prefer that</p>",
+        "id": 209068972,
+        "sender_full_name": "Sebastian Ullrich",
+        "timestamp": 1599209300
+    },
+    {
+        "content": "<p>I wonder if instead of immediately deleting the <code>lean</code> package whether it would be worth deprecating it with a message pointing people to run <code>brew install elan</code> instead. (Here's an example of a deprecated formula: <a href=\"https://github.com/Homebrew/homebrew-core/blob/master/Formula/acmetool.rb\">https://github.com/Homebrew/homebrew-core/blob/master/Formula/acmetool.rb</a>)</p>",
+        "id": 209073189,
+        "sender_full_name": "Alex Peattie",
+        "timestamp": 1599212398
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"248283\">Alex Peattie</span> <a href=\"#narrow/stream/113488-general/topic/Homebrew.20Tap/near/209073189\">said</a>:</p>\n<blockquote>\n<p>I wonder if instead of immediately deleting the <code>lean</code> package whether it would be worth deprecating it with a message pointing people to run <code>brew install elan</code> instead. (Here's an example of a deprecated formula: <a href=\"https://github.com/Homebrew/homebrew-core/blob/master/Formula/acmetool.rb\">https://github.com/Homebrew/homebrew-core/blob/master/Formula/acmetool.rb</a>)</p>\n</blockquote>\n<p>if it helps, according to <code>brew analytics</code>, the lean package has...:</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"bp\">==&gt;</span> <span class=\"n\">Analytics</span>\n<span class=\"n\">install</span><span class=\"o\">:</span> <span class=\"mi\">101</span> <span class=\"o\">(</span><span class=\"mi\">30</span> <span class=\"n\">days</span><span class=\"o\">),</span> <span class=\"mi\">132</span> <span class=\"o\">(</span><span class=\"mi\">90</span> <span class=\"n\">days</span><span class=\"o\">),</span> <span class=\"mi\">418</span> <span class=\"o\">(</span><span class=\"mi\">365</span> <span class=\"n\">days</span><span class=\"o\">)</span>\n<span class=\"n\">install</span><span class=\"bp\">-</span><span class=\"n\">on</span><span class=\"bp\">-</span><span class=\"n\">request</span><span class=\"o\">:</span> <span class=\"mi\">100</span> <span class=\"o\">(</span><span class=\"mi\">30</span> <span class=\"n\">days</span><span class=\"o\">),</span> <span class=\"mi\">131</span> <span class=\"o\">(</span><span class=\"mi\">90</span> <span class=\"n\">days</span><span class=\"o\">),</span> <span class=\"mi\">416</span> <span class=\"o\">(</span><span class=\"mi\">365</span> <span class=\"n\">days</span><span class=\"o\">)</span>\n<span class=\"n\">build</span><span class=\"bp\">-</span><span class=\"n\">error</span><span class=\"o\">:</span> <span class=\"mi\">0</span> <span class=\"o\">(</span><span class=\"mi\">30</span> <span class=\"n\">days</span><span class=\"o\">)</span>\n</code></pre></div>",
+        "id": 209087849,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1599222763
+    },
+    {
+        "content": "<p>(Or alternatively again as a random nobody, I personally wouldn't mind no deprecation and just switching over. Homebrew is generally pretty terrible about backwards compatibility, so as a user I'm used to cursing at it for breaking something.)</p>",
+        "id": 209088254,
+        "sender_full_name": "Julian Berman",
+        "timestamp": 1599223053
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"110024\">Sebastian Ullrich</span> <a href=\"#narrow/stream/113488-general/topic/Homebrew.20Tap/near/209068176\">said</a>:</p>\n<blockquote>\n<p>I'm not sure I'm happy with packaging elan under the name <code>lean</code>. It would be very confusing if updating a package named <code>lean</code> did not, you know, update Lean. As long as \"Lean\" is mentioned in the package description, and there is no other \"lean\" package, should that not be sufficient?</p>\n</blockquote>\n<p>The problem is that currently <code>brew install lean</code> gives you something useless, that doesn't work with modern mathlib, because it installs some fixed version of Lean which is inevitably outdated.</p>",
+        "id": 209166170,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1599291010
+    },
+    {
+        "content": "<p>If we made the \"tap\" for <code>lean</code> actually install <code>elan</code>, couldn't we arrange so that that actually updated lean (but via elan)?</p>",
+        "id": 209166177,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1599291059
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"110024\">@Sebastian Ullrich</span> is it easy for elan to be installed globally (in something like <code>/usr/bin</code>) and still do its magic inside each <code>$HOME/.lean</code>?</p>",
+        "id": 209168007,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1599294734
+    },
+    {
+        "content": "<p>And also, will <code>elan</code> be automatically able to handle Lean4 when the time will come?</p>",
+        "id": 209168011,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1599294768
+    },
+    {
+        "content": "<p>Yes, that should just work</p>",
+        "id": 209168012,
+        "sender_full_name": "Sebastian Ullrich",
+        "timestamp": 1599294768
+    },
+    {
+        "content": "<p>We're using <code>elan</code> for Lean 4 development right now</p>",
+        "id": 209168021,
+        "sender_full_name": "Sebastian Ullrich",
+        "timestamp": 1599294786
+    },
+    {
+        "content": "<p>Great, thanks!</p>",
+        "id": 209168026,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1599294821
+    },
+    {
+        "content": "<p>Is there an easy thing to type to e.g switch mathlib to lean 4 using elan?</p>",
+        "id": 209168070,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1599294863
+    },
+    {
+        "content": "<p>Yes, good old <code>elan --magic-port</code></p>",
+        "id": 209168075,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1599294901
+    },
+    {
+        "content": "<p>And mathlib is ported to Lean4!</p>",
+        "id": 209168083,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1599294914
+    },
+    {
+        "content": "<p>I mean is the install procedure more complicated than just changing the version number in mathlib</p>",
+        "id": 209168125,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1599294974
+    },
+    {
+        "content": "<p>obviously it won't work but I guess this would be step 0.0.1</p>",
+        "id": 209168133,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1599295008
+    },
+    {
+        "content": "<p>There is no GitHub release for elan to find automatically yet. We use local <code>elan toolchain link</code>s.</p>",
+        "id": 209168150,
+        "sender_full_name": "Sebastian Ullrich",
+        "timestamp": 1599295078
+    },
+    {
+        "content": "<p>Do you know why rust doesn't use, say <code>apt</code> or <code>brew</code> to install <code>rustup</code> globally and then let it do its magic in user space?</p>",
+        "id": 209168272,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1599295259
+    },
+    {
+        "content": "<p>My suspicion is \"packagers don't like that approach\"</p>",
+        "id": 209168406,
+        "sender_full_name": "Ruben Van de Velde",
+        "timestamp": 1599295472
+    },
+    {
+        "content": "<p>There is some discussion in <a href=\"https://github.com/rust-lang/rustup/issues/800\">https://github.com/rust-lang/rustup/issues/800</a>. Looks more like \"nobody volunteered to do it\".</p>",
+        "id": 209168418,
+        "sender_full_name": "Sebastian Ullrich",
+        "timestamp": 1599295521
+    },
+    {
+        "content": "<p>Indeed.</p>",
+        "id": 209168671,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1599295976
+    },
+    {
+        "content": "<p>Are there build instructions for elan somewhere?</p>",
+        "id": 209168737,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1599296046
+    },
+    {
+        "content": "<p>I'm pretty sure it's just <code>cargo build --release</code>, same as for any other Rust project</p>",
+        "id": 209169487,
+        "sender_full_name": "Sebastian Ullrich",
+        "timestamp": 1599297495
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"110031\">Patrick Massot</span> <a href=\"#narrow/stream/113488-general/topic/Homebrew.20Tap/near/209168272\">said</a>:</p>\n<blockquote>\n<p>Do you know why rust doesn't use, say <code>apt</code> or <code>brew</code> to install <code>rustup</code> globally and then let it do its magic in user space?</p>\n</blockquote>\n<p>NixOS has both <code>rustup</code> and <code>elan</code> packages.  ArchLinux has a <code>rustup</code> package.</p>",
+        "id": 209170492,
+        "sender_full_name": "Gabriel Ebner",
+        "timestamp": 1599299211
+    },
+    {
+        "content": "<p>In arch, at least, if I recall correctly, there is a <code>rustc</code> in <code>/usr/bin</code> which is symlinked to <code>rustup</code> in the same directory, which then figures everything out when you call rust.</p>",
+        "id": 209179446,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1599314553
+    },
+    {
+        "content": "<p>Yes, this is how <code>rustup</code> (and thus <code>elan</code>) works in general</p>",
+        "id": 209183460,
+        "sender_full_name": "Sebastian Ullrich",
+        "timestamp": 1599320169
+    },
+    {
+        "content": "<p>It looks like <code>rustup</code> is installable via Homebrew: <a href=\"https://github.com/Homebrew/homebrew-core/blob/master/Formula/rustup-init.rb\">https://github.com/Homebrew/homebrew-core/blob/master/Formula/rustup-init.rb</a></p>\n<p>I guess this could be lightly modified to make it work for <code>elan</code> <span aria-label=\"thinking\" class=\"emoji emoji-1f914\" role=\"img\" title=\"thinking\">:thinking:</span> ?</p>\n<p>Edit: Ah I see that it actually \"installs\" <code>rustup-init</code>, then the user has to run <code>rustup-init</code> to actually install <code>rustup</code>. So installing <code>elan</code> via Homebrew with this approach would mean doing:</p>\n<div class=\"codehilite\"><pre><span></span><code>brew install elan\nelan-init\n</code></pre></div>",
+        "id": 209189728,
+        "sender_full_name": "Alex Peattie",
+        "timestamp": 1599330214
+    },
+    {
+        "content": "<p>Wow, this is badly packaged.  Both the arch and nixos packages work out of the box.  You just have to create the right symlinks at installation time: <a href=\"https://github.com/NixOS/nixpkgs/blob/ade0eba99ddb4f559ce3daea2d073c92eeada5eb/pkgs/applications/science/logic/elan/default.nix#L23-L35\">https://github.com/NixOS/nixpkgs/blob/ade0eba99ddb4f559ce3daea2d073c92eeada5eb/pkgs/applications/science/logic/elan/default.nix#L23-L35</a></p>",
+        "id": 209191165,
+        "sender_full_name": "Gabriel Ebner",
+        "timestamp": 1599332571
+    },
+    {
+        "content": "<p>It looks like there was a proposed formula which would \"just work\": <a href=\"https://github.com/Homebrew/homebrew-core/pull/9617\">homebrew#9617</a></p>\n<p>But it was rejected for various reasons discussed in the PR: for example, because it writes things to <code>~./rustup</code> rather than the Homebrew directory... So it was replaced with <a href=\"https://github.com/Homebrew/homebrew-core/pull/14236\">homebrew#14236</a> instead.</p>\n<p>I actually think it might not be worth the effort to get <code>elan</code> and <code>lean</code> playing nice in the Homebrew ecosystem, since they have much <a href=\"https://docs.brew.sh/Acceptable-Formulae\">stricter rules</a> than other package managers. I think it might be better to either:</p>\n<ul>\n<li>Delete <code>lean</code> from Homebrew completely, have people follow the official install procedure instead</li>\n<li>Keep the lean formula as is, implement something like <a href=\"https://github.com/marketplace/actions/homebrew-bump-formula\">homebrew-bump-formula</a> to keep it always up-to-date with the latest lean (happy to help with the latter if people want to go that direction <span aria-label=\"smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"smile\">:smile:</span> )</li>\n</ul>",
+        "id": 209214081,
+        "sender_full_name": "Alex Peattie",
+        "timestamp": 1599378175
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"248283\">Alex Peattie</span> <a href=\"#narrow/stream/113488-general/topic/Homebrew.20Tap/near/209214081\">said</a>:</p>\n<blockquote>\n<p>But it was rejected for various reasons discussed in the PR: for example, because it writes things to <code>~./rustup</code> rather than the Homebrew directory...</p>\n</blockquote>\n<p>I'm not sure how you came to that conclusion, the last statement seems to say the opposite:</p>\n<blockquote>\n<p>Ok so my position is if we can install this from source, from a stable URL, without it installing to paths that will conflict with Homebrew (i.e. not to /usr/local/bin but instead /usr/local/var or ~/.rustup) and without it having any sort of self-update features possible at runtime: I'd be fine with accepting it as then it will feel similar to rbenv and friends. It looks like to do that it should only install a single binary (rustup) and any completions/manpages but not things like rustc so it doesn't conflict.</p>\n</blockquote>\n<p>Everything but the conflicts is already true for <code>elan</code>; and that part would be automatically resolved as well if we want to remove the conflicting <code>lean</code> package anyway.</p>",
+        "id": 209215377,
+        "sender_full_name": "Sebastian Ullrich",
+        "timestamp": 1599380864
+    },
+    {
+        "content": "<p>But all of this only makes sense if <code>leanproject</code> is packaged (with a dependency on <code>elan</code>) at the same time, doesn't it? Having just one of the tools packaged is worse than having none of them.</p>",
+        "id": 209215532,
+        "sender_full_name": "Sebastian Ullrich",
+        "timestamp": 1599381204
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"110024\">Sebastian Ullrich</span> <a href=\"#narrow/stream/113488-general/topic/Homebrew.20Tap/near/209215377\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"248283\">Alex Peattie</span> <a href=\"#narrow/stream/113488-general/topic/Homebrew.20Tap/near/209214081\">said</a>:</p>\n<blockquote>\n<p>But it was rejected for various reasons discussed in the PR: for example, because it writes things to <code>~./rustup</code> rather than the Homebrew directory...</p>\n</blockquote>\n<p>I'm not sure how you came to that conclusion, the last statement seems to say the opposite</p>\n</blockquote>\n<p>Mm yes I should have been clearer, I think my understanding is that generally most tools (good Homebrew citizens) should stick to only writing to the <code>/usr/local</code> directory:</p>\n<blockquote>\n<p>I'm disappointed by that, actually. Those caveats were useful if you installed (e.g.) rbenv from Homebrew expecting it to behave like a good Homebrew citizen and store its data in /usr/local. Automatically changing the default behavior of those tools could be problematic (backwards compatibility, expectations of users not familiar with Homebrew), and those caveats communicated not only that the tools were ill-behaved citizens, but how I could coerce them to behave properly.</p>\n</blockquote>\n<p>But for some tools, like <code>rbenv</code>, <code>rustup</code> etc. they make special exceptions because they install additional binaries that  could conflict with other binaries installed by Homebrew.</p>",
+        "id": 209216426,
+        "sender_full_name": "Alex Peattie",
+        "timestamp": 1599382891
+    },
+    {
+        "content": "<p>I'm not an expert though on Homebrew at all! I was just trying to understand why <code>rustup</code> is packaged on Homebrew the way it is, and not in an \"it just works\" way</p>",
+        "id": 209216600,
+        "sender_full_name": "Alex Peattie",
+        "timestamp": 1599383191
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"110024\">Sebastian Ullrich</span> <a href=\"#narrow/stream/113488-general/topic/Homebrew.20Tap/near/209215532\">said</a>:</p>\n<blockquote>\n<p>But all of this only makes sense if <code>leanproject</code> is packaged (with a dependency on <code>elan</code>) at the same time, doesn't it? Having just one of the tools packaged is worse than having none of them.</p>\n</blockquote>\n<p>I think the current setup (homebrew packages one fixed version of Lean) is worse than just packaging elan, which is worse than packaging elan and leanproject. I just want to avoid the stream of people who blindly grab Lean from homebrew without reading anything, get something incompatible with the recommended workflow, and come here complaining that things don't work. At least bare elan is compatible.</p>",
+        "id": 209222557,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1599394017
+    },
+    {
+        "content": "<p>I haven't used a mac in ages and know nothing about homebrew. If there's a reasonable way to package any part of the Lean ecosystem that doesn't conflict with installing the rest, then great. If not, then too bad. Either way the current package should probably be deleted.</p>",
+        "id": 209222655,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1599394178
+    },
+    {
+        "content": "<p>I agree, the <code>lean</code> package should be deleted in either case. Which might be hard to convince the Homebrew people of without providing an <code>elan</code> package as an alternative.</p>",
+        "id": 209226193,
+        "sender_full_name": "Sebastian Ullrich",
+        "timestamp": 1599400067
+    },
+    {
+        "content": "<p>Yes. Please one vote to have elan as a package in Homebrew before remove the Lean package</p>",
+        "id": 209460429,
+        "sender_full_name": "Alexandre Rademaker",
+        "timestamp": 1599611528
+    },
+    {
+        "content": "<p>I have been using the Lean installed with Homebrew, mainly because I am very uncomfortable with the scripts from <a href=\"https://leanprover-community.github.io/install/macos.html\">https://leanprover-community.github.io/install/macos.html</a></p>\n<p>As far as I understood, the <a href=\"https://raw.githubusercontent.com/leanprover-community/mathlib-tools/master/scripts/install_macos.sh\">https://raw.githubusercontent.com/leanprover-community/mathlib-tools/master/scripts/install_macos.sh</a> will try to modify the  .profile and .bash_profile files, but MacOs recently moved from bash to zsh (see <a href=\"https://support.apple.com/en-us/HT208050\">https://support.apple.com/en-us/HT208050</a>), and I am already using zsh. I had a hard time fixing all issues once I adopted zsh, and I am afraid to break things.</p>\n<p>Then we have this script calling another script, the <a href=\"https://raw.githubusercontent.com/Kha/elan/master/elan-init.sh\">https://raw.githubusercontent.com/Kha/elan/master/elan-init.sh</a>. This second script is a little obscure. In the beginning, it says that it will just detect the OS, download and execute the installer. But I know nothing about what the installer will do. I know that it is a fork of rustup, but I never used rust.  </p>\n<p>Surely I understand that all of these points are my problems and I am very grateful for all that this community is doing!</p>",
+        "id": 209462151,
+        "sender_full_name": "Alexandre Rademaker",
+        "timestamp": 1599613322
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"121542\">@Alexandre Rademaker</span> How does packaging <code>elan</code> in Homebrew change any of these considerations? It doesn't become magically more secure by doing that, right?</p>",
+        "id": 209470770,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1599625391
+    },
+    {
+        "content": "<p>Good question and thank you for asking. I was thinking about it. Homebrew makes very clear right from his homepage that </p>\n<blockquote>\n<p>Homebrew won’t install files outside its prefix and you can place a Homebrew installation wherever you like.</p>\n</blockquote>\n<p>Packages are installed from formulas. I am not a ruby programmer but the DSL is clean to read and we can make a good sense of what will be done. </p>\n<p>Packages have dependencies and it means I will not have unnecessary  duplications of softwares in my system (ideally).</p>",
+        "id": 209503226,
+        "sender_full_name": "Alexandre Rademaker",
+        "timestamp": 1599654167
+    },
+    {
+        "content": "<p>Ok, that makes sense</p>",
+        "id": 209503979,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1599654697
+    }
+]

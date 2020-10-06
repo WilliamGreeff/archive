@@ -1,0 +1,116 @@
+[
+    {
+        "content": "<p>(Migrating from 'Is there code for X?\" \"bidirectional maps?\" = <a href=\"#narrow/stream/217875-Is-there.20code.20for.20X.3F/topic/bidirectional.20maps.3F/near/212013731\">https://leanprover.zulipchat.com/#narrow/stream/217875-Is-there.20code.20for.20X.3F/topic/bidirectional.20maps.3F/near/212013731</a>) <span class=\"user-mention\" data-user-id=\"110049\">@Mario Carneiro</span></p>",
+        "id": 212017762,
+        "sender_full_name": "SnowFox",
+        "timestamp": 1601620723
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"110049\">@Mario Carneiro</span> Can you explain why you're using inductive Props in your x86.lean?</p>",
+        "id": 212039897,
+        "sender_full_name": "SnowFox",
+        "timestamp": 1601623086
+    },
+    {
+        "content": "<p>because it's a spec</p>",
+        "id": 212039906,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1601623103
+    },
+    {
+        "content": "<p>it's not intended to be directly executable</p>",
+        "id": 212039918,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1601623115
+    },
+    {
+        "content": "<p>but the advantage is that you don't need separate encode/decode</p>",
+        "id": 212039930,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1601623132
+    },
+    {
+        "content": "<p>Hmm. Not something I can use then.</p>",
+        "id": 212040466,
+        "sender_full_name": "SnowFox",
+        "timestamp": 1601623568
+    },
+    {
+        "content": "<p>No, I don't expect that aspect will translate</p>",
+        "id": 212040504,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1601623605
+    },
+    {
+        "content": "<p>I wrote a proof producing disassembler for x86/ARM before which is closer to what you need, but it is at least for now closed source</p>",
+        "id": 212040559,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1601623659
+    },
+    {
+        "content": "<p>Okay.</p>",
+        "id": 212040724,
+        "sender_full_name": "SnowFox",
+        "timestamp": 1601623786
+    },
+    {
+        "content": "<p>I've heard good things about metaprogramming in Lean but ... the documentation doesn't demonstrate how. Do you have any reference I can use for implementing <code>make_defs</code>? <a href=\"https://leanprover.github.io/reference/metaprogramming.html\">https://leanprover.github.io/reference/metaprogramming.html</a></p>",
+        "id": 212040886,
+        "sender_full_name": "SnowFox",
+        "timestamp": 1601623883
+    },
+    {
+        "content": "<p>for the most part it's just functional programming</p>",
+        "id": 212041186,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1601624044
+    },
+    {
+        "content": "<p>you have to interact with the lean API to make definitions</p>",
+        "id": 212041200,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1601624064
+    },
+    {
+        "content": "<p>and the API is admittedly not so well documented</p>",
+        "id": 212041236,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1601624089
+    },
+    {
+        "content": "<p>Rob Lewis made a metaprogramming tutorial that is pretty good</p>",
+        "id": 212041265,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1601624112
+    },
+    {
+        "content": "<p><a href=\"https://www.youtube.com/playlist?list=PLlF-CfQhukNnq2kDCw2P_vI5AfXN7egP2\">https://www.youtube.com/playlist?list=PLlF-CfQhukNnq2kDCw2P_vI5AfXN7egP2</a></p>",
+        "id": 212041303,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1601624145
+    },
+    {
+        "content": "<p>Thanks. I'll watch the series.</p>",
+        "id": 212041383,
+        "sender_full_name": "SnowFox",
+        "timestamp": 1601624184
+    },
+    {
+        "content": "<p>There's also the metaprogramming section of the <a href=\"https://raw.githubusercontent.com/blanchette/logical_verification_2020/master/hitchhikers_guide.pdf\">Hitchhiker's guide</a> and, if I may be so bold, my <a href=\"https://limperg.de/posts/2020-08-19-lean-metaprogramming.html\">blog post</a> on some gotchas of the API (but that'll only make sense once you have a bit of an overview). Beyond that, you'll have to read <code>init/meta/expr.lean</code> and <code>init/meta/tactic.lean</code>, which are reasonably documented.</p>",
+        "id": 212062203,
+        "sender_full_name": "Jannis Limperg",
+        "timestamp": 1601638311
+    },
+    {
+        "content": "<p>Okay. I've watched the short series linked above and bookmarked the blog post. I've adjusted the python scripts to generate at least a decent mostly-correct subset of RISC-V instruction to format with embedded constants list. <code>add_inductive</code> and <code>add_defn_equations</code> appear to be my next steps, which look straight forward. Afterwards, I may open an issue in the riscv-opcode repo proposing an alternative format and a new code generator to make certain things cleaner and better reflect the specification.</p>\n<p>Thanks for all the links everyone. I'll resume this tomorrow morning. :)</p>",
+        "id": 212070231,
+        "sender_full_name": "SnowFox",
+        "timestamp": 1601643432
+    },
+    {
+        "content": "<p>Okay, I couldn't resist but... ouch. <code>add_inductive</code>, as the documentation for its sibling <code>add_ginductive</code> suggests, doesn't generate the auxiliary definitions necessary for matching against it... I couldn't figure out how to use <code>add_ginductive</code> however. Could someone correct this code?</p>\n<div class=\"codehilite\" data-code-language=\"Lean\"><pre><span></span><code><span class=\"kd\">meta</span> <span class=\"kd\">def</span> <span class=\"n\">make_defs</span> <span class=\"o\">(</span><span class=\"n\">l</span> <span class=\"o\">:</span> <span class=\"n\">list</span> <span class=\"o\">(</span><span class=\"n\">name</span> <span class=\"bp\">×</span> <span class=\"n\">type</span><span class=\"o\">))</span> <span class=\"o\">:</span> <span class=\"n\">tactic</span> <span class=\"n\">unit</span> <span class=\"o\">:=</span>\n<span class=\"n\">tactic.add_inductive</span> <span class=\"bp\">`</span><span class=\"n\">rvim</span> <span class=\"o\">[]</span> <span class=\"mi\">0</span> <span class=\"bp\">`</span><span class=\"o\">(</span><span class=\"kt\">Type</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">l.map</span> <span class=\"o\">(</span><span class=\"bp\">λ</span> <span class=\"o\">⟨</span><span class=\"n\">n</span><span class=\"o\">,</span> <span class=\"n\">t</span><span class=\"o\">⟩,</span> <span class=\"o\">⟨</span><span class=\"n\">n</span><span class=\"o\">,</span> <span class=\"n\">expr.const</span> <span class=\"bp\">`</span><span class=\"n\">rvim</span> <span class=\"o\">[]⟩))</span>\n</code></pre></div>",
+        "id": 212077159,
+        "sender_full_name": "SnowFox",
+        "timestamp": 1601646770
+    }
+]

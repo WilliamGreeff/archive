@@ -1,0 +1,92 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/113488-general/topic/autoformatter.20for.20lean.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/113488-general/index.html">general</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/autoformatter.20for.20lean.html">autoformatter for lean</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="209511839"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/autoformatter%20for%20lean/near/209511839" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Tran <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/autoformatter.20for.20lean.html#209511839">(Sep 09 2020 at 13:44)</a>:</h4>
+<p>when i use a "real" programming language, i like to use an autoformatter, because i don't like to think about formatting my code beyond "good enough". is there an autoformatter or one planned for lean?</p>
+
+
+
+<a name="209511966"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/autoformatter%20for%20lean/near/209511966" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/autoformatter.20for.20lean.html#209511966">(Sep 09 2020 at 13:45)</a>:</h4>
+<p>Nothing for Lean 3. I guess we're all waiting for Lean 4.</p>
+
+
+
+<a name="209512079"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/autoformatter%20for%20lean/near/209512079" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/autoformatter.20for.20lean.html#209512079">(Sep 09 2020 at 13:46)</a>:</h4>
+<p>But it might be really hard to do this for Lean 4, because its syntax is <em>extremely</em> flexible.</p>
+
+
+
+<a name="209515181"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/autoformatter%20for%20lean/near/209515181" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Julian Berman <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/autoformatter.20for.20lean.html#209515181">(Sep 09 2020 at 14:06)</a>:</h4>
+<p>Is there a linter? I saw mathlib used one, but it didn't seem general purpose</p>
+
+
+
+<a name="209515213"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/autoformatter%20for%20lean/near/209515213" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Julian Berman <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/autoformatter.20for.20lean.html#209515213">(Sep 09 2020 at 14:07)</a>:</h4>
+<p>(Something that doesn't fully do the autoformatting but at least complains for whatever style lean files might want to follow)</p>
+
+
+
+<a name="209515275"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/autoformatter%20for%20lean/near/209515275" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/autoformatter.20for.20lean.html#209515275">(Sep 09 2020 at 14:07)</a>:</h4>
+<p>The linting is different from usual linters</p>
+
+
+
+<a name="209515356"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/autoformatter%20for%20lean/near/209515356" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/autoformatter.20for.20lean.html#209515356">(Sep 09 2020 at 14:08)</a>:</h4>
+<p>The mathlib linters check that a theorem uses all its assumptions, things like that.</p>
+
+
+
+<a name="209515400"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/autoformatter%20for%20lean/near/209515400" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/autoformatter.20for.20lean.html#209515400">(Sep 09 2020 at 14:08)</a>:</h4>
+<p>Or bad simp-lemmas, or using <code>&gt;</code> instead of <code>&lt;</code></p>
+
+
+
+<a name="209515458"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/autoformatter%20for%20lean/near/209515458" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Julian Berman <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/autoformatter.20for.20lean.html#209515458">(Sep 09 2020 at 14:08)</a>:</h4>
+<p>ah</p>
+
+
+
+<a name="209515519"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/autoformatter%20for%20lean/near/209515519" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/autoformatter.20for.20lean.html#209515519">(Sep 09 2020 at 14:09)</a>:</h4>
+<p>They aren't even technically capable of inspecting the syntax that the user wrote.</p>
+
+
+
+<a name="209515553"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/autoformatter%20for%20lean/near/209515553" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/autoformatter.20for.20lean.html#209515553">(Sep 09 2020 at 14:09)</a>:</h4>
+<p>Because they operate on a level behind the parser.</p>
+
+
+
+<a name="209515920"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/autoformatter%20for%20lean/near/209515920" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Julian Berman <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/autoformatter.20for.20lean.html#209515920">(Sep 09 2020 at 14:12)</a>:</h4>
+<p><em>nod</em></p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

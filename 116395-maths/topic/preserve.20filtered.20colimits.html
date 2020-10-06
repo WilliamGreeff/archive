@@ -1,0 +1,618 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/116395-maths/topic/preserve.20filtered.20colimits.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/116395-maths/index.html">maths</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html">preserve filtered colimits</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="207962735"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207962735" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207962735">(Aug 25 2020 at 13:31)</a>:</h4>
+<p>I've been trying to show that <code>forget CommRing</code> preserves filtered colimits (as this is something now blocking schemes).</p>
+<p>I'm completely stuck, however, on the <a href="https://github.com/leanprover-community/mathlib/compare/preserves_filtered_colimits?expand=1#diff-d27a630fd2328a19457dfb973f26891bR487">following lemma</a>:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">lemma</span> <span class="n">filtered_exact</span> <span class="o">[</span><span class="n">is_filtered</span> <span class="n">J</span><span class="o">]</span> <span class="o">(</span><span class="n">F</span> <span class="o">:</span> <span class="n">J</span> <span class="err">⥤</span> <span class="n">CommRing</span><span class="bp">.</span><span class="o">{</span><span class="n">v</span><span class="o">})</span> <span class="o">{</span><span class="n">jx</span> <span class="n">jy</span> <span class="o">:</span> <span class="n">J</span><span class="o">}</span> <span class="o">{</span><span class="n">x</span> <span class="o">:</span> <span class="n">F</span><span class="bp">.</span><span class="n">obj</span> <span class="n">jx</span><span class="o">}</span> <span class="o">{</span><span class="n">y</span> <span class="o">:</span> <span class="n">F</span><span class="bp">.</span><span class="n">obj</span> <span class="n">jy</span><span class="o">}</span>
+  <span class="o">(</span><span class="n">w</span> <span class="o">:</span> <span class="n">quot</span><span class="bp">.</span><span class="n">mk</span> <span class="o">(</span><span class="n">relation</span> <span class="n">F</span><span class="o">)</span> <span class="o">(</span><span class="n">of</span> <span class="n">jx</span> <span class="n">x</span><span class="o">)</span> <span class="bp">=</span> <span class="n">quot</span><span class="bp">.</span><span class="n">mk</span> <span class="bp">_</span> <span class="o">(</span><span class="n">of</span> <span class="n">jy</span> <span class="n">y</span><span class="o">))</span> <span class="o">:</span>
+  <span class="bp">∃</span> <span class="o">(</span><span class="n">j</span> <span class="o">:</span> <span class="n">J</span><span class="o">)</span> <span class="o">(</span><span class="n">ix</span> <span class="o">:</span> <span class="n">jx</span> <span class="err">⟶</span> <span class="n">j</span><span class="o">)</span> <span class="o">(</span><span class="n">iy</span> <span class="o">:</span> <span class="n">jy</span> <span class="err">⟶</span> <span class="n">j</span><span class="o">),</span> <span class="n">F</span><span class="bp">.</span><span class="n">map</span> <span class="n">ix</span> <span class="n">x</span> <span class="bp">=</span> <span class="n">F</span><span class="bp">.</span><span class="n">map</span> <span class="n">iy</span> <span class="n">y</span> <span class="o">:=</span>
+<span class="k">begin</span>
+
+<span class="kn">end</span>
+</code></pre></div>
+
+
+<p>at <a href="https://github.com/leanprover-community/mathlib/tree/preserves_filtered_colimits">branch#preserves_filtered_colimits</a></p>
+<p>Here <code>of</code> is building the big inductive type we use to build colimits, and <code>relation F</code> is the relation on it.</p>
+<p>I want to do something like:</p>
+<ol>
+<li>generalize one side of <code>w</code></li>
+<li>use <code>quot.exact</code> to get an <code>eqv_gen (relation F)</code> hypothesis</li>
+<li>do induction on that, obtaining a huge case base.</li>
+</ol>
+<p>I don't mind having to do a big case bash: I'd just like to get to the point I can start. All my attempts to generalize and/or induct so far quickly lose the connection with the <code>x</code> and <code>y</code> terms.</p>
+
+
+
+<a name="207962837"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207962837" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207962837">(Aug 25 2020 at 13:32)</a>:</h4>
+<p><span class="user-mention" data-user-id="110032">@Reid Barton</span>, any suggestions? It this or similar something you did previously when you were looking at filtered colimits? I don't remember seeing this.</p>
+
+
+
+<a name="207963625"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207963625" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207963625">(Aug 25 2020 at 13:39)</a>:</h4>
+<p>(<span class="user-mention" data-user-id="110087">@Scott Morrison</span> The period at the end of the branch link breaks the link.)</p>
+
+
+
+<a name="207963934"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207963934" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207963934">(Aug 25 2020 at 13:42)</a>:</h4>
+<p>I don't remember proving anything like this.</p>
+
+
+
+<a name="207964472"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207964472" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207964472">(Aug 25 2020 at 13:47)</a>:</h4>
+<p>I think I understand your problem. It might be worth keeping in mind that the fact that <code>comm_ring</code> only has finitary operations is required for this to be true.</p>
+
+
+
+<a name="207964562"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207964562" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207964562">(Aug 25 2020 at 13:48)</a>:</h4>
+<p>Yes.</p>
+
+
+
+<a name="207964633"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207964633" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207964633">(Aug 25 2020 at 13:49)</a>:</h4>
+<p>(I should have done the <code>Mon</code> case instead, if I knew I was going to need to ask for help, just to keep the clutter down.)</p>
+
+
+
+<a name="207964878"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207964878" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207964878">(Aug 25 2020 at 13:51)</a>:</h4>
+<p>Maybe you would need to generalize to something like: for any two terms in the free algebra that become equal in the quotient, there's some <code>j : J</code> and a bunch of maps to it from all the places where the <code>of</code>s live, such that if you map all those guys forward to <code>j</code>, the two terms are already equal there.</p>
+
+
+
+<a name="207964901"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207964901" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207964901">(Aug 25 2020 at 13:51)</a>:</h4>
+<p>Which sounds pretty dreadful</p>
+
+
+
+<a name="207964959"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207964959" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207964959">(Aug 25 2020 at 13:51)</a>:</h4>
+<p>Another approach that might be easier would be to instead put a ring structure on the Set-colimit and prove it has the right universal property</p>
+
+
+
+<a name="207965194"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207965194" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207965194">(Aug 25 2020 at 13:53)</a>:</h4>
+<p>That does sound rather more pleasant, I guess. (Now that you say it I think I've tried that before... I guess time for another go.)</p>
+
+
+
+<a name="207965197"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207965197" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207965197">(Aug 25 2020 at 13:53)</a>:</h4>
+<p>I think there is or was a direct construction of most of this in the algebra library</p>
+
+
+
+<a name="207965341"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207965341" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207965341">(Aug 25 2020 at 13:54)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="110032">Reid Barton</span> <a href="#narrow/stream/116395-maths/topic/preserve.20filtered.20colimits/near/207964959">said</a>:</p>
+<blockquote>
+<p>Another approach that might be easier would be to instead put a ring structure on the Set-colimit and prove it has the right universal property</p>
+</blockquote>
+<p>I think the law of "conservation of work" will apply here :-/</p>
+
+
+
+<a name="207965461"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207965461" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207965461">(Aug 25 2020 at 13:55)</a>:</h4>
+<p>I want to try out the lemma from this branch, but I'm just waiting for the oleans to be available.</p>
+
+
+
+<a name="207965648"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207965648" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207965648">(Aug 25 2020 at 13:56)</a>:</h4>
+<p>can you get away with directed instead of filtered, btw? Should be okay for now right?</p>
+
+
+
+<a name="207965786"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207965786" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207965786">(Aug 25 2020 at 13:57)</a>:</h4>
+<p>Yeah that should be fine for sheaves on topological spaces</p>
+
+
+
+<a name="207965854"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207965854" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207965854">(Aug 25 2020 at 13:58)</a>:</h4>
+<p>yes</p>
+
+
+
+<a name="207965988"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207965988" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207965988">(Aug 25 2020 at 13:59)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="110032">Reid Barton</span> <a href="#narrow/stream/116395-maths/topic/preserve.20filtered.20colimits/near/207965197">said</a>:</p>
+<blockquote>
+<p>I think there is or was a direct construction of most of this in the algebra library</p>
+</blockquote>
+<p>oh no I'm wrong, it was always using the free ring-style construction even though it assumed directedness</p>
+
+
+
+<a name="207966186"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207966186" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207966186">(Aug 25 2020 at 14:00)</a>:</h4>
+<p>oh but actually it might prove the result you wanted originally</p>
+
+
+
+<a name="207966320"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207966320" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207966320">(Aug 25 2020 at 14:01)</a>:</h4>
+<p><a href="https://leanprover-community.github.io/mathlib_docs/find/ring.direct_limit.of.zero_exact">docs#ring.direct_limit.of.zero_exact</a></p>
+
+
+
+<a name="207966464"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207966464" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207966464">(Aug 25 2020 at 14:02)</a>:</h4>
+<p>The docstring should say "some bigger ring" not "some bigger module"</p>
+
+
+
+<a name="207966504"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207966504" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207966504">(Aug 25 2020 at 14:03)</a>:</h4>
+<p>It looks like Kenny used the argument I was sketching</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">lemma</span> <span class="n">of</span><span class="bp">.</span><span class="n">zero_exact_aux</span> <span class="o">{</span><span class="n">x</span> <span class="o">:</span> <span class="n">free_comm_ring</span> <span class="err">Σ</span> <span class="n">i</span><span class="o">,</span> <span class="n">G</span> <span class="n">i</span><span class="o">}</span> <span class="o">(</span><span class="n">H</span> <span class="o">:</span> <span class="n">ideal</span><span class="bp">.</span><span class="n">quotient</span><span class="bp">.</span><span class="n">mk</span> <span class="bp">_</span> <span class="n">x</span> <span class="bp">=</span> <span class="o">(</span><span class="mi">0</span> <span class="o">:</span> <span class="n">direct_limit</span> <span class="n">G</span> <span class="n">f</span><span class="o">))</span> <span class="o">:</span>
+  <span class="bp">∃</span> <span class="n">j</span> <span class="n">s</span><span class="o">,</span> <span class="bp">∃</span> <span class="n">H</span> <span class="o">:</span> <span class="o">(</span><span class="bp">∀</span> <span class="n">k</span> <span class="o">:</span> <span class="err">Σ</span> <span class="n">i</span><span class="o">,</span> <span class="n">G</span> <span class="n">i</span><span class="o">,</span> <span class="n">k</span> <span class="err">∈</span> <span class="n">s</span> <span class="bp">→</span> <span class="n">k</span><span class="bp">.</span><span class="mi">1</span> <span class="bp">≤</span> <span class="n">j</span><span class="o">),</span> <span class="n">is_supported</span> <span class="n">x</span> <span class="n">s</span> <span class="bp">∧</span>
+    <span class="n">lift</span> <span class="o">(</span><span class="bp">λ</span> <span class="n">ix</span> <span class="o">:</span> <span class="n">s</span><span class="o">,</span> <span class="n">f</span> <span class="n">ix</span><span class="bp">.</span><span class="mi">1</span><span class="bp">.</span><span class="mi">1</span> <span class="n">j</span> <span class="o">(</span><span class="n">H</span> <span class="n">ix</span> <span class="n">ix</span><span class="bp">.</span><span class="mi">2</span><span class="o">)</span> <span class="n">ix</span><span class="bp">.</span><span class="mi">1</span><span class="bp">.</span><span class="mi">2</span><span class="o">)</span> <span class="o">(</span><span class="n">restriction</span> <span class="n">s</span> <span class="n">x</span><span class="o">)</span> <span class="bp">=</span> <span class="o">(</span><span class="mi">0</span> <span class="o">:</span> <span class="n">G</span> <span class="n">j</span><span class="o">)</span> <span class="o">:=</span>
+</code></pre></div>
+
+
+
+<a name="207967854"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207967854" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207967854">(Aug 25 2020 at 14:14)</a>:</h4>
+<p>So here's a gigantic case-by-case start:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">lemma</span> <span class="n">filtered_exact</span> <span class="o">[</span><span class="n">is_filtered</span> <span class="n">J</span><span class="o">]</span> <span class="o">{</span><span class="n">jx</span> <span class="n">jy</span> <span class="o">:</span> <span class="n">J</span><span class="o">}</span> <span class="o">{</span><span class="n">x</span> <span class="o">:</span> <span class="n">F</span><span class="bp">.</span><span class="n">obj</span> <span class="n">jx</span><span class="o">}</span> <span class="o">{</span><span class="n">y</span> <span class="o">:</span> <span class="n">F</span><span class="bp">.</span><span class="n">obj</span> <span class="n">jy</span><span class="o">}</span>
+  <span class="o">(</span><span class="n">w</span> <span class="o">:</span> <span class="n">quot</span><span class="bp">.</span><span class="n">mk</span> <span class="o">(</span><span class="n">relation</span> <span class="n">F</span><span class="o">)</span> <span class="o">(</span><span class="n">of</span> <span class="n">jx</span> <span class="n">x</span><span class="o">)</span> <span class="bp">=</span> <span class="n">quot</span><span class="bp">.</span><span class="n">mk</span> <span class="bp">_</span> <span class="o">(</span><span class="n">of</span> <span class="n">jy</span> <span class="n">y</span><span class="o">))</span> <span class="o">:</span>
+  <span class="bp">∃</span> <span class="o">(</span><span class="n">j</span> <span class="o">:</span> <span class="n">J</span><span class="o">)</span> <span class="o">(</span><span class="n">ix</span> <span class="o">:</span> <span class="n">jx</span> <span class="err">⟶</span> <span class="n">j</span><span class="o">)</span> <span class="o">(</span><span class="n">iy</span> <span class="o">:</span> <span class="n">jy</span> <span class="err">⟶</span> <span class="n">j</span><span class="o">),</span> <span class="n">F</span><span class="bp">.</span><span class="n">map</span> <span class="n">ix</span> <span class="n">x</span> <span class="bp">=</span> <span class="n">F</span><span class="bp">.</span><span class="n">map</span> <span class="n">iy</span> <span class="n">y</span> <span class="o">:=</span>
+<span class="k">begin</span>
+  <span class="n">replace</span> <span class="n">w</span> <span class="o">:=</span> <span class="n">quot</span><span class="bp">.</span><span class="n">exact</span> <span class="bp">_</span> <span class="n">w</span><span class="o">,</span>
+  <span class="n">cases</span> <span class="n">w</span><span class="o">,</span>
+  <span class="n">cases</span> <span class="n">w_a</span><span class="o">,</span>
+  <span class="n">repeat</span> <span class="o">{</span><span class="n">sorry</span><span class="o">}</span>
+<span class="kn">end</span>
+</code></pre></div>
+
+
+
+<a name="207968359"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207968359" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207968359">(Aug 25 2020 at 14:18)</a>:</h4>
+<p>won't this generate subgoals involving stuff to which the inductive hypothesis won't apply?</p>
+
+
+
+<a name="207968410"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207968410" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207968410">(Aug 25 2020 at 14:19)</a>:</h4>
+<p>yeah... look at the third goal, for example</p>
+
+
+
+<a name="207968442"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207968442" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207968442">(Aug 25 2020 at 14:19)</a>:</h4>
+<p>because you're using <code>cases</code>, not <code>induction</code>, you've got nothing to work with there</p>
+
+
+
+<a name="207968570"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207968570" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207968570">(Aug 25 2020 at 14:20)</a>:</h4>
+<p>but even using induction won't work, because you'll get <code>relation</code>s between stuff not of the form <code>of jz z</code></p>
+
+
+
+<a name="207968764"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207968764" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207968764">(Aug 25 2020 at 14:21)</a>:</h4>
+<p>yes, hence the idea to somehow generalize one side...?</p>
+
+
+
+<a name="207968784"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207968784" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207968784">(Aug 25 2020 at 14:21)</a>:</h4>
+<p>but I don't see it.</p>
+
+
+
+<a name="207969015"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207969015" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207969015">(Aug 25 2020 at 14:23)</a>:</h4>
+<p>Basically you need to do what Kenny did</p>
+
+
+
+<a name="207969286"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207969286" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207969286">(Aug 25 2020 at 14:25)</a>:</h4>
+<p>I think the viable options are to reuse Kenny's construction, or build the ring structure on the Set-colimit (I really think this is a lot easier if you're going to build from scratch, but maybe just because I am bad at <code>finset</code>)</p>
+
+
+
+<a name="207969559"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207969559" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207969559">(Aug 25 2020 at 14:27)</a>:</h4>
+<p>For the latter it might be a good idea to prove first that <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>↦</mo><mi>X</mi><mo>×</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">X \mapsto X \times X</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.69433em;vertical-align:-0.011em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">↦</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span> (and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>↦</mo><mo>∗</mo></mrow><annotation encoding="application/x-tex">X \mapsto *</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.69433em;vertical-align:-0.011em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">↦</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord">∗</span></span></span></span>) preserves filtered colimits</p>
+
+
+
+<a name="207970230"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207970230" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207970230">(Aug 25 2020 at 14:32)</a>:</h4>
+<p>Then I feel like the rest is just a series of diagram chases</p>
+
+
+
+<a name="207972192"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207972192" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207972192">(Aug 25 2020 at 14:47)</a>:</h4>
+<p>Would it perhaps make sense to replace <code>relation.map</code> by this:</p>
+<div class="codehilite"><pre><span></span><code><span class="bp">|</span> <span class="n">map</span> <span class="o">:</span> <span class="bp">Π</span> <span class="o">(</span><span class="n">jx</span> <span class="n">jy</span> <span class="n">j</span> <span class="o">:</span> <span class="n">J</span><span class="o">)</span> <span class="o">(</span><span class="n">x</span> <span class="o">:</span> <span class="n">F</span><span class="bp">.</span><span class="n">obj</span> <span class="n">jx</span><span class="o">)</span> <span class="o">(</span><span class="n">y</span> <span class="o">:</span> <span class="n">F</span><span class="bp">.</span><span class="n">obj</span> <span class="n">jy</span><span class="o">)</span> <span class="o">(</span><span class="n">ix</span> <span class="o">:</span> <span class="n">jx</span> <span class="err">⟶</span> <span class="n">j</span><span class="o">)</span> <span class="o">(</span><span class="n">iy</span> <span class="o">:</span> <span class="n">jy</span> <span class="err">⟶</span> <span class="n">j</span><span class="o">),</span>
+    <span class="n">relation</span> <span class="o">(</span><span class="n">of</span> <span class="bp">_</span> <span class="o">(</span><span class="n">F</span><span class="bp">.</span><span class="n">map</span> <span class="n">ix</span> <span class="n">x</span><span class="o">))</span> <span class="o">(</span><span class="n">of</span> <span class="bp">_</span> <span class="o">(</span><span class="n">F</span><span class="bp">.</span><span class="n">map</span> <span class="n">iy</span> <span class="n">y</span><span class="o">))</span> <span class="bp">→</span> <span class="n">relation</span> <span class="o">(</span><span class="n">of</span> <span class="n">jx</span> <span class="n">x</span><span class="o">)</span> <span class="o">(</span><span class="n">of</span> <span class="n">jy</span> <span class="n">y</span><span class="o">)</span>
+</code></pre></div>
+
+
+
+<a name="207993075"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207993075" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207993075">(Aug 25 2020 at 17:23)</a>:</h4>
+<p>Okay, I think I have something working... <del>what's the easiest way to obtain a common <code>j</code> with maps <code>jx \hom j</code> and <code>jy \hom j</code> given <code>jx jy : J</code> and <code>is_filtered J</code> ?</del> found it: <code>is_filtered_or_empty.cocone_objs</code>.</p>
+
+
+
+<a name="207998996"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/207998996" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#207998996">(Aug 25 2020 at 18:05)</a>:</h4>
+<p>Oh no! I ran into a point where I have to prove that <code>prequotient.of</code>is injective. That's unprovable right?</p>
+
+
+
+<a name="208038496"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208038496" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208038496">(Aug 25 2020 at 23:49)</a>:</h4>
+<p>No, rather there should be an automatically generated lemma for it.</p>
+
+
+
+<a name="208038568"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208038568" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208038568">(Aug 25 2020 at 23:50)</a>:</h4>
+<p><code>prequotient.of.inj</code></p>
+
+
+
+<a name="208040497"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208040497" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208040497">(Aug 26 2020 at 00:21)</a>:</h4>
+<p><span class="user-mention" data-user-id="110087">@Scott Morrison</span>  I tried doing something like this:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">lemma</span> <span class="n">filtered_exact</span> <span class="o">[</span><span class="n">is_filtered</span> <span class="n">J</span><span class="o">]</span> <span class="o">(</span><span class="n">a</span> <span class="n">b</span> <span class="o">:</span> <span class="n">prequotient</span> <span class="n">F</span><span class="o">)</span> <span class="o">(</span><span class="n">w</span> <span class="o">:</span> <span class="n">relation</span> <span class="n">F</span> <span class="n">a</span> <span class="n">b</span><span class="o">)</span> <span class="o">:</span>
+  <span class="bp">Π</span> <span class="o">(</span><span class="n">jx</span> <span class="n">jy</span> <span class="o">:</span> <span class="n">J</span><span class="o">)</span> <span class="o">(</span><span class="n">x</span> <span class="o">:</span> <span class="n">F</span><span class="bp">.</span><span class="n">obj</span> <span class="n">jx</span><span class="o">)</span> <span class="o">(</span><span class="n">y</span> <span class="o">:</span> <span class="n">F</span><span class="bp">.</span><span class="n">obj</span> <span class="n">jy</span><span class="o">),</span>
+  <span class="n">a</span> <span class="bp">=</span> <span class="n">of</span> <span class="n">jx</span> <span class="n">x</span> <span class="bp">→</span> <span class="n">b</span> <span class="bp">=</span> <span class="n">of</span> <span class="n">jy</span> <span class="n">y</span> <span class="bp">→</span>
+  <span class="o">(</span><span class="bp">∃</span> <span class="o">(</span><span class="n">j</span> <span class="o">:</span> <span class="n">J</span><span class="o">)</span> <span class="o">(</span><span class="n">ix</span> <span class="o">:</span> <span class="n">jx</span> <span class="err">⟶</span> <span class="n">j</span><span class="o">)</span> <span class="o">(</span><span class="n">iy</span> <span class="o">:</span> <span class="n">jy</span> <span class="err">⟶</span> <span class="n">j</span><span class="o">),</span> <span class="n">F</span><span class="bp">.</span><span class="n">map</span> <span class="n">ix</span> <span class="n">x</span> <span class="bp">=</span> <span class="n">F</span><span class="bp">.</span><span class="n">map</span> <span class="n">iy</span> <span class="n">y</span><span class="o">)</span> <span class="o">:=</span>
+<span class="k">begin</span>
+  <span class="n">induction</span> <span class="n">w</span><span class="o">,</span>
+  <span class="n">sorry</span>
+<span class="kn">end</span>
+</code></pre></div>
+
+
+<p>At least the induction gets started this way.</p>
+
+
+
+<a name="208042889"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208042889" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208042889">(Aug 26 2020 at 01:00)</a>:</h4>
+<p>That lemma does seem provable. But can we actually deduce the lemma I was after from it?</p>
+
+
+
+<a name="208043178"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208043178" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208043178">(Aug 26 2020 at 01:06)</a>:</h4>
+<p>I haven't tried. I didn't have much time for lean today.</p>
+
+
+
+<a name="208043296"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208043296" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208043296">(Aug 26 2020 at 01:08)</a>:</h4>
+<p>I think it may be. There's actually something pretty stupid going on in the construction of colimits here --- we go to all the effort of making <code>relation F</code> an equivalence relation, and then use <code>quot</code> instead of <code>quotient</code>.</p>
+
+
+
+<a name="208043410"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208043410" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208043410">(Aug 26 2020 at 01:11)</a>:</h4>
+<p>oh, this isn't a problem in the construction, just in the lemmas I'm trying to prove now. maybe not a big deal</p>
+
+
+
+<a name="208043784"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208043784" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208043784">(Aug 26 2020 at 01:19)</a>:</h4>
+<p>It's possible to just get rid of refl, symm and trans in the definition of relation</p>
+
+
+
+<a name="208043887"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208043887" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208043887">(Aug 26 2020 at 01:21)</a>:</h4>
+<p>It is strange that <code>quot.mk</code> is used sometimes as opposed to <code>quotient.mk</code>, given that there is a setoid around</p>
+
+
+
+<a name="208044605"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208044605" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208044605">(Aug 26 2020 at 01:37)</a>:</h4>
+<p>Renaming your <code>filtered_exact</code> to <code>filtered_exact'</code>, the original <code>filtered_exact</code> is indeed provable from it:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">lemma</span> <span class="n">filtered_exact</span> <span class="o">[</span><span class="n">is_filtered</span> <span class="n">J</span><span class="o">]</span> <span class="o">(</span><span class="n">F</span> <span class="o">:</span> <span class="n">J</span> <span class="err">⥤</span> <span class="n">CommRing</span><span class="bp">.</span><span class="o">{</span><span class="n">v</span><span class="o">})</span> <span class="o">{</span><span class="n">jx</span> <span class="n">jy</span> <span class="o">:</span> <span class="n">J</span><span class="o">}</span> <span class="o">{</span><span class="n">x</span> <span class="o">:</span> <span class="n">F</span><span class="bp">.</span><span class="n">obj</span> <span class="n">jx</span><span class="o">}</span> <span class="o">{</span><span class="n">y</span> <span class="o">:</span> <span class="n">F</span><span class="bp">.</span><span class="n">obj</span> <span class="n">jy</span><span class="o">}</span>
+  <span class="o">(</span><span class="n">w</span> <span class="o">:</span> <span class="n">quotient</span><span class="bp">.</span><span class="n">mk</span> <span class="o">(</span><span class="n">of</span> <span class="n">jx</span> <span class="n">x</span><span class="o">)</span> <span class="bp">=</span> <span class="n">quotient</span><span class="bp">.</span><span class="n">mk</span> <span class="o">(</span><span class="n">of</span> <span class="n">jy</span> <span class="n">y</span><span class="o">))</span> <span class="o">:</span>
+  <span class="bp">∃</span> <span class="o">(</span><span class="n">j</span> <span class="o">:</span> <span class="n">J</span><span class="o">)</span> <span class="o">(</span><span class="n">ix</span> <span class="o">:</span> <span class="n">jx</span> <span class="err">⟶</span> <span class="n">j</span><span class="o">)</span> <span class="o">(</span><span class="n">iy</span> <span class="o">:</span> <span class="n">jy</span> <span class="err">⟶</span> <span class="n">j</span><span class="o">),</span> <span class="n">F</span><span class="bp">.</span><span class="n">map</span> <span class="n">ix</span> <span class="n">x</span> <span class="bp">=</span> <span class="n">F</span><span class="bp">.</span><span class="n">map</span> <span class="n">iy</span> <span class="n">y</span> <span class="o">:=</span>
+<span class="k">begin</span>
+  <span class="n">cases</span> <span class="n">quotient</span><span class="bp">.</span><span class="n">exact</span> <span class="n">w</span> <span class="k">with</span> <span class="bp">_</span> <span class="bp">_</span> <span class="bp">_</span> <span class="n">h</span> <span class="bp">_</span> <span class="n">tz</span> <span class="bp">_</span> <span class="n">h₁</span> <span class="n">h₂</span><span class="o">,</span>
+  <span class="o">{</span> <span class="n">apply</span> <span class="n">filtered_exact&#39;</span> <span class="n">F</span> <span class="o">(</span><span class="n">relation</span><span class="bp">.</span><span class="n">refl</span> <span class="bp">_</span><span class="o">)</span> <span class="bp">_</span> <span class="bp">_</span> <span class="n">rfl</span> <span class="n">rfl</span><span class="o">,</span> <span class="o">},</span>
+  <span class="o">{</span> <span class="k">let</span> <span class="n">h</span> <span class="o">:=</span> <span class="n">relation</span><span class="bp">.</span><span class="n">symm</span> <span class="bp">_</span> <span class="bp">_</span> <span class="n">h</span><span class="o">,</span>
+    <span class="n">apply</span> <span class="n">filtered_exact&#39;</span> <span class="n">F</span> <span class="n">h</span> <span class="bp">_</span> <span class="bp">_</span> <span class="n">rfl</span> <span class="n">rfl</span><span class="o">,</span> <span class="o">},</span>
+  <span class="o">{</span> <span class="k">let</span> <span class="n">h</span> <span class="o">:=</span> <span class="n">relation</span><span class="bp">.</span><span class="n">trans</span> <span class="bp">_</span> <span class="bp">_</span> <span class="bp">_</span> <span class="n">h₁</span> <span class="n">h₂</span><span class="o">,</span>
+    <span class="n">apply</span> <span class="n">filtered_exact&#39;</span> <span class="n">F</span> <span class="n">h</span> <span class="bp">_</span> <span class="bp">_</span> <span class="n">rfl</span> <span class="n">rfl</span><span class="o">,</span> <span class="o">},</span>
+  <span class="o">{</span> <span class="n">exact</span> <span class="n">filtered_exact&#39;</span> <span class="n">F</span> <span class="bp">_</span><span class="n">x</span> <span class="o">((</span><span class="n">F</span><span class="bp">.</span><span class="n">map</span> <span class="n">f</span><span class="o">)</span> <span class="n">y</span><span class="o">)</span> <span class="n">y</span> <span class="n">rfl</span> <span class="n">rfl</span><span class="o">,</span> <span class="o">},</span>
+<span class="kn">end</span>
+</code></pre></div>
+
+
+
+<a name="208045217"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208045217" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208045217">(Aug 26 2020 at 01:51)</a>:</h4>
+<p>Ah, no, but the <code>trans</code> case of your lemma is simply not provable. I don't think this is going to work.</p>
+
+
+
+<a name="208045607"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208045607" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208045607">(Aug 26 2020 at 01:58)</a>:</h4>
+<p>What of we get rid of trans from relation?</p>
+
+
+
+<a name="208045611"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208045611" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208045611">(Aug 26 2020 at 01:58)</a>:</h4>
+<p>And just never define a setoid?</p>
+
+
+
+<a name="208045623"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208045623" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208045623">(Aug 26 2020 at 01:59)</a>:</h4>
+<p>(same with symm and refl)</p>
+
+
+
+<a name="208045728"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208045728" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208045728">(Aug 26 2020 at 02:00)</a>:</h4>
+<p>This would be a hack anyway... There must be a better way!</p>
+
+
+
+<a name="208046278"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208046278" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208046278">(Aug 26 2020 at 02:10)</a>:</h4>
+<p>I don't think that the setoid business is an issue.</p>
+
+
+
+<a name="208046319"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208046319" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208046319">(Aug 26 2020 at 02:11)</a>:</h4>
+<p>You have a choice whether you deal with transitivity as a case of the relation, or as a case of <code>eqv_gen</code> if you decide not to use a setoid.</p>
+
+
+
+<a name="208053206"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208053206" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208053206">(Aug 26 2020 at 05:03)</a>:</h4>
+<p><span class="user-mention" data-user-id="110032">@Reid Barton</span> or <span class="user-mention" data-user-id="246273">@Bhavik Mehta</span>, I can prove the diagonal functor preserves filtered colimits. But could you sketch out for me a bit more detail how you thought that would be useful defining a ring structure on the type level colimit?</p>
+
+
+
+<a name="208060739"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208060739" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208060739">(Aug 26 2020 at 07:35)</a>:</h4>
+<p>Oh, I see, multiplication gives a natural transformation <code>F ⋙ Δ ⟶ F</code>, and we can take the induced map on colimits, and since <code>Δ</code> preserves filtered colimits, we can turn that into a morphism <code>Δ (colimit F) ⟶ colimit F</code>, which is what we wanted.</p>
+
+
+
+<a name="208070049"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208070049" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208070049">(Aug 26 2020 at 09:31)</a>:</h4>
+<p>I can use this to construct <code>one</code> and <code>mul</code> quite slickly on the type level colimit, but so far my efforts to check the axioms just result in big messes. :-(</p>
+
+
+
+<a name="208081117"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208081117" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208081117">(Aug 26 2020 at 11:50)</a>:</h4>
+<p>Now you should prove that, say, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>↦</mo><mi>X</mi><mo>×</mo><mi>X</mi><mo>×</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">X \mapsto X \times X \times X</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.69433em;vertical-align:-0.011em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">↦</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span> also preserves filtered colimits and therefore any axiom involving 3 variables follows from the fact that, by construction, the maps to the colimit preserve the addition and multiplication you just defined.</p>
+
+
+
+<a name="208081467"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208081467" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208081467">(Aug 26 2020 at 11:55)</a>:</h4>
+<p>That is, if we switch to a more comfortable notation denoting a typical input ring as <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">R_i</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> and their colimit in Set as <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">R</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span>, you've constructed addition on <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">R</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span> as the map <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>×</mo><mi>R</mi><mo>→</mo><mi>R</mi></mrow><annotation encoding="application/x-tex">R \times R \to R</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span> such that the squares formed together with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>i</mi></msub><mo>×</mo><msub><mi>R</mi><mi>i</mi></msub><mo>→</mo><msub><mi>R</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">R_i \times R_i \to R_i</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> commute, and similarly for multiplication. In other words, each map <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>i</mi></msub><mo>→</mo><mi>R</mi></mrow><annotation encoding="application/x-tex">R_i \to R</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span> now preserves <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo></mrow><annotation encoding="application/x-tex">+</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∗</mo></mrow><annotation encoding="application/x-tex">*</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord">∗</span></span></span></span>.</p>
+
+
+
+<a name="208081684"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208081684" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208081684">(Aug 26 2020 at 11:57)</a>:</h4>
+<p>Now, suppose we want to prove that say <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>∗</mo><mo stretchy="false">(</mo><mi>b</mi><mo>+</mo><mi>c</mi><mo stretchy="false">)</mo><mo>=</mo><mi>a</mi><mo>∗</mo><mi>b</mi><mo>+</mo><mi>a</mi><mo>∗</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">a * (b + c) = a * b + a * c</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">c</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">c</span></span></span></span> is satisfied in <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">R</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span>. Look at the diagram formed by the maps <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo separator="true">,</mo><mi>c</mi><mo stretchy="false">)</mo><mo>↦</mo><mi>a</mi><mo>∗</mo><mo stretchy="false">(</mo><mi>b</mi><mo>+</mo><mi>c</mi><mo stretchy="false">)</mo><mo>:</mo><msub><mi>R</mi><mi>i</mi></msub><mo>×</mo><msub><mi>R</mi><mi>i</mi></msub><mo>×</mo><msub><mi>R</mi><mi>i</mi></msub><mo>→</mo><msub><mi>R</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">(a, b, c) \mapsto a * (b + c) : R_i \times R_i \times R_i \to R_i</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">c</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">↦</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">c</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>. Because the maps <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>i</mi></msub><mo>→</mo><mi>R</mi></mrow><annotation encoding="application/x-tex">R_i \to R</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span> preserve addition and multiplication, we can extend this diagram to include the corresponding map <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>×</mo><mi>R</mi><mo>×</mo><mi>R</mi><mo>→</mo><mi>R</mi></mrow><annotation encoding="application/x-tex">R \times R \times R \to R</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span>.</p>
+
+
+
+<a name="208081768"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208081768" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208081768">(Aug 26 2020 at 11:58)</a>:</h4>
+<p>If we instead used the expression <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>∗</mo><mi>b</mi><mo>+</mo><mi>a</mi><mo>∗</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">a * b + a * c</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">c</span></span></span></span>, we'd get the same maps for all the <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">R_i</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, of course, and a priori a different map <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>×</mo><mi>R</mi><mo>×</mo><mi>R</mi><mo>→</mo><mi>R</mi></mrow><annotation encoding="application/x-tex">R \times R \times R \to R</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span>, but we can conclude that they're actually equal because there's only one map that fits there by the universal property of the colimit.</p>
+
+
+
+<a name="208081813"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208081813" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208081813">(Aug 26 2020 at 11:59)</a>:</h4>
+<p>The same kind of argument will appear later when you want to verify the universal property, whicih amounts to showing that the map you get from the universal property in Set is also a ring homomorphism.</p>
+
+
+
+<a name="208082094"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208082094" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208082094">(Aug 26 2020 at 12:02)</a>:</h4>
+<p>I'm a bit confused as to how this solves the original issue of proving the <code>filtered_exact</code> lemma from before. It seems that one would just have to prove a similar lemma for colimits in the category <code>Type*</code> (which is certainly a sensible thing to do), and it seems to me that this would have similar issues with getting the induction right. That is unless mathlib already has an analogue of <code>filtered_exact</code> for colimits in <code>Type*</code>?</p>
+
+
+
+<a name="208082130"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208082130" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208082130">(Aug 26 2020 at 12:02)</a>:</h4>
+<p>Also, with this formulation it feels like we should just define sheaves of rings to be internal ring objects in the category of sheaves of sets.</p>
+
+
+
+<a name="208082195"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208082195" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208082195">(Aug 26 2020 at 12:03)</a>:</h4>
+<p>The point is that in Set, any element of a colimit (even one that isn't filtered) is actually of the form <code>of _</code></p>
+
+
+
+<a name="208082211"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208082211" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208082211">(Aug 26 2020 at 12:03)</a>:</h4>
+<p>and so the corresponding fact for Set is very easy</p>
+
+
+
+<a name="208082327"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208082327" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208082327">(Aug 26 2020 at 12:05)</a>:</h4>
+<p>Well, we already know this for colimits (in the filtered case) in CRing from <code>of_surjective</code> which is a lemma in the file that Scott was working with.</p>
+
+
+
+<a name="208082803"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208082803" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208082803">(Aug 26 2020 at 12:10)</a>:</h4>
+<p>Ok, I think I see why it is easier in the <code>Type*</code>. The point is that we would define the relation whose quotient is the colimit directly on the disjoint union of the components, as opposed to working with an auxiliary <code>prequotient</code> type.</p>
+
+
+
+<a name="208082823"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208082823" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208082823">(Aug 26 2020 at 12:10)</a>:</h4>
+<p>And yes I agree the induction would be much smoother.</p>
+
+
+
+<a name="208082971"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208082971" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208082971">(Aug 26 2020 at 12:12)</a>:</h4>
+<p>Hmm, it's possible you could use the surjectivity somehow, but it's not clear to me. The relations are also more complicated, involving multiple variables.</p>
+
+
+
+<a name="208083032"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208083032" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208083032">(Aug 26 2020 at 12:12)</a>:</h4>
+<p>I might be misunderstanding the root of the issue, but it seems to be coming from using this auxiliary <code>prequotient</code> thing.</p>
+
+
+
+<a name="208083627"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208083627" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208083627">(Aug 26 2020 at 12:19)</a>:</h4>
+<p>Ha, I guess there is not induction at all in the case of <code>Type*</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="n">category_theory</span><span class="bp">.</span><span class="n">limits</span><span class="bp">.</span><span class="n">limits</span>
+<span class="kn">import</span> <span class="n">category_theory</span><span class="bp">.</span><span class="n">limits</span><span class="bp">.</span><span class="n">types</span>
+
+<span class="n">universes</span> <span class="n">u</span> <span class="n">v</span>
+
+<span class="kn">open</span> <span class="n">category_theory</span>
+<span class="kn">open</span> <span class="n">category_theory</span><span class="bp">.</span><span class="n">limits</span>
+
+<span class="kn">variables</span> <span class="o">{</span><span class="n">J</span> <span class="o">:</span> <span class="kt">Type</span> <span class="n">v</span><span class="o">}</span> <span class="o">[</span><span class="n">small_category</span> <span class="n">J</span><span class="o">]</span> <span class="o">(</span><span class="n">F</span> <span class="o">:</span> <span class="n">J</span> <span class="err">⥤</span> <span class="kt">Type</span> <span class="n">u</span><span class="o">)</span>
+
+<span class="kn">namespace</span> <span class="n">colimit</span>
+<span class="n">def</span> <span class="n">relation</span> <span class="o">:</span> <span class="o">(</span><span class="err">Σ</span> <span class="o">(</span><span class="n">j</span> <span class="o">:</span> <span class="n">J</span><span class="o">),</span> <span class="n">F</span><span class="bp">.</span><span class="n">obj</span> <span class="n">j</span><span class="o">)</span> <span class="bp">→</span> <span class="o">(</span><span class="err">Σ</span> <span class="o">(</span><span class="n">j</span> <span class="o">:</span> <span class="n">J</span><span class="o">),</span> <span class="n">F</span><span class="bp">.</span><span class="n">obj</span> <span class="n">j</span><span class="o">)</span> <span class="bp">→</span> <span class="kt">Prop</span> <span class="o">:=</span>
+  <span class="bp">λ</span> <span class="bp">⟨</span><span class="n">j₁</span><span class="o">,</span><span class="n">x₁</span><span class="bp">⟩</span> <span class="bp">⟨</span><span class="n">j₂</span><span class="o">,</span><span class="n">x₂</span><span class="bp">⟩</span><span class="o">,</span> <span class="bp">∃</span> <span class="o">(</span><span class="n">i</span> <span class="o">:</span> <span class="n">j₁</span> <span class="err">⟶</span> <span class="n">j₂</span><span class="o">),</span> <span class="n">F</span><span class="bp">.</span><span class="n">map</span> <span class="n">i</span> <span class="n">x₁</span> <span class="bp">=</span> <span class="n">x₂</span>
+<span class="kn">end</span> <span class="n">colimit</span>
+
+<span class="n">def</span> <span class="n">colimit</span> <span class="o">:=</span> <span class="n">quot</span> <span class="o">(</span><span class="n">colimit</span><span class="bp">.</span><span class="n">relation</span> <span class="n">F</span><span class="o">)</span>
+</code></pre></div>
+
+
+<p>I think that's the right construction?</p>
+
+
+
+<a name="208087405"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208087405" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208087405">(Aug 26 2020 at 12:59)</a>:</h4>
+<p>Okay, it works for colimits of types :)</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="n">category_theory</span><span class="bp">.</span><span class="n">limits</span><span class="bp">.</span><span class="n">limits</span>
+<span class="kn">import</span> <span class="n">category_theory</span><span class="bp">.</span><span class="n">limits</span><span class="bp">.</span><span class="n">types</span>
+
+<span class="n">universes</span> <span class="n">u</span> <span class="n">v</span>
+
+<span class="kn">open</span> <span class="n">category_theory</span>
+<span class="kn">open</span> <span class="n">category_theory</span><span class="bp">.</span><span class="n">limits</span>
+
+<span class="kn">variables</span> <span class="o">{</span><span class="n">J</span> <span class="o">:</span> <span class="kt">Type</span> <span class="n">v</span><span class="o">}</span> <span class="o">[</span><span class="n">small_category</span> <span class="n">J</span><span class="o">]</span> <span class="o">(</span><span class="n">F</span> <span class="o">:</span> <span class="n">J</span> <span class="err">⥤</span> <span class="kt">Type</span> <span class="n">u</span><span class="o">)</span>
+
+<span class="kn">namespace</span> <span class="n">colimit</span>
+<span class="bp">@</span><span class="o">[</span><span class="kn">reducible</span><span class="o">]</span>
+<span class="n">def</span> <span class="n">relation</span> <span class="o">:</span> <span class="o">(</span><span class="err">Σ</span> <span class="o">(</span><span class="n">j</span> <span class="o">:</span> <span class="n">J</span><span class="o">),</span> <span class="n">F</span><span class="bp">.</span><span class="n">obj</span> <span class="n">j</span><span class="o">)</span> <span class="bp">→</span> <span class="o">(</span><span class="err">Σ</span> <span class="o">(</span><span class="n">j</span> <span class="o">:</span> <span class="n">J</span><span class="o">),</span> <span class="n">F</span><span class="bp">.</span><span class="n">obj</span> <span class="n">j</span><span class="o">)</span> <span class="bp">→</span> <span class="kt">Prop</span> <span class="o">:=</span>
+  <span class="bp">λ</span> <span class="n">x</span> <span class="n">y</span><span class="o">,</span> <span class="bp">∃</span> <span class="o">(</span><span class="n">i</span> <span class="o">:</span> <span class="n">x</span><span class="bp">.</span><span class="mi">1</span> <span class="err">⟶</span> <span class="n">y</span><span class="bp">.</span><span class="mi">1</span><span class="o">),</span> <span class="n">F</span><span class="bp">.</span><span class="n">map</span> <span class="n">i</span> <span class="n">x</span><span class="bp">.</span><span class="mi">2</span> <span class="bp">=</span> <span class="n">y</span><span class="bp">.</span><span class="mi">2</span>
+<span class="kn">end</span> <span class="n">colimit</span>
+
+<span class="n">def</span> <span class="n">colimit</span> <span class="o">:=</span> <span class="n">quot</span> <span class="o">(</span><span class="n">colimit</span><span class="bp">.</span><span class="n">relation</span> <span class="n">F</span><span class="o">)</span>
+
+<span class="kn">lemma</span> <span class="n">filtered_exact</span> <span class="o">[</span><span class="n">is_filtered</span> <span class="n">J</span><span class="o">]</span> <span class="o">(</span><span class="n">x</span> <span class="n">y</span> <span class="o">:</span> <span class="err">Σ</span> <span class="o">(</span><span class="n">j</span> <span class="o">:</span> <span class="n">J</span><span class="o">),</span> <span class="n">F</span><span class="bp">.</span><span class="n">obj</span> <span class="n">j</span><span class="o">)</span>
+  <span class="o">(</span><span class="n">h</span> <span class="o">:</span> <span class="n">quot</span><span class="bp">.</span><span class="n">mk</span> <span class="o">(</span><span class="n">colimit</span><span class="bp">.</span><span class="n">relation</span> <span class="n">F</span><span class="o">)</span> <span class="n">x</span> <span class="bp">=</span> <span class="n">quot</span><span class="bp">.</span><span class="n">mk</span> <span class="o">(</span><span class="n">colimit</span><span class="bp">.</span><span class="n">relation</span> <span class="n">F</span><span class="o">)</span> <span class="n">y</span><span class="o">)</span> <span class="o">:</span>
+  <span class="o">(</span><span class="bp">∃</span> <span class="o">(</span><span class="n">j</span> <span class="o">:</span> <span class="n">J</span><span class="o">)</span> <span class="o">(</span><span class="n">i1</span> <span class="o">:</span> <span class="n">x</span><span class="bp">.</span><span class="mi">1</span> <span class="err">⟶</span> <span class="n">j</span><span class="o">)</span> <span class="o">(</span><span class="n">i2</span> <span class="o">:</span> <span class="n">y</span><span class="bp">.</span><span class="mi">1</span> <span class="err">⟶</span> <span class="n">j</span><span class="o">),</span> <span class="n">F</span><span class="bp">.</span><span class="n">map</span> <span class="n">i1</span> <span class="n">x</span><span class="bp">.</span><span class="mi">2</span> <span class="bp">=</span> <span class="n">F</span><span class="bp">.</span><span class="n">map</span> <span class="n">i2</span> <span class="n">y</span><span class="bp">.</span><span class="mi">2</span><span class="o">)</span> <span class="o">:=</span>
+<span class="k">begin</span>
+  <span class="n">cases</span> <span class="n">x</span> <span class="k">with</span> <span class="n">j1</span> <span class="n">x</span><span class="o">,</span>
+  <span class="n">cases</span> <span class="n">y</span> <span class="k">with</span> <span class="n">j2</span> <span class="n">y</span><span class="o">,</span>
+  <span class="n">replace</span> <span class="n">h</span> <span class="o">:=</span> <span class="n">quot</span><span class="bp">.</span><span class="n">exact</span> <span class="bp">_</span> <span class="n">h</span><span class="o">,</span>
+  <span class="n">induction</span> <span class="n">h</span><span class="o">,</span>
+  <span class="o">{</span> <span class="n">cases</span> <span class="n">h_a</span><span class="o">,</span>
+    <span class="n">refine</span> <span class="bp">⟨</span><span class="n">h_y</span><span class="bp">.</span><span class="mi">1</span><span class="o">,</span><span class="n">h_a_w</span><span class="o">,</span><span class="mi">𝟙</span> <span class="bp">_</span><span class="o">,</span><span class="bp">_⟩</span><span class="o">,</span>
+    <span class="n">simpa</span> <span class="o">},</span>
+  <span class="o">{</span> <span class="n">refine</span> <span class="bp">⟨</span><span class="n">h</span><span class="bp">.</span><span class="mi">1</span><span class="o">,</span><span class="mi">𝟙</span> <span class="bp">_</span><span class="o">,</span> <span class="mi">𝟙</span> <span class="bp">_</span><span class="o">,</span> <span class="bp">_⟩</span><span class="o">,</span>
+    <span class="n">simp</span> <span class="o">},</span>
+  <span class="o">{</span> <span class="n">rcases</span> <span class="n">h_ih</span> <span class="k">with</span> <span class="bp">⟨</span><span class="n">j</span><span class="o">,</span><span class="n">i1</span><span class="o">,</span><span class="n">i2</span><span class="o">,</span><span class="n">h</span><span class="bp">⟩</span><span class="o">,</span>
+    <span class="n">refine</span> <span class="bp">⟨</span><span class="n">j</span><span class="o">,</span><span class="n">i2</span><span class="o">,</span><span class="n">i1</span><span class="o">,</span><span class="bp">_⟩</span><span class="o">,</span>
+    <span class="n">symmetry</span><span class="o">,</span> <span class="n">assumption</span> <span class="o">},</span>
+  <span class="o">{</span> <span class="n">rcases</span> <span class="n">h_ih_a</span> <span class="k">with</span> <span class="bp">⟨</span><span class="n">j1</span><span class="o">,</span><span class="n">i11</span><span class="o">,</span><span class="n">i12</span><span class="o">,</span><span class="n">h1</span><span class="bp">⟩</span><span class="o">,</span>
+    <span class="n">rcases</span> <span class="n">h_ih_a_1</span> <span class="k">with</span> <span class="bp">⟨</span><span class="n">j2</span><span class="o">,</span><span class="n">i21</span><span class="o">,</span><span class="n">i22</span><span class="o">,</span><span class="n">h2</span><span class="bp">⟩</span><span class="o">,</span>
+    <span class="n">rcases</span> <span class="n">is_filtered_or_empty</span><span class="bp">.</span><span class="n">cocone_objs</span> <span class="n">j1</span> <span class="n">j2</span> <span class="k">with</span> <span class="bp">⟨</span><span class="n">j</span><span class="o">,</span><span class="n">i1</span><span class="o">,</span><span class="n">i2</span><span class="o">,</span><span class="bp">_⟩</span><span class="o">,</span>
+    <span class="n">rcases</span> <span class="n">is_filtered_or_empty</span><span class="bp">.</span><span class="n">cocone_maps</span> <span class="o">(</span><span class="n">i12</span> <span class="err">≫</span> <span class="n">i1</span><span class="o">)</span> <span class="o">(</span><span class="n">i21</span> <span class="err">≫</span> <span class="n">i2</span><span class="o">)</span> <span class="k">with</span> <span class="bp">⟨</span><span class="n">jj</span><span class="o">,</span><span class="n">i</span><span class="o">,</span><span class="n">hh</span><span class="bp">⟩</span><span class="o">,</span>
+    <span class="n">use</span> <span class="n">jj</span><span class="o">,</span>
+    <span class="n">use</span> <span class="n">i11</span> <span class="err">≫</span> <span class="n">i1</span> <span class="err">≫</span> <span class="n">i</span><span class="o">,</span>
+    <span class="n">use</span> <span class="n">i22</span> <span class="err">≫</span> <span class="n">i2</span> <span class="err">≫</span> <span class="n">i</span><span class="o">,</span>
+    <span class="n">simp</span> <span class="n">only</span> <span class="o">[</span><span class="n">functor_to_types</span><span class="bp">.</span><span class="n">map_comp_apply</span><span class="o">],</span>
+    <span class="n">rw</span> <span class="o">[</span><span class="n">h1</span><span class="o">,</span><span class="err">←</span><span class="n">h2</span><span class="o">],</span>
+    <span class="n">simp_rw</span> <span class="err">←</span><span class="n">functor_to_types</span><span class="bp">.</span><span class="n">map_comp_apply</span><span class="o">,</span>
+    <span class="n">rw</span> <span class="n">hh</span> <span class="o">}</span>
+<span class="kn">end</span>
+</code></pre></div>
+
+
+
+<a name="208087745"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208087745" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208087745">(Aug 26 2020 at 13:03)</a>:</h4>
+<p>right, I think that's what I proved <a href="https://github.com/leanprover-community/mathlib/commit/bc457fb5716fbffe63cbcc10b4ce7a253c720f84#diff-b99529211f61cfc9437470fc7ea6ed1aR131-R132">here</a></p>
+
+
+
+<a name="208088001"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208088001" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208088001">(Aug 26 2020 at 13:06)</a>:</h4>
+<p>By the way, isn't there some general category theory voodoo which tells us that the underlying type of the colimits in CRing are the same as the colimits of the underlying type, using the fact that the forgetful functor from CRing to Set is a right adjoint?</p>
+
+
+
+<a name="208088518"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208088518" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208088518">(Aug 26 2020 at 13:11)</a>:</h4>
+<p>Oh, no, right adjoints preserve limits.</p>
+
+
+
+<a name="208088660"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208088660" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208088660">(Aug 26 2020 at 13:12)</a>:</h4>
+<p>And anyway, this is only true for filtered colimits.</p>
+
+
+
+<a name="208097181"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/preserve%20filtered%20colimits/near/208097181" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Adam Topaz <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/preserve.20filtered.20colimits.html#208097181">(Aug 26 2020 at 14:19)</a>:</h4>
+<p>I guess there is some general-nonsense type theorem that this fits into (something about algebras for Lawvere theories, etc.) but the proof seems to boil down to the fact that filtered colimits commute with finite limits in Set, so one would have to do the work that Reid is suggesting anyway :)</p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

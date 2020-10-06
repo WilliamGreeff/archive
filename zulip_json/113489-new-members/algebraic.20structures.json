@@ -1,0 +1,140 @@
+[
+    {
+        "content": "<p>Is it possible, as an example, to define the notion of a group, prove properties that all groups have, prove that ℤ is a group under addition, and thus have proofs of those properties for ℤ under addition? The definition of a group that I know uses a set, so I'm not sure how that translates to type theory. Would a group be a type class?</p>",
+        "id": 211863042,
+        "sender_full_name": "Patrick Thomas",
+        "timestamp": 1601519405
+    },
+    {
+        "content": "<p>Type classes are a feature that let you attach structure to already existing things.  Group structures are a perfect use for type classes.</p>",
+        "id": 211863201,
+        "sender_full_name": "Kyle Miller",
+        "timestamp": 1601519623
+    },
+    {
+        "content": "<p>My first thought was like</p>\n<div class=\"codehilite\" data-code-language=\"Lean\"><pre><span></span><code><span class=\"kd\">structure</span> <span class=\"n\">group</span> <span class=\"o\">(</span><span class=\"n\">α</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">S</span> <span class=\"o\">:</span> <span class=\"n\">set</span> <span class=\"n\">α</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">op</span> <span class=\"o\">:</span> <span class=\"n\">α</span> <span class=\"bp\">→</span> <span class=\"n\">α</span> <span class=\"bp\">→</span> <span class=\"n\">α</span><span class=\"o\">)</span> <span class=\"o\">:=</span>\n<span class=\"o\">(</span><span class=\"n\">closure</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"n\">a</span> <span class=\"n\">b</span> <span class=\"bp\">∈</span> <span class=\"n\">S</span><span class=\"o\">,</span> <span class=\"o\">(</span><span class=\"n\">op</span> <span class=\"n\">a</span> <span class=\"n\">b</span> <span class=\"bp\">∈</span> <span class=\"n\">S</span><span class=\"o\">))</span>\n<span class=\"o\">(</span><span class=\"n\">assoc</span><span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"n\">a</span> <span class=\"n\">b</span> <span class=\"n\">c</span> <span class=\"bp\">∈</span> <span class=\"n\">S</span><span class=\"o\">,</span> <span class=\"o\">(</span><span class=\"n\">op</span> <span class=\"o\">(</span><span class=\"n\">op</span> <span class=\"n\">a</span> <span class=\"n\">b</span><span class=\"o\">)</span> <span class=\"n\">c</span><span class=\"o\">)</span> <span class=\"bp\">=</span> <span class=\"o\">(</span><span class=\"n\">op</span> <span class=\"n\">a</span> <span class=\"o\">(</span><span class=\"n\">op</span> <span class=\"n\">b</span> <span class=\"n\">c</span><span class=\"o\">)))</span>\n<span class=\"o\">(</span><span class=\"n\">e</span> <span class=\"o\">:</span> <span class=\"n\">α</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"n\">e</span> <span class=\"bp\">∈</span> <span class=\"n\">S</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">ident_1</span><span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"n\">a</span> <span class=\"bp\">∈</span> <span class=\"n\">S</span><span class=\"o\">,</span> <span class=\"o\">(</span><span class=\"n\">op</span> <span class=\"n\">e</span> <span class=\"n\">a</span><span class=\"o\">)</span> <span class=\"bp\">=</span> <span class=\"n\">a</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">ident_2</span><span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"n\">a</span> <span class=\"bp\">∈</span> <span class=\"n\">S</span><span class=\"o\">,</span> <span class=\"o\">(</span><span class=\"n\">op</span> <span class=\"n\">a</span> <span class=\"n\">e</span><span class=\"o\">)</span> <span class=\"bp\">=</span> <span class=\"n\">a</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">inv_1</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"n\">a</span> <span class=\"bp\">∈</span> <span class=\"n\">S</span><span class=\"o\">,</span> <span class=\"bp\">∃</span> <span class=\"n\">b</span> <span class=\"bp\">∈</span> <span class=\"n\">S</span><span class=\"o\">,</span> <span class=\"n\">op</span> <span class=\"n\">a</span> <span class=\"n\">b</span> <span class=\"bp\">=</span> <span class=\"n\">e</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">inv_2</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"n\">a</span> <span class=\"bp\">∈</span> <span class=\"n\">S</span><span class=\"o\">,</span> <span class=\"bp\">∃</span> <span class=\"n\">b</span> <span class=\"bp\">∈</span> <span class=\"n\">S</span><span class=\"o\">,</span> <span class=\"n\">op</span> <span class=\"n\">b</span> <span class=\"n\">a</span> <span class=\"bp\">=</span> <span class=\"n\">e</span><span class=\"o\">)</span>\n</code></pre></div>\n\n<p>But then a set didn't seem right.</p>",
+        "id": 211863252,
+        "sender_full_name": "Patrick Thomas",
+        "timestamp": 1601519667
+    },
+    {
+        "content": "<p>With classes, it's this sort of setup:</p>\n<div class=\"codehilite\" data-code-language=\"Lean\"><pre><span></span><code><span class=\"kd\">class</span> <span class=\"n\">group</span> <span class=\"o\">(</span><span class=\"n\">G</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"bp\">*</span><span class=\"o\">)</span> <span class=\"o\">:=</span>\n<span class=\"o\">(</span><span class=\"n\">op</span> <span class=\"o\">:</span> <span class=\"n\">G</span> <span class=\"bp\">→</span> <span class=\"n\">G</span> <span class=\"bp\">→</span> <span class=\"n\">G</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">unit</span> <span class=\"o\">:</span> <span class=\"n\">G</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">inv</span> <span class=\"o\">:</span> <span class=\"n\">G</span> <span class=\"bp\">→</span> <span class=\"n\">G</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">assoc</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"o\">{</span><span class=\"n\">x</span> <span class=\"n\">y</span> <span class=\"n\">z</span> <span class=\"o\">:</span> <span class=\"n\">G</span><span class=\"o\">},</span> <span class=\"n\">op</span> <span class=\"n\">x</span> <span class=\"o\">(</span><span class=\"n\">op</span> <span class=\"n\">y</span> <span class=\"n\">z</span><span class=\"o\">)</span> <span class=\"bp\">=</span> <span class=\"n\">op</span> <span class=\"o\">(</span><span class=\"n\">op</span> <span class=\"n\">x</span> <span class=\"n\">y</span><span class=\"o\">)</span> <span class=\"n\">z</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">op_unit</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"o\">{</span><span class=\"n\">x</span> <span class=\"o\">:</span> <span class=\"n\">G</span><span class=\"o\">},</span> <span class=\"n\">op</span> <span class=\"n\">x</span> <span class=\"n\">unit</span> <span class=\"bp\">=</span> <span class=\"n\">x</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">unit_op</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"o\">{</span><span class=\"n\">x</span> <span class=\"o\">:</span> <span class=\"n\">G</span><span class=\"o\">},</span> <span class=\"n\">op</span> <span class=\"n\">unit</span> <span class=\"n\">x</span> <span class=\"bp\">=</span> <span class=\"n\">x</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">op_inv</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"o\">{</span><span class=\"n\">x</span> <span class=\"o\">:</span> <span class=\"n\">G</span><span class=\"o\">},</span> <span class=\"n\">op</span> <span class=\"n\">x</span> <span class=\"o\">(</span><span class=\"n\">inv</span> <span class=\"n\">x</span><span class=\"o\">)</span> <span class=\"bp\">=</span> <span class=\"n\">unit</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">inv_op</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"o\">{</span><span class=\"n\">x</span> <span class=\"o\">:</span> <span class=\"n\">G</span><span class=\"o\">},</span> <span class=\"n\">op</span> <span class=\"o\">(</span><span class=\"n\">inv</span> <span class=\"n\">x</span><span class=\"o\">)</span> <span class=\"n\">x</span> <span class=\"bp\">=</span> <span class=\"n\">unit</span><span class=\"o\">)</span>\n\n<span class=\"kd\">instance</span> <span class=\"o\">:</span> <span class=\"n\">group</span> <span class=\"n\">ℤ</span> <span class=\"o\">:=</span>\n<span class=\"o\">{</span><span class=\"n\">op</span> <span class=\"o\">:=</span> <span class=\"o\">(</span><span class=\"bp\">+</span><span class=\"o\">),</span>\n <span class=\"n\">unit</span> <span class=\"o\">:=</span> <span class=\"mi\">1</span><span class=\"o\">,</span>\n <span class=\"n\">inv</span> <span class=\"o\">:=</span> <span class=\"bp\">λ</span> <span class=\"n\">x</span><span class=\"o\">,</span> <span class=\"bp\">-</span><span class=\"n\">x</span><span class=\"o\">,</span>\n <span class=\"bp\">...</span>\n<span class=\"o\">}</span>\n</code></pre></div>",
+        "id": 211863338,
+        "sender_full_name": "Kyle Miller",
+        "timestamp": 1601519794
+    },
+    {
+        "content": "<p>Inverse is a function?</p>",
+        "id": 211863378,
+        "sender_full_name": "Patrick Thomas",
+        "timestamp": 1601519869
+    },
+    {
+        "content": "<p>You can define a group as an operation on a set, but with Lean you can lift sets up to being types (with <code>subtype</code>), so you may as well work with an operation on a type.</p>",
+        "id": 211863422,
+        "sender_full_name": "Kyle Miller",
+        "timestamp": 1601519896
+    },
+    {
+        "content": "<p>I made inverse be a function, but you can use <code>classical.some</code> and the rest with your <code>inv_1</code> axiom to define it.</p>",
+        "id": 211863446,
+        "sender_full_name": "Kyle Miller",
+        "timestamp": 1601519962
+    },
+    {
+        "content": "<p>My definition is the constructible version, since to form a group you would need to show you can give an explicit inverse function.  If you only care about classical reasoning, then this distinction doesn't matter.</p>",
+        "id": 211863516,
+        "sender_full_name": "Kyle Miller",
+        "timestamp": 1601520025
+    },
+    {
+        "content": "<p>(By the way, type classes are just structures, but they plug into a special mechanism that lets Lean automatically locate relevant terms (called instances) of the structure.)</p>",
+        "id": 211863621,
+        "sender_full_name": "Kyle Miller",
+        "timestamp": 1601520179
+    },
+    {
+        "content": "<p>Thank you. I'll see if I can make the classical version as you described.</p>",
+        "id": 211863745,
+        "sender_full_name": "Patrick Thomas",
+        "timestamp": 1601520347
+    },
+    {
+        "content": "<p>Actually, that is really cool.</p>",
+        "id": 211864211,
+        "sender_full_name": "Patrick Thomas",
+        "timestamp": 1601520959
+    },
+    {
+        "content": "<p>Here's an example of a generic lemma to get you started, if you didn't know the syntax already:</p>\n<div class=\"codehilite\" data-code-language=\"Lean\"><pre><span></span><code><span class=\"kn\">open</span> <span class=\"n\">group</span>\n\n<span class=\"kd\">lemma</span> <span class=\"n\">unit_unique</span> <span class=\"o\">{</span><span class=\"n\">G</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"bp\">*</span><span class=\"o\">}</span> <span class=\"o\">[</span><span class=\"n\">group</span> <span class=\"n\">G</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">unit'</span> <span class=\"o\">:</span> <span class=\"n\">G</span><span class=\"o\">)</span>\n  <span class=\"o\">(</span><span class=\"n\">h_left</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"n\">x</span><span class=\"o\">,</span> <span class=\"n\">op</span> <span class=\"n\">unit'</span> <span class=\"n\">x</span> <span class=\"bp\">=</span> <span class=\"n\">x</span><span class=\"o\">)</span> <span class=\"o\">:</span>\n  <span class=\"n\">unit'</span> <span class=\"bp\">=</span> <span class=\"n\">unit</span> <span class=\"o\">:=</span>\n<span class=\"kd\">begin</span>\n  <span class=\"n\">transitivity</span> <span class=\"n\">op</span> <span class=\"n\">unit'</span> <span class=\"n\">unit</span><span class=\"o\">,</span>\n  <span class=\"n\">rw</span> <span class=\"n\">op_unit</span><span class=\"o\">,</span>\n  <span class=\"n\">rw</span> <span class=\"n\">h_left</span><span class=\"o\">,</span>\n<span class=\"kd\">end</span>\n</code></pre></div>",
+        "id": 211864451,
+        "sender_full_name": "Kyle Miller",
+        "timestamp": 1601521216
+    },
+    {
+        "content": "<p>Thank you!</p>",
+        "id": 211864550,
+        "sender_full_name": "Patrick Thomas",
+        "timestamp": 1601521344
+    },
+    {
+        "content": "<p>I forgot the <code>open group</code> line.  This takes everything that's inside the <code>group</code> namespace (i.e., the fields of <code>group</code>) and makes them accessible without needing to write things like <code>group.op</code>.</p>",
+        "id": 211864575,
+        "sender_full_name": "Kyle Miller",
+        "timestamp": 1601521407
+    },
+    {
+        "content": "<p>Did you mean that the classical version is just:</p>\n<div class=\"codehilite\" data-code-language=\"Lean\"><pre><span></span><code><span class=\"kd\">class</span> <span class=\"n\">group_classical</span> <span class=\"o\">(</span><span class=\"n\">G</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"bp\">*</span><span class=\"o\">)</span> <span class=\"o\">:=</span>\n<span class=\"o\">(</span><span class=\"n\">op</span> <span class=\"o\">:</span> <span class=\"n\">G</span> <span class=\"bp\">→</span> <span class=\"n\">G</span> <span class=\"bp\">→</span> <span class=\"n\">G</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">unit</span> <span class=\"o\">:</span> <span class=\"n\">G</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">assoc</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"o\">{</span><span class=\"n\">x</span> <span class=\"n\">y</span> <span class=\"n\">z</span> <span class=\"o\">:</span> <span class=\"n\">G</span><span class=\"o\">},</span> <span class=\"n\">op</span> <span class=\"n\">x</span> <span class=\"o\">(</span><span class=\"n\">op</span> <span class=\"n\">y</span> <span class=\"n\">z</span><span class=\"o\">)</span> <span class=\"bp\">=</span> <span class=\"n\">op</span> <span class=\"o\">(</span><span class=\"n\">op</span> <span class=\"n\">x</span> <span class=\"n\">y</span><span class=\"o\">)</span> <span class=\"n\">z</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">op_unit</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"o\">{</span><span class=\"n\">x</span> <span class=\"o\">:</span> <span class=\"n\">G</span><span class=\"o\">},</span> <span class=\"n\">op</span> <span class=\"n\">x</span> <span class=\"n\">unit</span> <span class=\"bp\">=</span> <span class=\"n\">x</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">unit_op</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"o\">{</span><span class=\"n\">x</span> <span class=\"o\">:</span> <span class=\"n\">G</span><span class=\"o\">},</span> <span class=\"n\">op</span> <span class=\"n\">unit</span> <span class=\"n\">x</span> <span class=\"bp\">=</span> <span class=\"n\">x</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">op_inv</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"o\">{</span><span class=\"n\">x</span> <span class=\"o\">:</span> <span class=\"n\">G</span><span class=\"o\">},</span> <span class=\"bp\">∃</span> <span class=\"o\">{</span><span class=\"n\">b</span> <span class=\"o\">:</span> <span class=\"n\">G</span><span class=\"o\">},</span> <span class=\"n\">op</span> <span class=\"n\">x</span> <span class=\"n\">b</span> <span class=\"bp\">=</span> <span class=\"n\">unit</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">inv_op</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"o\">{</span><span class=\"n\">x</span> <span class=\"o\">:</span> <span class=\"n\">G</span><span class=\"o\">},</span> <span class=\"bp\">∃</span> <span class=\"o\">{</span><span class=\"n\">b</span> <span class=\"o\">:</span> <span class=\"n\">G</span><span class=\"o\">},</span> <span class=\"n\">op</span> <span class=\"n\">b</span> <span class=\"n\">x</span> <span class=\"bp\">=</span> <span class=\"n\">unit</span><span class=\"o\">)</span>\n</code></pre></div>\n\n<p>and that it is the instance that would have to use classical.some?</p>",
+        "id": 211865488,
+        "sender_full_name": "Patrick Thomas",
+        "timestamp": 1601522655
+    },
+    {
+        "content": "<p>actually you can drop the unit too</p>",
+        "id": 211865518,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1601522740
+    },
+    {
+        "content": "<p>but the two inverses generally have to be in the same existential</p>",
+        "id": 211865563,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1601522764
+    },
+    {
+        "content": "<p>groups I think are special because you can prove that the left and right inverse are the same, but for weaker structures you have to assume this</p>",
+        "id": 211865576,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1601522806
+    },
+    {
+        "content": "<p>Sorry, do you know how I would fix the syntax here:</p>\n<div class=\"codehilite\" data-code-language=\"Lean\"><pre><span></span><code><span class=\"kd\">class</span> <span class=\"n\">total_order</span> <span class=\"o\">{</span><span class=\"n\">T</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"bp\">*</span><span class=\"o\">}</span> <span class=\"o\">:=</span>\n<span class=\"o\">(</span><span class=\"n\">le</span> <span class=\"o\">:</span> <span class=\"n\">T</span> <span class=\"bp\">→</span> <span class=\"n\">T</span> <span class=\"bp\">→</span> <span class=\"kt\">Prop</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">asymm</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"n\">a</span> <span class=\"n\">b</span> <span class=\"o\">:</span> <span class=\"n\">T</span><span class=\"o\">,</span> <span class=\"n\">le</span> <span class=\"n\">a</span> <span class=\"n\">b</span> <span class=\"bp\">∧</span> <span class=\"n\">le</span> <span class=\"n\">b</span> <span class=\"n\">a</span> <span class=\"bp\">→</span> <span class=\"n\">a</span> <span class=\"bp\">=</span> <span class=\"n\">b</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">trans</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"n\">a</span> <span class=\"n\">b</span> <span class=\"n\">c</span> <span class=\"o\">:</span> <span class=\"n\">T</span><span class=\"o\">,</span> <span class=\"n\">le</span> <span class=\"n\">a</span> <span class=\"n\">b</span> <span class=\"bp\">∧</span> <span class=\"n\">le</span> <span class=\"n\">b</span> <span class=\"n\">c</span> <span class=\"bp\">→</span> <span class=\"n\">le</span> <span class=\"n\">a</span> <span class=\"n\">c</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">conn</span> <span class=\"o\">:</span> <span class=\"bp\">∀</span> <span class=\"n\">a</span> <span class=\"n\">b</span> <span class=\"o\">:</span> <span class=\"n\">T</span><span class=\"o\">,</span> <span class=\"n\">le</span> <span class=\"n\">a</span> <span class=\"n\">b</span> <span class=\"bp\">∨</span> <span class=\"n\">le</span> <span class=\"n\">b</span> <span class=\"n\">a</span><span class=\"o\">)</span>\n\n<span class=\"kd\">def</span> <span class=\"n\">is_upper_bound</span> <span class=\"o\">{</span><span class=\"n\">T</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"bp\">*</span><span class=\"o\">}</span> <span class=\"o\">[</span><span class=\"n\">total_order</span> <span class=\"n\">T</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">S</span> <span class=\"o\">:</span> <span class=\"n\">set</span> <span class=\"n\">T</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">t</span> <span class=\"o\">:</span> <span class=\"n\">T</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"kt\">Prop</span> <span class=\"o\">:=</span>\n<span class=\"bp\">∀</span> <span class=\"n\">s</span> <span class=\"bp\">∈</span> <span class=\"n\">S</span><span class=\"o\">,</span> <span class=\"n\">le</span> <span class=\"n\">s</span> <span class=\"n\">t</span>\n</code></pre></div>",
+        "id": 212179372,
+        "sender_full_name": "Patrick Thomas",
+        "timestamp": 1601742930
+    },
+    {
+        "content": "<p>They syntax for the <code>is_upper_bound</code> definition that is.</p>",
+        "id": 212179436,
+        "sender_full_name": "Patrick Thomas",
+        "timestamp": 1601743020
+    },
+    {
+        "content": "<p>I guess I just needed to change it to:<br>\n<code>def is_upper_bound {T : Type*} [@total_order T] (S : set T) (t : T) : Prop := sorry</code>.</p>",
+        "id": 212179750,
+        "sender_full_name": "Patrick Thomas",
+        "timestamp": 1601743606
+    },
+    {
+        "content": "<p>Change the binder type in <code>total_order</code> to <code>(T : Type*)</code> instead, otherwise you'll have to write <code>@total_order</code> every time.</p>",
+        "id": 212179957,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1601744010
+    },
+    {
+        "content": "<p>Ok.</p>",
+        "id": 212180072,
+        "sender_full_name": "Patrick Thomas",
+        "timestamp": 1601744167
+    }
+]

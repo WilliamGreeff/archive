@@ -1,0 +1,151 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/113489-new-members/topic/basic.20tactic.20writing.20.26.20IO.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/index.html">new members</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/basic.20tactic.20writing.20.26.20IO.html">basic tactic writing & IO</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="212102906"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/basic%20tactic%20writing%20%26%20IO/near/212102906" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Logan Murphy <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/basic.20tactic.20writing.20.26.20IO.html#212102906">(Oct 02 2020 at 17:15)</a>:</h4>
+<p>a slightly different question, is there any support for defining lean functions from standard input? For instance, is there a way to use <code>get_line</code> to read a string like </p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="k">fun</span> <span class="n">n</span> <span class="o">:</span> <span class="n">nat</span><span class="o">,</span> <span class="n">ne</span> <span class="n">n</span> <span class="mi">0</span>
+</code></pre></div>
+
+<p>and turn this into a lean expression, which could be used in a tactic? I looked around in <code>tactic.expr</code> and <code>system.io</code> but I can't seem to find anything of this kind. I  can write a simple parser for now, but it would be nice to know if there's a general function or something</p>
+
+
+
+<a name="212112689"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/basic%20tactic%20writing%20%26%20IO/near/212112689" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/basic.20tactic.20writing.20.26.20IO.html#212112689">(Oct 02 2020 at 18:44)</a>:</h4>
+<p>You can only do this from the <code>parser</code> monad</p>
+
+
+
+<a name="212115035"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/basic%20tactic%20writing%20%26%20IO/near/212115035" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/basic.20tactic.20writing.20.26.20IO.html#212115035">(Oct 02 2020 at 19:05)</a>:</h4>
+<p><span class="user-mention" data-user-id="319223">@Logan Murphy</span> Here's a proof of concept:</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="kn">import</span> <span class="n">system.io</span>
+
+<span class="kn">open</span> <span class="n">lean</span> <span class="n">lean.parser</span> <span class="n">tactic</span> <span class="n">interactive</span>
+
+<span class="kd">meta</span> <span class="kd">def</span> <span class="n">from_file</span> <span class="o">{</span><span class="n">α</span><span class="o">}</span> <span class="o">(</span><span class="n">f</span> <span class="o">:</span> <span class="n">string</span><span class="o">)</span> <span class="o">(</span><span class="n">p</span> <span class="o">:</span> <span class="n">parser</span> <span class="n">α</span><span class="o">)</span> <span class="o">:</span> <span class="n">parser</span> <span class="n">α</span> <span class="o">:=</span>
+<span class="k">do</span> <span class="n">buf</span> <span class="bp">←</span> <span class="n">tactic.unsafe_run_io</span> <span class="o">(</span><span class="n">io.fs.read_file</span> <span class="n">f</span><span class="o">),</span>
+  <span class="n">prod.fst</span> <span class="bp">&lt;$&gt;</span> <span class="n">with_input</span> <span class="n">p</span> <span class="n">buf.to_string</span>
+
+<span class="kd">meta</span> <span class="kd">def</span> <span class="n">load_parser</span> <span class="o">{</span><span class="n">α</span><span class="o">}</span> <span class="o">(</span><span class="n">p</span> <span class="o">:</span> <span class="n">parser</span> <span class="n">α</span><span class="o">)</span> <span class="o">:</span> <span class="n">parser</span> <span class="n">α</span> <span class="o">:=</span>
+<span class="k">do</span> <span class="n">t</span> <span class="bp">←</span> <span class="n">types.texpr</span><span class="o">,</span>
+  <span class="n">f</span> <span class="bp">←</span> <span class="bp">↑</span><span class="o">(</span><span class="n">to_expr</span> <span class="n">t</span> <span class="bp">&gt;&gt;=</span> <span class="n">eval_expr</span> <span class="n">string</span><span class="o">),</span>
+  <span class="n">from_file</span> <span class="n">f</span> <span class="n">p</span>
+
+<span class="kd">meta</span> <span class="kd">def</span> <span class="n">tactic.interactive.load</span> <span class="o">(</span><span class="n">e</span> <span class="o">:</span> <span class="n">parse</span> <span class="o">(</span><span class="n">load_parser</span> <span class="n">types.texpr</span><span class="o">))</span> <span class="o">:</span> <span class="n">tactic</span> <span class="n">unit</span> <span class="o">:=</span>
+<span class="n">interactive.exact</span> <span class="n">e</span>
+
+<span class="kd">example</span> <span class="o">:</span> <span class="n">true</span> <span class="o">:=</span>
+<span class="kd">begin</span>
+  <span class="k">let</span> <span class="n">foo</span> <span class="o">:=</span> <span class="kd">by</span> <span class="n">load</span> <span class="s2">"foo.txt"</span><span class="o">,</span>
+<span class="c1">-- foo : ℕ → Prop := λ (n : ℕ), n ≠ 0</span>
+<span class="kd">end</span>
+</code></pre></div>
+
+<p>foo.txt:</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="bp">λ</span> <span class="n">n</span> <span class="o">:</span> <span class="n">ℕ</span><span class="o">,</span> <span class="n">n</span> <span class="bp">≠</span> <span class="mi">0</span>
+</code></pre></div>
+
+
+
+<a name="212115145"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/basic%20tactic%20writing%20%26%20IO/near/212115145" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Logan Murphy <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/basic.20tactic.20writing.20.26.20IO.html#212115145">(Oct 02 2020 at 19:06)</a>:</h4>
+<p>That’s very helpful Mario, thank you very much!</p>
+
+
+
+<a name="212115422"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/basic%20tactic%20writing%20%26%20IO/near/212115422" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/basic.20tactic.20writing.20.26.20IO.html#212115422">(Oct 02 2020 at 19:08)</a>:</h4>
+<p>Here's a version that doesn't do any file IO and just does the string -&gt; expr part</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="kn">open</span> <span class="n">lean</span> <span class="n">lean.parser</span> <span class="n">tactic</span> <span class="n">interactive</span>
+
+<span class="kd">meta</span> <span class="kd">def</span> <span class="n">parse_parser</span> <span class="o">{</span><span class="n">α</span><span class="o">}</span> <span class="o">(</span><span class="n">p</span> <span class="o">:</span> <span class="n">parser</span> <span class="n">α</span><span class="o">)</span> <span class="o">:</span> <span class="n">parser</span> <span class="n">α</span> <span class="o">:=</span>
+<span class="k">do</span> <span class="n">t</span> <span class="bp">←</span> <span class="n">types.texpr</span><span class="o">,</span>
+  <span class="n">f</span> <span class="bp">←</span> <span class="bp">↑</span><span class="o">(</span><span class="n">to_expr</span> <span class="n">t</span> <span class="bp">&gt;&gt;=</span> <span class="n">eval_expr</span> <span class="n">string</span><span class="o">),</span>
+  <span class="n">prod.fst</span> <span class="bp">&lt;$&gt;</span> <span class="n">with_input</span> <span class="n">p</span> <span class="n">f</span>
+
+<span class="kd">meta</span> <span class="kd">def</span> <span class="n">tactic.interactive.parse</span> <span class="o">(</span><span class="n">e</span> <span class="o">:</span> <span class="n">parse</span> <span class="o">(</span><span class="n">parse_parser</span> <span class="n">types.texpr</span><span class="o">))</span> <span class="o">:</span> <span class="n">tactic</span> <span class="n">unit</span> <span class="o">:=</span>
+<span class="n">interactive.exact</span> <span class="n">e</span>
+
+<span class="kd">example</span> <span class="o">:</span> <span class="n">true</span> <span class="o">:=</span>
+<span class="kd">begin</span>
+  <span class="k">let</span> <span class="n">foo</span> <span class="o">:=</span> <span class="kd">by</span> <span class="n">parse</span> <span class="s2">"λ (n : ℕ), n ≠ 0"</span><span class="o">,</span>
+<span class="c1">-- foo : ℕ → Prop := λ (n : ℕ), n ≠ 0</span>
+<span class="kd">end</span>
+</code></pre></div>
+
+
+
+<a name="212251791"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/basic%20tactic%20writing%20%26%20IO/near/212251791" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Logan Murphy <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/basic.20tactic.20writing.20.26.20IO.html#212251791">(Oct 05 2020 at 01:57)</a>:</h4>
+<p>I'm not super familiar yet with monads as a programming structure, would it be hard to write a version of <code>io.iterate</code>  as a <code>tactic unit</code>? Just looking at how it's used in <a href="https://agentultra.github.io/lean-for-hackers/">Lean 3 for Hackers</a>, it would be useful to have a counter of some kind in an iteration. </p>
+<p>Specifically, the proof I'm trying to automate is of the form </p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="kn">import</span> <span class="n">system.io</span> <span class="n">tactic</span> <span class="n">data.list</span>
+<span class="kn">open</span>  <span class="n">io</span> <span class="n">tactic</span> <span class="n">list</span>
+
+<span class="kd">def</span> <span class="n">aList</span> <span class="o">:</span> <span class="n">list</span> <span class="kt">Prop</span> <span class="o">:=</span> <span class="o">[</span><span class="n">true</span><span class="o">,</span> <span class="n">true</span><span class="o">,</span> <span class="n">true</span><span class="o">]</span>
+
+<span class="kd">example</span> <span class="o">(</span><span class="n">H</span> <span class="o">:</span> <span class="bp">∀</span> <span class="n">i</span> <span class="o">:</span> <span class="n">fin</span> <span class="n">aList.length</span><span class="o">,</span> <span class="o">(</span><span class="n">aList.nth_le</span> <span class="n">i.val</span> <span class="n">i.property</span><span class="o">))</span> <span class="o">:</span> <span class="n">false</span> <span class="o">:=</span>
+<span class="kd">begin</span>
+  <span class="n">rw</span> <span class="n">aList</span> <span class="n">at</span> <span class="n">H</span><span class="o">,</span>
+  <span class="k">have</span> <span class="n">h1</span> <span class="o">:=</span> <span class="n">H</span> <span class="o">⟨</span><span class="mi">0</span><span class="o">,</span> <span class="n">dec_trivial</span><span class="o">⟩,</span>
+  <span class="k">have</span> <span class="n">h2</span> <span class="o">:=</span> <span class="n">H</span> <span class="o">⟨</span><span class="mi">1</span><span class="o">,</span> <span class="n">dec_trivial</span><span class="o">⟩,</span>
+  <span class="k">have</span> <span class="n">h3</span> <span class="o">:=</span> <span class="n">H</span> <span class="o">⟨</span><span class="mi">2</span><span class="o">,</span> <span class="n">dec_trivial</span><span class="o">⟩,</span>
+<span class="kd">end</span>
+</code></pre></div>
+
+<p>It seems that the simplest way to automate this would be to iterate a counter <code>i</code> from 0  to <code>aList.length</code> (for any <code>aList</code>)</p>
+<p><code>tactic.interactive.iterate</code> allows one to specify the size of the loop, but not to refer to the counter variable</p>
+
+
+
+<a name="212256322"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/basic%20tactic%20writing%20%26%20IO/near/212256322" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/basic.20tactic.20writing.20.26.20IO.html#212256322">(Oct 05 2020 at 04:08)</a>:</h4>
+<p>It's easy to do unbounded iteration using a recursive function</p>
+
+
+
+<a name="212256327"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/basic%20tactic%20writing%20%26%20IO/near/212256327" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/basic.20tactic.20writing.20.26.20IO.html#212256327">(Oct 05 2020 at 04:09)</a>:</h4>
+<p>you don't need <code>io</code> for that</p>
+
+
+
+<a name="212256346"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/basic%20tactic%20writing%20%26%20IO/near/212256346" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/basic.20tactic.20writing.20.26.20IO.html#212256346">(Oct 05 2020 at 04:09)</a>:</h4>
+<p>By the way, your proof looks a lot like <code>fin_cases</code></p>
+
+
+
+<a name="212256664"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/basic%20tactic%20writing%20%26%20IO/near/212256664" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/basic.20tactic.20writing.20.26.20IO.html#212256664">(Oct 05 2020 at 04:18)</a>:</h4>
+<p>Here's a really literal interpretation of how you could automate that:</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="kd">example</span> <span class="o">(</span><span class="n">H</span> <span class="o">:</span> <span class="bp">∀</span> <span class="n">i</span> <span class="o">:</span> <span class="n">fin</span> <span class="n">aList.length</span><span class="o">,</span> <span class="o">(</span><span class="n">aList.nth_le</span> <span class="n">i.val</span> <span class="n">i.property</span><span class="o">))</span> <span class="o">:</span> <span class="n">false</span> <span class="o">:=</span>
+<span class="kd">begin</span>
+  <span class="n">rw</span> <span class="n">aList</span> <span class="n">at</span> <span class="n">H</span><span class="o">,</span>
+  <span class="o">(</span><span class="k">do</span> <span class="o">(</span><span class="n">list.range</span> <span class="mi">3</span><span class="o">)</span><span class="bp">.</span><span class="n">mmap'</span> <span class="o">(</span><span class="bp">λ</span> <span class="n">i</span><span class="o">,</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">h</span> <span class="o">:</span> <span class="n">name</span> <span class="o">:=</span> <span class="o">(</span><span class="s2">"h"</span> <span class="bp">++</span> <span class="n">to_string</span> <span class="o">(</span><span class="n">i</span><span class="bp">+</span><span class="mi">1</span><span class="o">)</span> <span class="o">:</span> <span class="n">string</span><span class="o">),</span>
+    <span class="n">tactic.interactive.</span><span class="bp">«</span><span class="k">have</span><span class="bp">»</span> <span class="n">h</span> <span class="n">none</span> <span class="bp">```</span><span class="o">(</span><span class="n">H</span> <span class="o">⟨</span><span class="bp">%%</span><span class="o">(</span><span class="n">reflect</span> <span class="n">i</span><span class="o">),</span> <span class="n">dec_trivial</span><span class="o">⟩))),</span>
+<span class="kd">end</span>
+</code></pre></div>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

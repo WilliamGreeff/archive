@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>If there are other attributes on a definition which I want <code>to_additive</code> to copy to the additive version, then <code>to_additive</code> should come <strong>last</strong>, right? Or does it not matter?</p>",
+        "id": 209314438,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1599498089
+    },
+    {
+        "content": "<p>I didn't see anything about this in the documentation.</p>",
+        "id": 209314449,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1599498099
+    },
+    {
+        "content": "<p>Yes, <code>to_additive</code> adds <code>simp</code> and some other attributes (but not all) to the generated declarations.</p>",
+        "id": 209317217,
+        "sender_full_name": "Chris Hughes",
+        "timestamp": 1599501114
+    },
+    {
+        "content": "<p>I tested and you do need to put other attributes first if you want them to be copied.</p>",
+        "id": 209335737,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1599523844
+    }
+]

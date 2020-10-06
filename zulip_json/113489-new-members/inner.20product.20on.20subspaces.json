@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>I want to have 'inheritance' of the real inner product structure of my E , but run into a problem I cant figure out. Here is my context and the code for defining the inner product from .core:</p>\n<div class=\"codehilite\" data-code-language=\"Lean\"><pre><span></span><code><span class=\"kn\">import</span> <span class=\"n\">algebra.module</span>\n<span class=\"kn\">import</span> <span class=\"n\">linear_algebra.basic</span>\n<span class=\"kn\">import</span> <span class=\"n\">analysis.normed_space.real_inner_product</span>\n<span class=\"c1\">-- import data.complex.is_R_or_C</span>\n<span class=\"kn\">import</span> <span class=\"n\">tactic</span>\n\n\n<span class=\"kd\">noncomputable theory</span>\n\n<span class=\"n\">open_locale</span> <span class=\"n\">big_operators</span> <span class=\"n\">classical</span>\n\n<span class=\"kd\">variables</span> <span class=\"o\">{</span><span class=\"n\">ι</span>  <span class=\"n\">E</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"bp\">*</span><span class=\"o\">}</span> <span class=\"o\">[</span><span class=\"n\">inner_product_space</span> <span class=\"n\">E</span><span class=\"o\">]</span>\n\n\n<span class=\"kd\">variable</span> <span class=\"o\">(</span><span class=\"n\">K</span><span class=\"o\">:</span> <span class=\"n\">submodule</span> <span class=\"n\">ℝ</span> <span class=\"n\">E</span><span class=\"o\">)</span>\n\n<span class=\"kd\">instance</span> <span class=\"o\">:</span> <span class=\"n\">inner_product_space</span> <span class=\"n\">K</span> <span class=\"o\">:=</span>\n<span class=\"n\">inner_product_space.of_core</span>\n<span class=\"o\">{</span>\n  <span class=\"n\">inner</span> <span class=\"o\">:=</span> <span class=\"bp\">λ</span> <span class=\"n\">v</span> <span class=\"n\">w</span><span class=\"o\">,</span> <span class=\"bp\">⟪</span><span class=\"o\">(</span><span class=\"n\">v</span><span class=\"o\">:</span><span class=\"n\">E</span><span class=\"o\">)</span> <span class=\"o\">,(</span><span class=\"n\">w</span><span class=\"o\">:</span><span class=\"n\">E</span><span class=\"o\">)</span> <span class=\"bp\">⟫</span><span class=\"o\">,</span>\n  <span class=\"n\">comm</span> <span class=\"o\">:=</span> <span class=\"bp\">λ</span> <span class=\"n\">_</span> <span class=\"n\">_</span><span class=\"o\">,</span> <span class=\"n\">inner_comm</span> <span class=\"n\">_</span> <span class=\"n\">_</span> <span class=\"o\">,</span>\n  <span class=\"n\">nonneg</span> <span class=\"o\">:=</span> <span class=\"bp\">λ</span> <span class=\"n\">x</span><span class=\"o\">,</span> <span class=\"n\">inner_self_nonneg</span><span class=\"o\">,</span>\n  <span class=\"n\">definite</span> <span class=\"o\">:=</span> <span class=\"kd\">by</span> <span class=\"o\">{</span><span class=\"n\">intros</span> <span class=\"n\">x</span> <span class=\"n\">h</span><span class=\"o\">,</span> <span class=\"k\">have</span> <span class=\"o\">:=</span> <span class=\"n\">inner_self_eq_zero.mp</span> <span class=\"n\">h</span><span class=\"o\">,</span> <span class=\"n\">simp</span> <span class=\"n\">at</span> <span class=\"n\">this</span><span class=\"o\">,</span> <span class=\"n\">exact</span> <span class=\"n\">this</span><span class=\"o\">,},</span>\n  <span class=\"n\">add_left</span> <span class=\"o\">:=</span> <span class=\"bp\">λ</span> <span class=\"n\">_</span> <span class=\"n\">_</span> <span class=\"n\">_</span><span class=\"o\">,</span><span class=\"n\">inner_add_left</span><span class=\"o\">,</span>\n  <span class=\"n\">smul_left</span> <span class=\"o\">:=</span> <span class=\"bp\">λ</span> <span class=\"n\">_</span> <span class=\"n\">_</span> <span class=\"n\">_</span> <span class=\"o\">,</span> <span class=\"n\">inner_smul_left</span><span class=\"o\">,</span>\n<span class=\"o\">}</span>\n</code></pre></div>\n\n<p>I get the following error message in vscode, with the <code>:</code> after <code>instance</code> highlilghted as the offender:</p>\n<div class=\"codehilite\" data-code-language=\"Lean\"><pre><span></span><code><span class=\"n\">failed</span> <span class=\"n\">to</span> <span class=\"n\">synthesize</span> <span class=\"kd\">instance</span> <span class=\"n\">name</span><span class=\"o\">,</span> <span class=\"n\">name</span> <span class=\"n\">should</span> <span class=\"n\">be</span> <span class=\"n\">provided</span> <span class=\"n\">explicitly</span>\n</code></pre></div>\n\n<p>Is there an alternative, more straightforward way to have submodules recognized as inner product spaces?</p>",
+        "id": 212401459,
+        "sender_full_name": "Busiso Chisala",
+        "timestamp": 1601975123
+    },
+    {
+        "content": "<p>According to that error message, all you have to do is provide an explicit name, like<br>\n<code>instance submodule_inner_product_space : inner_product_space K := ...</code></p>",
+        "id": 212401833,
+        "sender_full_name": "Kyle Miller",
+        "timestamp": 1601975384
+    },
+    {
+        "content": "<p><code>instance</code> is like a <code>def</code> that doesn't always need a name and that lets the typeclass resolution system know this definition exists.</p>",
+        "id": 212401975,
+        "sender_full_name": "Kyle Miller",
+        "timestamp": 1601975461
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"306601\">Kyle Miller</span> <a href=\"#narrow/stream/113489-new-members/topic/inner.20product.20on.20subspaces/near/212401833\">said</a>:</p>\n<blockquote>\n<p>According to that error message, all you have to do is provide an explicit name, like<br>\n<code>instance submodule_inner_product_space : inner_product_space K := ...</code></p>\n</blockquote>\n<p>Thanks. I also realized that if enclosed in a namespace, it goes away!</p>\n<p>But is this the way to ensure that in a lemma, every submodule used  has the inherited inner product? what invocation is required?</p>",
+        "id": 212402794,
+        "sender_full_name": "Busiso Chisala",
+        "timestamp": 1601976048
+    },
+    {
+        "content": "<p>It looks to me like the code you have already does that</p>",
+        "id": 212406186,
+        "sender_full_name": "Eric Wieser",
+        "timestamp": 1601978318
+    }
+]

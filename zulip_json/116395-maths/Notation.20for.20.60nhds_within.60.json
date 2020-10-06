@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>What do you think about (a) introducing a notation for <code>nhds_within</code>? E.g., <code>𝓝[s] a</code>? (b) using <code>notation</code> instead of <code>def</code>?<br>\nRemoving <code>def</code> makes all lemmas about <code>inf_principal</code> work without extra <code>dunfold</code>.</p>",
+        "id": 205444079,
+        "sender_full_name": "Yury G. Kudryashov",
+        "timestamp": 1596088086
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"110031\">@Patrick Massot</span> <span class=\"user-mention\" data-user-id=\"110050\">@Sebastien Gouezel</span>  <span aria-label=\"up\" class=\"emoji emoji-2b06\" role=\"img\" title=\"up\">:up:</span></p>",
+        "id": 205444164,
+        "sender_full_name": "Yury G. Kudryashov",
+        "timestamp": 1596088233
+    },
+    {
+        "content": "<p>You mean that you want to abolish the <code>def nhds_within</code> and replace it with notation?</p>",
+        "id": 205448703,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1596094105
+    },
+    {
+        "content": "<p>Does it help if you make <code>nhds_within</code> reducible, or an <code>abbreviation</code>?</p>",
+        "id": 205448723,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1596094135
+    },
+    {
+        "content": "<p>AFAIR, either <code>simp</code> or <code>rw</code> won't be able to rewrite on lemmas about <code>*_inf_principal</code> in this case.</p>",
+        "id": 205449836,
+        "sender_full_name": "Yury G. Kudryashov",
+        "timestamp": 1596095025
+    },
+    {
+        "content": "<p>I like notations.</p>",
+        "id": 205456924,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1596100427
+    }
+]

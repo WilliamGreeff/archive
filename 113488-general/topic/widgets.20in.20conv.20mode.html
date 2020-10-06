@@ -1,0 +1,51 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/113488-general/topic/widgets.20in.20conv.20mode.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/113488-general/index.html">general</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/widgets.20in.20conv.20mode.html">widgets in conv mode</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="204596013"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/widgets%20in%20conv%20mode/near/204596013" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/widgets.20in.20conv.20mode.html#204596013">(Jul 21 2020 at 20:00)</a>:</h4>
+<p>It seems that widgets don't work in conv mode. How hard would it be to enable them there?</p>
+
+
+
+<a name="204596098"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/widgets%20in%20conv%20mode/near/204596098" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/widgets.20in.20conv.20mode.html#204596098">(Jul 21 2020 at 20:00)</a>:</h4>
+<p>They're really good! As soon as they're not there... I miss them, and I'm completely stuck and helpless <span aria-label="oops" class="emoji emoji-1f643" role="img" title="oops">:oops:</span></p>
+
+
+
+<a name="204596915"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/widgets%20in%20conv%20mode/near/204596915" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Bryan Gin-ge Chen <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/widgets.20in.20conv.20mode.html#204596915">(Jul 21 2020 at 20:07)</a>:</h4>
+<p>It'd also be nice to upgrade <code>#print</code>, <code>#eval</code>, <code>#reduce</code>, etc. to output widgets as well...</p>
+<p><span class="user-mention" data-user-id="121918">@Edward Ayers</span> wanna give us some hints?</p>
+
+
+
+<a name="204597096"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/widgets%20in%20conv%20mode/near/204597096" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Edward Ayers <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/widgets.20in.20conv.20mode.html#204597096">(Jul 21 2020 at 20:08)</a>:</h4>
+<p>Yeah you should be able to get widgets for other interactive modes by overriding <code>conv.save_info</code></p>
+
+
+
+<a name="204597173"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/widgets%20in%20conv%20mode/near/204597173" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Edward Ayers <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/widgets.20in.20conv.20mode.html#204597173">(Jul 21 2020 at 20:09)</a>:</h4>
+<p>The #xs sound a little more fiddly because if I recall correctly they are implemented in c++</p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

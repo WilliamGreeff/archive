@@ -1,0 +1,120 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/113488-general/topic/Closing.20.60.E2.8A.A2.60.20goals.20in.20.60conv.60.20mode.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/113488-general/index.html">general</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/Closing.20.60.E2.8A.A2.60.20goals.20in.20.60conv.60.20mode.html">Closing `⊢` goals in `conv` mode</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="212181256"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/Closing%20%60%E2%8A%A2%60%20goals%20in%20%60conv%60%20mode/near/212181256" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Eric Wieser <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/Closing.20.60.E2.8A.A2.60.20goals.20in.20.60conv.60.20mode.html#212181256">(Oct 03 2020 at 17:27)</a>:</h4>
+<p>After running <code>rw</code> in  conv mode with <a href="https://leanprover-community.github.io/mathlib_docs/find/finsupp.sum_map_domain_index">docs#finsupp.sum_map_domain_index</a> (which requires two assumptions), I end up with one <code>|</code> goal and two <code>⊢</code> goals.</p>
+<p>I already know how to handle the <code>|</code> goal, and can discard it with <code>skip</code>. I'm then left with two <code>⊢</code> goals, but:</p>
+<ul>
+<li>I'm still in <code>conv</code> mode, so don't have any tactics to help me</li>
+<li>If I leave conv mode, the <code>|</code> goal does not take effect</li>
+</ul>
+<p>Is there a way to drop back into tactic mode in conv mode?</p>
+
+
+
+<a name="212181315"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/Closing%20%60%E2%8A%A2%60%20goals%20in%20%60conv%60%20mode/near/212181315" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/Closing.20.60.E2.8A.A2.60.20goals.20in.20.60conv.60.20mode.html#212181315">(Oct 03 2020 at 17:28)</a>:</h4>
+<p>Good question! Does <code>conv</code> mode have an <code>exact</code> tactic?</p>
+
+
+
+<a name="212181321"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/Closing%20%60%E2%8A%A2%60%20goals%20in%20%60conv%60%20mode/near/212181321" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Eric Wieser <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/Closing.20.60.E2.8A.A2.60.20goals.20in.20.60conv.60.20mode.html#212181321">(Oct 03 2020 at 17:29)</a>:</h4>
+<p>No!</p>
+
+
+
+<a name="212181328"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/Closing%20%60%E2%8A%A2%60%20goals%20in%20%60conv%60%20mode/near/212181328" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/Closing.20.60.E2.8A.A2.60.20goals.20in.20.60conv.60.20mode.html#212181328">(Oct 03 2020 at 17:29)</a>:</h4>
+<p>If not, I guess it should get it for situations like these.</p>
+
+
+
+<a name="212181333"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/Closing%20%60%E2%8A%A2%60%20goals%20in%20%60conv%60%20mode/near/212181333" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Eric Wieser <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/Closing.20.60.E2.8A.A2.60.20goals.20in.20.60conv.60.20mode.html#212181333">(Oct 03 2020 at 17:29)</a>:</h4>
+<p>But indeed, then I could use <code>exact by { }</code> which would hopefully do the trick</p>
+
+
+
+<a name="212181346"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/Closing%20%60%E2%8A%A2%60%20goals%20in%20%60conv%60%20mode/near/212181346" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Eric Wieser <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/Closing.20.60.E2.8A.A2.60.20goals.20in.20.60conv.60.20mode.html#212181346">(Oct 03 2020 at 17:30)</a>:</h4>
+<p>Furthermore, if I attempt a term-mode proof as an argument to <code>sum_map_domain_index</code>, if I get it wrong the error is silenced and the <code>conv</code> does nothing</p>
+
+
+
+<a name="212181403"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/Closing%20%60%E2%8A%A2%60%20goals%20in%20%60conv%60%20mode/near/212181403" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Eric Wieser <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/Closing.20.60.E2.8A.A2.60.20goals.20in.20.60conv.60.20mode.html#212181403">(Oct 03 2020 at 17:30)</a>:</h4>
+<p>almost- <a href="https://leanprover-community.github.io/mwe.html">#mwe</a> (needs some variables from monoid_algebra.lean):</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="c1">-- in master shortly</span>
+<span class="kd">def</span> <span class="n">to_add_equiv</span> <span class="o">:</span> <span class="n">multiplicative</span> <span class="n">G</span> <span class="bp">≃</span> <span class="n">G</span> <span class="o">:=</span> <span class="o">⟨</span><span class="n">multiplicative.to_add</span><span class="o">,</span> <span class="n">multiplicative.of_add</span><span class="o">,</span> <span class="n">of_add_to_add</span><span class="o">,</span> <span class="n">to_add_of_add</span><span class="o">⟩</span>
+
+<span class="kd">def</span> <span class="n">add_monoid_algebra.to_multiplicative</span> <span class="o">:</span>
+  <span class="n">add_monoid_algebra</span> <span class="n">k</span> <span class="n">G</span> <span class="bp">≃+*</span> <span class="n">monoid_algebra</span> <span class="n">k</span> <span class="o">(</span><span class="n">multiplicative</span> <span class="n">G</span><span class="o">)</span> <span class="o">:=</span>
+<span class="o">{</span> <span class="n">map_mul'</span> <span class="o">:=</span> <span class="bp">λ</span> <span class="n">x</span> <span class="n">y</span><span class="o">,</span> <span class="kd">by</span> <span class="o">{</span>
+    <span class="n">unfold</span> <span class="n">finsupp.dom_congr</span> <span class="n">to_add_equiv</span><span class="o">,</span>
+    <span class="n">simp</span> <span class="o">[</span><span class="n">mul_def</span><span class="o">],</span>
+    <span class="n">simp_rw</span> <span class="n">map_domain_sum</span><span class="o">,</span>
+    <span class="n">simp_rw</span> <span class="n">map_domain_single</span><span class="o">,</span>
+    <span class="n">conv_rhs</span> <span class="o">{</span>
+      <span class="n">for</span> <span class="o">(</span><span class="n">finsupp.sum</span> <span class="n">_</span> <span class="n">_</span><span class="o">)</span> <span class="o">[</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">]</span> <span class="o">{</span>
+        <span class="n">rw</span> <span class="n">finsupp.sum_map_domain_index</span><span class="o">,</span>
+        <span class="n">skip</span><span class="o">,</span>
+      <span class="o">},</span>
+    <span class="o">},</span>
+    <span class="n">sorry</span> <span class="o">},</span>
+  <span class="n">map_add'</span> <span class="o">:=</span> <span class="bp">λ</span> <span class="n">x</span> <span class="n">y</span><span class="o">,</span> <span class="kd">by</span> <span class="o">{</span>
+    <span class="n">simp</span> <span class="o">[</span><span class="n">finsupp.dom_congr</span><span class="o">,</span> <span class="n">map_domain_add</span><span class="o">],</span>
+  <span class="o">},</span>
+  <span class="bp">..</span><span class="n">finsupp.dom_congr</span> <span class="n">to_add_equiv</span> <span class="o">}</span>
+</code></pre></div>
+
+
+
+<a name="212184838"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/Closing%20%60%E2%8A%A2%60%20goals%20in%20%60conv%60%20mode/near/212184838" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Eric Wieser <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/Closing.20.60.E2.8A.A2.60.20goals.20in.20.60conv.60.20mode.html#212184838">(Oct 03 2020 at 18:48)</a>:</h4>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="kd">meta</span> <span class="kd">def</span> <span class="n">conv.interactive.exact</span> <span class="o">(</span><span class="n">q</span> <span class="o">:</span> <span class="n">interactive.parse</span> <span class="n">interactive.types.texpr</span><span class="o">)</span> <span class="o">:</span> <span class="n">conv</span> <span class="n">unit</span> <span class="o">:=</span> <span class="n">tactic.interactive.exact</span> <span class="n">q</span>
+</code></pre></div>
+
+<p>seems to do the job, although I wonder if it warrants some special casing to only allow its use on <code>⊢</code> goals</p>
+
+
+
+<a name="212184876"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/Closing%20%60%E2%8A%A2%60%20goals%20in%20%60conv%60%20mode/near/212184876" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Eric Wieser <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/Closing.20.60.E2.8A.A2.60.20goals.20in.20.60conv.60.20mode.html#212184876">(Oct 03 2020 at 18:49)</a>:</h4>
+<p>In fact even this works:</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="kd">meta</span> <span class="kd">def</span> <span class="n">conv.interactive.exact</span> <span class="o">:=</span> <span class="n">tactic.interactive.exact</span>
+</code></pre></div>
+
+
+
+<a name="212311026"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/Closing%20%60%E2%8A%A2%60%20goals%20in%20%60conv%60%20mode/near/212311026" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Eric Wieser <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/Closing.20.60.E2.8A.A2.60.20goals.20in.20.60conv.60.20mode.html#212311026">(Oct 05 2020 at 14:57)</a>:</h4>
+<p>Should I PR the above?</p>
+<p>Or should we change <code>conv</code> so that unsolved goals remain outside of the <code>conv</code> block?</p>
+
+
+
+<a name="212311145"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/Closing%20%60%E2%8A%A2%60%20goals%20in%20%60conv%60%20mode/near/212311145" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Eric Wieser <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/Closing.20.60.E2.8A.A2.60.20goals.20in.20.60conv.60.20mode.html#212311145">(Oct 05 2020 at 14:58)</a>:</h4>
+<p>And If I did use the above definition of exact, is there anything to stop the user closing a <code>|</code> goal with it nonsensically?</p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

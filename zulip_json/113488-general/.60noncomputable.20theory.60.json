@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>Is putting <code>noncomputable theory</code> at the top of the file different to putting <code>noncomputable</code> on every def?</p>",
+        "id": 212398078,
+        "sender_full_name": "Eric Wieser",
+        "timestamp": 1601972980
+    },
+    {
+        "content": "<p>I believe it's mostly equivalent, except that definitions that don't need <code>noncomputable</code> won't be marked <code>noncomputable</code>.  Lean will warn if you put <code>noncomputable</code> in front of a definition where it's unnecessary.</p>",
+        "id": 212398217,
+        "sender_full_name": "Kyle Miller",
+        "timestamp": 1601973065
+    },
+    {
+        "content": "<p>Is one approach preferred over the other?</p>",
+        "id": 212398338,
+        "sender_full_name": "Eric Wieser",
+        "timestamp": 1601973138
+    }
+]

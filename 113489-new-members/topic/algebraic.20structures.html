@@ -1,0 +1,219 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/113489-new-members/topic/algebraic.20structures.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/index.html">new members</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html">algebraic structures</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="211863042"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211863042" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Patrick Thomas <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211863042">(Oct 01 2020 at 02:30)</a>:</h4>
+<p>Is it possible, as an example, to define the notion of a group, prove properties that all groups have, prove that ℤ is a group under addition, and thus have proofs of those properties for ℤ under addition? The definition of a group that I know uses a set, so I'm not sure how that translates to type theory. Would a group be a type class?</p>
+
+
+
+<a name="211863201"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211863201" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kyle Miller <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211863201">(Oct 01 2020 at 02:33)</a>:</h4>
+<p>Type classes are a feature that let you attach structure to already existing things.  Group structures are a perfect use for type classes.</p>
+
+
+
+<a name="211863252"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211863252" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Patrick Thomas <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211863252">(Oct 01 2020 at 02:34)</a>:</h4>
+<p>My first thought was like</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="kd">structure</span> <span class="n">group</span> <span class="o">(</span><span class="n">α</span> <span class="o">:</span> <span class="kt">Type</span><span class="o">)</span> <span class="o">(</span><span class="n">S</span> <span class="o">:</span> <span class="n">set</span> <span class="n">α</span><span class="o">)</span> <span class="o">(</span><span class="n">op</span> <span class="o">:</span> <span class="n">α</span> <span class="bp">→</span> <span class="n">α</span> <span class="bp">→</span> <span class="n">α</span><span class="o">)</span> <span class="o">:=</span>
+<span class="o">(</span><span class="n">closure</span> <span class="o">:</span> <span class="bp">∀</span> <span class="n">a</span> <span class="n">b</span> <span class="bp">∈</span> <span class="n">S</span><span class="o">,</span> <span class="o">(</span><span class="n">op</span> <span class="n">a</span> <span class="n">b</span> <span class="bp">∈</span> <span class="n">S</span><span class="o">))</span>
+<span class="o">(</span><span class="n">assoc</span><span class="o">:</span> <span class="bp">∀</span> <span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="bp">∈</span> <span class="n">S</span><span class="o">,</span> <span class="o">(</span><span class="n">op</span> <span class="o">(</span><span class="n">op</span> <span class="n">a</span> <span class="n">b</span><span class="o">)</span> <span class="n">c</span><span class="o">)</span> <span class="bp">=</span> <span class="o">(</span><span class="n">op</span> <span class="n">a</span> <span class="o">(</span><span class="n">op</span> <span class="n">b</span> <span class="n">c</span><span class="o">)))</span>
+<span class="o">(</span><span class="n">e</span> <span class="o">:</span> <span class="n">α</span><span class="o">)</span>
+<span class="o">(</span><span class="n">h</span> <span class="o">:</span> <span class="n">e</span> <span class="bp">∈</span> <span class="n">S</span><span class="o">)</span>
+<span class="o">(</span><span class="n">ident_1</span><span class="o">:</span> <span class="bp">∀</span> <span class="n">a</span> <span class="bp">∈</span> <span class="n">S</span><span class="o">,</span> <span class="o">(</span><span class="n">op</span> <span class="n">e</span> <span class="n">a</span><span class="o">)</span> <span class="bp">=</span> <span class="n">a</span><span class="o">)</span>
+<span class="o">(</span><span class="n">ident_2</span><span class="o">:</span> <span class="bp">∀</span> <span class="n">a</span> <span class="bp">∈</span> <span class="n">S</span><span class="o">,</span> <span class="o">(</span><span class="n">op</span> <span class="n">a</span> <span class="n">e</span><span class="o">)</span> <span class="bp">=</span> <span class="n">a</span><span class="o">)</span>
+<span class="o">(</span><span class="n">inv_1</span> <span class="o">:</span> <span class="bp">∀</span> <span class="n">a</span> <span class="bp">∈</span> <span class="n">S</span><span class="o">,</span> <span class="bp">∃</span> <span class="n">b</span> <span class="bp">∈</span> <span class="n">S</span><span class="o">,</span> <span class="n">op</span> <span class="n">a</span> <span class="n">b</span> <span class="bp">=</span> <span class="n">e</span><span class="o">)</span>
+<span class="o">(</span><span class="n">inv_2</span> <span class="o">:</span> <span class="bp">∀</span> <span class="n">a</span> <span class="bp">∈</span> <span class="n">S</span><span class="o">,</span> <span class="bp">∃</span> <span class="n">b</span> <span class="bp">∈</span> <span class="n">S</span><span class="o">,</span> <span class="n">op</span> <span class="n">b</span> <span class="n">a</span> <span class="bp">=</span> <span class="n">e</span><span class="o">)</span>
+</code></pre></div>
+
+<p>But then a set didn't seem right.</p>
+
+
+
+<a name="211863338"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211863338" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kyle Miller <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211863338">(Oct 01 2020 at 02:36)</a>:</h4>
+<p>With classes, it's this sort of setup:</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="kd">class</span> <span class="n">group</span> <span class="o">(</span><span class="n">G</span> <span class="o">:</span> <span class="kt">Type</span><span class="bp">*</span><span class="o">)</span> <span class="o">:=</span>
+<span class="o">(</span><span class="n">op</span> <span class="o">:</span> <span class="n">G</span> <span class="bp">→</span> <span class="n">G</span> <span class="bp">→</span> <span class="n">G</span><span class="o">)</span>
+<span class="o">(</span><span class="n">unit</span> <span class="o">:</span> <span class="n">G</span><span class="o">)</span>
+<span class="o">(</span><span class="n">inv</span> <span class="o">:</span> <span class="n">G</span> <span class="bp">→</span> <span class="n">G</span><span class="o">)</span>
+<span class="o">(</span><span class="n">assoc</span> <span class="o">:</span> <span class="bp">∀</span> <span class="o">{</span><span class="n">x</span> <span class="n">y</span> <span class="n">z</span> <span class="o">:</span> <span class="n">G</span><span class="o">},</span> <span class="n">op</span> <span class="n">x</span> <span class="o">(</span><span class="n">op</span> <span class="n">y</span> <span class="n">z</span><span class="o">)</span> <span class="bp">=</span> <span class="n">op</span> <span class="o">(</span><span class="n">op</span> <span class="n">x</span> <span class="n">y</span><span class="o">)</span> <span class="n">z</span><span class="o">)</span>
+<span class="o">(</span><span class="n">op_unit</span> <span class="o">:</span> <span class="bp">∀</span> <span class="o">{</span><span class="n">x</span> <span class="o">:</span> <span class="n">G</span><span class="o">},</span> <span class="n">op</span> <span class="n">x</span> <span class="n">unit</span> <span class="bp">=</span> <span class="n">x</span><span class="o">)</span>
+<span class="o">(</span><span class="n">unit_op</span> <span class="o">:</span> <span class="bp">∀</span> <span class="o">{</span><span class="n">x</span> <span class="o">:</span> <span class="n">G</span><span class="o">},</span> <span class="n">op</span> <span class="n">unit</span> <span class="n">x</span> <span class="bp">=</span> <span class="n">x</span><span class="o">)</span>
+<span class="o">(</span><span class="n">op_inv</span> <span class="o">:</span> <span class="bp">∀</span> <span class="o">{</span><span class="n">x</span> <span class="o">:</span> <span class="n">G</span><span class="o">},</span> <span class="n">op</span> <span class="n">x</span> <span class="o">(</span><span class="n">inv</span> <span class="n">x</span><span class="o">)</span> <span class="bp">=</span> <span class="n">unit</span><span class="o">)</span>
+<span class="o">(</span><span class="n">inv_op</span> <span class="o">:</span> <span class="bp">∀</span> <span class="o">{</span><span class="n">x</span> <span class="o">:</span> <span class="n">G</span><span class="o">},</span> <span class="n">op</span> <span class="o">(</span><span class="n">inv</span> <span class="n">x</span><span class="o">)</span> <span class="n">x</span> <span class="bp">=</span> <span class="n">unit</span><span class="o">)</span>
+
+<span class="kd">instance</span> <span class="o">:</span> <span class="n">group</span> <span class="n">ℤ</span> <span class="o">:=</span>
+<span class="o">{</span><span class="n">op</span> <span class="o">:=</span> <span class="o">(</span><span class="bp">+</span><span class="o">),</span>
+ <span class="n">unit</span> <span class="o">:=</span> <span class="mi">1</span><span class="o">,</span>
+ <span class="n">inv</span> <span class="o">:=</span> <span class="bp">λ</span> <span class="n">x</span><span class="o">,</span> <span class="bp">-</span><span class="n">x</span><span class="o">,</span>
+ <span class="bp">...</span>
+<span class="o">}</span>
+</code></pre></div>
+
+
+
+<a name="211863378"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211863378" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Patrick Thomas <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211863378">(Oct 01 2020 at 02:37)</a>:</h4>
+<p>Inverse is a function?</p>
+
+
+
+<a name="211863422"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211863422" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kyle Miller <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211863422">(Oct 01 2020 at 02:38)</a>:</h4>
+<p>You can define a group as an operation on a set, but with Lean you can lift sets up to being types (with <code>subtype</code>), so you may as well work with an operation on a type.</p>
+
+
+
+<a name="211863446"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211863446" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kyle Miller <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211863446">(Oct 01 2020 at 02:39)</a>:</h4>
+<p>I made inverse be a function, but you can use <code>classical.some</code> and the rest with your <code>inv_1</code> axiom to define it.</p>
+
+
+
+<a name="211863516"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211863516" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kyle Miller <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211863516">(Oct 01 2020 at 02:40)</a>:</h4>
+<p>My definition is the constructible version, since to form a group you would need to show you can give an explicit inverse function.  If you only care about classical reasoning, then this distinction doesn't matter.</p>
+
+
+
+<a name="211863621"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211863621" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kyle Miller <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211863621">(Oct 01 2020 at 02:42)</a>:</h4>
+<p>(By the way, type classes are just structures, but they plug into a special mechanism that lets Lean automatically locate relevant terms (called instances) of the structure.)</p>
+
+
+
+<a name="211863745"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211863745" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Patrick Thomas <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211863745">(Oct 01 2020 at 02:45)</a>:</h4>
+<p>Thank you. I'll see if I can make the classical version as you described.</p>
+
+
+
+<a name="211864211"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211864211" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Patrick Thomas <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211864211">(Oct 01 2020 at 02:55)</a>:</h4>
+<p>Actually, that is really cool.</p>
+
+
+
+<a name="211864451"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211864451" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kyle Miller <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211864451">(Oct 01 2020 at 03:00)</a>:</h4>
+<p>Here's an example of a generic lemma to get you started, if you didn't know the syntax already:</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="kn">open</span> <span class="n">group</span>
+
+<span class="kd">lemma</span> <span class="n">unit_unique</span> <span class="o">{</span><span class="n">G</span> <span class="o">:</span> <span class="kt">Type</span><span class="bp">*</span><span class="o">}</span> <span class="o">[</span><span class="n">group</span> <span class="n">G</span><span class="o">]</span> <span class="o">(</span><span class="n">unit'</span> <span class="o">:</span> <span class="n">G</span><span class="o">)</span>
+  <span class="o">(</span><span class="n">h_left</span> <span class="o">:</span> <span class="bp">∀</span> <span class="n">x</span><span class="o">,</span> <span class="n">op</span> <span class="n">unit'</span> <span class="n">x</span> <span class="bp">=</span> <span class="n">x</span><span class="o">)</span> <span class="o">:</span>
+  <span class="n">unit'</span> <span class="bp">=</span> <span class="n">unit</span> <span class="o">:=</span>
+<span class="kd">begin</span>
+  <span class="n">transitivity</span> <span class="n">op</span> <span class="n">unit'</span> <span class="n">unit</span><span class="o">,</span>
+  <span class="n">rw</span> <span class="n">op_unit</span><span class="o">,</span>
+  <span class="n">rw</span> <span class="n">h_left</span><span class="o">,</span>
+<span class="kd">end</span>
+</code></pre></div>
+
+
+
+<a name="211864550"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211864550" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Patrick Thomas <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211864550">(Oct 01 2020 at 03:02)</a>:</h4>
+<p>Thank you!</p>
+
+
+
+<a name="211864575"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211864575" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kyle Miller <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211864575">(Oct 01 2020 at 03:03)</a>:</h4>
+<p>I forgot the <code>open group</code> line.  This takes everything that's inside the <code>group</code> namespace (i.e., the fields of <code>group</code>) and makes them accessible without needing to write things like <code>group.op</code>.</p>
+
+
+
+<a name="211865488"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211865488" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Patrick Thomas <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211865488">(Oct 01 2020 at 03:24)</a>:</h4>
+<p>Did you mean that the classical version is just:</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="kd">class</span> <span class="n">group_classical</span> <span class="o">(</span><span class="n">G</span> <span class="o">:</span> <span class="kt">Type</span><span class="bp">*</span><span class="o">)</span> <span class="o">:=</span>
+<span class="o">(</span><span class="n">op</span> <span class="o">:</span> <span class="n">G</span> <span class="bp">→</span> <span class="n">G</span> <span class="bp">→</span> <span class="n">G</span><span class="o">)</span>
+<span class="o">(</span><span class="n">unit</span> <span class="o">:</span> <span class="n">G</span><span class="o">)</span>
+<span class="o">(</span><span class="n">assoc</span> <span class="o">:</span> <span class="bp">∀</span> <span class="o">{</span><span class="n">x</span> <span class="n">y</span> <span class="n">z</span> <span class="o">:</span> <span class="n">G</span><span class="o">},</span> <span class="n">op</span> <span class="n">x</span> <span class="o">(</span><span class="n">op</span> <span class="n">y</span> <span class="n">z</span><span class="o">)</span> <span class="bp">=</span> <span class="n">op</span> <span class="o">(</span><span class="n">op</span> <span class="n">x</span> <span class="n">y</span><span class="o">)</span> <span class="n">z</span><span class="o">)</span>
+<span class="o">(</span><span class="n">op_unit</span> <span class="o">:</span> <span class="bp">∀</span> <span class="o">{</span><span class="n">x</span> <span class="o">:</span> <span class="n">G</span><span class="o">},</span> <span class="n">op</span> <span class="n">x</span> <span class="n">unit</span> <span class="bp">=</span> <span class="n">x</span><span class="o">)</span>
+<span class="o">(</span><span class="n">unit_op</span> <span class="o">:</span> <span class="bp">∀</span> <span class="o">{</span><span class="n">x</span> <span class="o">:</span> <span class="n">G</span><span class="o">},</span> <span class="n">op</span> <span class="n">unit</span> <span class="n">x</span> <span class="bp">=</span> <span class="n">x</span><span class="o">)</span>
+<span class="o">(</span><span class="n">op_inv</span> <span class="o">:</span> <span class="bp">∀</span> <span class="o">{</span><span class="n">x</span> <span class="o">:</span> <span class="n">G</span><span class="o">},</span> <span class="bp">∃</span> <span class="o">{</span><span class="n">b</span> <span class="o">:</span> <span class="n">G</span><span class="o">},</span> <span class="n">op</span> <span class="n">x</span> <span class="n">b</span> <span class="bp">=</span> <span class="n">unit</span><span class="o">)</span>
+<span class="o">(</span><span class="n">inv_op</span> <span class="o">:</span> <span class="bp">∀</span> <span class="o">{</span><span class="n">x</span> <span class="o">:</span> <span class="n">G</span><span class="o">},</span> <span class="bp">∃</span> <span class="o">{</span><span class="n">b</span> <span class="o">:</span> <span class="n">G</span><span class="o">},</span> <span class="n">op</span> <span class="n">b</span> <span class="n">x</span> <span class="bp">=</span> <span class="n">unit</span><span class="o">)</span>
+</code></pre></div>
+
+<p>and that it is the instance that would have to use classical.some?</p>
+
+
+
+<a name="211865518"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211865518" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211865518">(Oct 01 2020 at 03:25)</a>:</h4>
+<p>actually you can drop the unit too</p>
+
+
+
+<a name="211865563"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211865563" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211865563">(Oct 01 2020 at 03:26)</a>:</h4>
+<p>but the two inverses generally have to be in the same existential</p>
+
+
+
+<a name="211865576"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/211865576" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#211865576">(Oct 01 2020 at 03:26)</a>:</h4>
+<p>groups I think are special because you can prove that the left and right inverse are the same, but for weaker structures you have to assume this</p>
+
+
+
+<a name="212179372"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/212179372" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Patrick Thomas <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#212179372">(Oct 03 2020 at 16:35)</a>:</h4>
+<p>Sorry, do you know how I would fix the syntax here:</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="kd">class</span> <span class="n">total_order</span> <span class="o">{</span><span class="n">T</span> <span class="o">:</span> <span class="kt">Type</span><span class="bp">*</span><span class="o">}</span> <span class="o">:=</span>
+<span class="o">(</span><span class="n">le</span> <span class="o">:</span> <span class="n">T</span> <span class="bp">→</span> <span class="n">T</span> <span class="bp">→</span> <span class="kt">Prop</span><span class="o">)</span>
+<span class="o">(</span><span class="n">asymm</span> <span class="o">:</span> <span class="bp">∀</span> <span class="n">a</span> <span class="n">b</span> <span class="o">:</span> <span class="n">T</span><span class="o">,</span> <span class="n">le</span> <span class="n">a</span> <span class="n">b</span> <span class="bp">∧</span> <span class="n">le</span> <span class="n">b</span> <span class="n">a</span> <span class="bp">→</span> <span class="n">a</span> <span class="bp">=</span> <span class="n">b</span><span class="o">)</span>
+<span class="o">(</span><span class="n">trans</span> <span class="o">:</span> <span class="bp">∀</span> <span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="o">:</span> <span class="n">T</span><span class="o">,</span> <span class="n">le</span> <span class="n">a</span> <span class="n">b</span> <span class="bp">∧</span> <span class="n">le</span> <span class="n">b</span> <span class="n">c</span> <span class="bp">→</span> <span class="n">le</span> <span class="n">a</span> <span class="n">c</span><span class="o">)</span>
+<span class="o">(</span><span class="n">conn</span> <span class="o">:</span> <span class="bp">∀</span> <span class="n">a</span> <span class="n">b</span> <span class="o">:</span> <span class="n">T</span><span class="o">,</span> <span class="n">le</span> <span class="n">a</span> <span class="n">b</span> <span class="bp">∨</span> <span class="n">le</span> <span class="n">b</span> <span class="n">a</span><span class="o">)</span>
+
+<span class="kd">def</span> <span class="n">is_upper_bound</span> <span class="o">{</span><span class="n">T</span> <span class="o">:</span> <span class="kt">Type</span><span class="bp">*</span><span class="o">}</span> <span class="o">[</span><span class="n">total_order</span> <span class="n">T</span><span class="o">]</span> <span class="o">(</span><span class="n">S</span> <span class="o">:</span> <span class="n">set</span> <span class="n">T</span><span class="o">)</span> <span class="o">(</span><span class="n">t</span> <span class="o">:</span> <span class="n">T</span><span class="o">)</span> <span class="o">:</span> <span class="kt">Prop</span> <span class="o">:=</span>
+<span class="bp">∀</span> <span class="n">s</span> <span class="bp">∈</span> <span class="n">S</span><span class="o">,</span> <span class="n">le</span> <span class="n">s</span> <span class="n">t</span>
+</code></pre></div>
+
+
+
+<a name="212179436"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/212179436" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Patrick Thomas <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#212179436">(Oct 03 2020 at 16:37)</a>:</h4>
+<p>They syntax for the <code>is_upper_bound</code> definition that is.</p>
+
+
+
+<a name="212179750"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/212179750" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Patrick Thomas <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#212179750">(Oct 03 2020 at 16:46)</a>:</h4>
+<p>I guess I just needed to change it to:<br>
+<code>def is_upper_bound {T : Type*} [@total_order T] (S : set T) (t : T) : Prop := sorry</code>.</p>
+
+
+
+<a name="212179957"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/212179957" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Reid Barton <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#212179957">(Oct 03 2020 at 16:53)</a>:</h4>
+<p>Change the binder type in <code>total_order</code> to <code>(T : Type*)</code> instead, otherwise you'll have to write <code>@total_order</code> every time.</p>
+
+
+
+<a name="212180072"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/algebraic%20structures/near/212180072" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Patrick Thomas <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/algebraic.20structures.html#212180072">(Oct 03 2020 at 16:56)</a>:</h4>
+<p>Ok.</p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

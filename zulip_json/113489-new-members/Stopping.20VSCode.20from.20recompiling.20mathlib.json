@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>I just created a new project by executing <code>leanproject new kata</code>, edited <code>leanpkg.toml</code> to contain the following:</p>\n<div class=\"codehilite\" data-code-language=\"TOML\"><pre><span></span><code><span class=\"k\">[package]</span>\n<span class=\"n\">name</span> <span class=\"o\">=</span> <span class=\"s\">\"kata\"</span>\n<span class=\"n\">version</span> <span class=\"o\">=</span> <span class=\"s\">\"0.1\"</span>\n<span class=\"n\">lean_version</span> <span class=\"o\">=</span> <span class=\"s\">\"leanprover-community/lean:3.20.0\"</span>\n<span class=\"n\">path</span> <span class=\"o\">=</span> <span class=\"s\">\"src\"</span>\n\n<span class=\"k\">[dependencies]</span>\n<span class=\"n\">mathlib</span> <span class=\"o\">=</span> <span class=\"p\">{</span><span class=\"n\">git</span> <span class=\"o\">=</span> <span class=\"s\">\"https://github.com/leanprover-community/mathlib\"</span><span class=\"p\">,</span> <span class=\"n\">rev</span> <span class=\"o\">=</span> <span class=\"s\">\"da66bb81bf0466335bae82077f0c335dfe53aeb3\"</span><span class=\"p\">}</span>\n</code></pre></div>\n\n<p>and executed <code>leanproject get-mathlib-cache</code>. I then opened my project folder in VSCode and created a new file <code>Preloaded.lean</code> with the following contents:</p>\n<div class=\"codehilite\" data-code-language=\"Lean\"><pre><span></span><code><span class=\"kn\">import</span> <span class=\"n\">data.equiv.basic</span> <span class=\"n\">data.pnat.basic</span>\n</code></pre></div>\n\n<p>The orange bar at the <code>import</code> line stays for well over a minute, and system statistics indicate that CPU usage increases to 100%, with all 4G of RAM and 1.5G of swap (of 2G total) being used in the meantime, suggesting that (parts of) mathlib was being recompiled. How do I stop this from happening? I thought that <code>leanproject get-mathlib-cache</code> used to do the job but maybe I misremembered.</p>",
+        "id": 212212567,
+        "sender_full_name": "Donald Sebastian Leung",
+        "timestamp": 1601799819
+    },
+    {
+        "content": "<p>Why did you edit the <code>leanpkg.toml</code>?</p>",
+        "id": 212215910,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1601805654
+    },
+    {
+        "content": "<p>The <a href=\"https://github.com/DonaldKellett/CW-Lean3-Examples\">toy Lean examples</a> I use for Codewars have been tested with a version of mathlib from about a week ago and I've just been asked to add an example involving a mathlib dependency. I thought it would be easier to pin mathlib and build my new example on that specific commit instead of running all of my previous examples with the newest mathlib.</p>\n<p>But now that I think about it, it would probably be easier to just use the newest mathlib and run all of the existing examples against it, especially considering that none of them have any meaningful dependency on mathlib AFAIK.</p>",
+        "id": 212216715,
+        "sender_full_name": "Donald Sebastian Leung",
+        "timestamp": 1601807053
+    },
+    {
+        "content": "<p>That being said I'm not able to reproduce your issue.</p>",
+        "id": 212216812,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1601807230
+    },
+    {
+        "content": "<p>I did exactly what you wrote and everything works fine.</p>",
+        "id": 212216817,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1601807252
+    },
+    {
+        "content": "<p>What happens if you quit VSCode and type <code>leanproject build</code> in the <code>kata</code> folder?</p>",
+        "id": 212216829,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1601807282
+    }
+]

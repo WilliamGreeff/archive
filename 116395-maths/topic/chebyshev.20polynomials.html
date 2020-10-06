@@ -1,0 +1,35 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/116395-maths/topic/chebyshev.20polynomials.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/116395-maths/index.html">maths</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/chebyshev.20polynomials.html">chebyshev polynomials</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="211231463"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/chebyshev%20polynomials/near/211231463" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/chebyshev.20polynomials.html#211231463">(Sep 25 2020 at 08:36)</a>:</h4>
+<p><a href="https://github.com/leanprover-community/mathlib/tree/chebpoly">branch#chebpoly</a> is a little experiment that I did for fun. And it turned out to be a lot of fun!<br>
+It's 350 lines of code where I mix polynomials, trigonometric functions and zmod p.</p>
+<p>Everything fit pretty smoothly together, but it will need some cleaning up before it can be PR'd. In particular, it would benefit from having <a href="https://github.com/leanprover-community/mathlib/issues/4241">#4241</a> and <a href="https://github.com/leanprover-community/mathlib/issues/4197">#4197</a> merged.</p>
+<p>The end result is that we get a family of polynomials over Z, that commute with each other, and such that the <code>p</code>-th polynomial is congruent to <code>X ^ p</code> modulo <code>p</code>.</p>
+
+
+
+<a name="211231491"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/chebyshev%20polynomials/near/211231491" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Johan Commelin <a href="https://leanprover-community.github.io/archive/stream/116395-maths/topic/chebyshev.20polynomials.html#211231491">(Sep 25 2020 at 08:37)</a>:</h4>
+<p>Such a family is a Lambda structure, and there are only two such structures on <code>polynomial int</code>.</p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

@@ -1,0 +1,98 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/113488-general/topic/typeclass.20inference.20of.20.60add_comm_monoid.60.20vs.20.60add_comm_group.60.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/113488-general/index.html">general</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/typeclass.20inference.20of.20.60add_comm_monoid.60.20vs.20.60add_comm_group.60.html">typeclass inference of `add_comm_monoid` vs `add_comm_group`</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="204532370"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/typeclass%20inference%20of%20%60add_comm_monoid%60%20vs%20%60add_comm_group%60/near/204532370" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Eric Wieser <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/typeclass.20inference.20of.20.60add_comm_monoid.60.20vs.20.60add_comm_group.60.html#204532370">(Jul 21 2020 at 10:34)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="238446">Anne Baanen</span> <a href="#narrow/stream/113488-general/topic/.60add_comm_monoid.60.20vs.20.60add_comm_group.60.20in.20.60direct_sum.60/near/204476811">said</a>:</p>
+<blockquote>
+<p>There should be no issues making arguments to functions more general, since any consumers must declare these arguments themselves (unless they share a <code>variables</code> statement with your definition.)</p>
+</blockquote>
+<p>This seems to fall apart once the requirements are pi-instances - see <a href="https://github.com/leanprover-community/mathlib/pull/3490/files">this small PR</a> for an example</p>
+
+
+
+<a name="204534326"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/typeclass%20inference%20of%20%60add_comm_monoid%60%20vs%20%60add_comm_group%60/near/204534326" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Anne Baanen <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/typeclass.20inference.20of.20.60add_comm_monoid.60.20vs.20.60add_comm_group.60.html#204534326">(Jul 21 2020 at 11:01)</a>:</h4>
+<p>As far as I can tell, you can replace the first typeclass argument <code>(λ i, by apply_instance)</code> in your example with <code>infer_instance</code> in the third argument and it will still work.</p>
+
+
+
+<a name="204534564"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/typeclass%20inference%20of%20%60add_comm_monoid%60%20vs%20%60add_comm_group%60/near/204534564" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Anne Baanen <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/typeclass.20inference.20of.20.60add_comm_monoid.60.20vs.20.60add_comm_group.60.html#204534564">(Jul 21 2020 at 11:05)</a>:</h4>
+<p>The error comes from diamond inheritance in <code>comm_group -&gt; {comm_monoid, group} -&gt; monoid</code>, and the unifier is not smart enough to unify the <code>comm_monoid.to_monoid (comm_group.to_monoid ?)</code> that it expects with the instance <code>group.to_monoid (comm_group.to_group __inst_3)</code> that it has inferred.</p>
+
+
+
+<a name="204534665"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/typeclass%20inference%20of%20%60add_comm_monoid%60%20vs%20%60add_comm_group%60/near/204534665" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Eric Wieser <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/typeclass.20inference.20of.20.60add_comm_monoid.60.20vs.20.60add_comm_group.60.html#204534665">(Jul 21 2020 at 11:06)</a>:</h4>
+<p>Can priority be used to avoid needing the unifier?</p>
+
+
+
+<a name="204534838"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/typeclass%20inference%20of%20%60add_comm_monoid%60%20vs%20%60add_comm_group%60/near/204534838" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Anne Baanen <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/typeclass.20inference.20of.20.60add_comm_monoid.60.20vs.20.60add_comm_group.60.html#204534838">(Jul 21 2020 at 11:09)</a>:</h4>
+<p>Possibly. I'm not an expert in dealing with typeclass diamonds, though.</p>
+
+
+
+<a name="204535598"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/typeclass%20inference%20of%20%60add_comm_monoid%60%20vs%20%60add_comm_group%60/near/204535598" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Anne Baanen <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/typeclass.20inference.20of.20.60add_comm_monoid.60.20vs.20.60add_comm_group.60.html#204535598">(Jul 21 2020 at 11:19)</a>:</h4>
+<p>The priority was tweaked in the opposite direction in <a href="https://github.com/leanprover-community/mathlib/issues/2848">#2848</a>:</p>
+<blockquote>
+<p>I have tweaked a few instance priorities to make sure that things don't go too bad: there are often additional steps in typeclass inference, going from <code>ring</code> to <code>semiring</code> and from <code>add_comm_group</code> to <code>add_comm_monoid</code>, so I have increased their priority (putting it strictly between 100 and 1000), and adjusted some other priorities to get more canonical instance paths, fixing some preexisting weirdnesses (notably in multilinear maps).</p>
+</blockquote>
+
+
+
+<a name="204536725"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/typeclass%20inference%20of%20%60add_comm_monoid%60%20vs%20%60add_comm_group%60/near/204536725" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Anne Baanen <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/typeclass.20inference.20of.20.60add_comm_monoid.60.20vs.20.60add_comm_group.60.html#204536725">(Jul 21 2020 at 11:34)</a>:</h4>
+<p>This is breaking my head. If we add a line to <code>direct_sum</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">local</span> <span class="n">attribute</span> <span class="o">[</span><span class="kn">instance</span><span class="o">,</span> <span class="n">priority</span> <span class="mi">1</span><span class="o">]</span> <span class="n">add_comm_group</span><span class="bp">.</span><span class="n">to_add_group</span>
+
+<span class="n">def</span> <span class="n">direct_sum</span> <span class="o">:</span> <span class="kt">Type</span><span class="bp">*</span> <span class="o">:=</span> <span class="bp">Π</span><span class="err">₀</span> <span class="n">i</span><span class="o">,</span> <span class="n">β</span> <span class="n">i</span>
+</code></pre></div>
+
+
+<p>then the following works in <code>direct_sum_module</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">instance</span> <span class="o">:</span> <span class="n">semimodule</span> <span class="n">R</span> <span class="o">(</span><span class="n">direct_sum</span> <span class="n">ι</span> <span class="n">M</span><span class="o">)</span> <span class="o">:=</span> <span class="bp">@</span><span class="n">dfinsupp</span><span class="bp">.</span><span class="n">to_semimodule</span> <span class="bp">_</span> <span class="n">M</span> <span class="bp">_</span> <span class="bp">_</span> <span class="bp">_</span> <span class="bp">_</span>
+</code></pre></div>
+
+
+<p>or:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">instance</span> <span class="o">:</span> <span class="n">semimodule</span> <span class="n">R</span> <span class="o">(</span><span class="n">direct_sum</span> <span class="n">ι</span> <span class="n">M</span><span class="o">)</span> <span class="o">:=</span> <span class="bp">@</span><span class="n">dfinsupp</span><span class="bp">.</span><span class="n">to_semimodule</span> <span class="bp">_</span> <span class="bp">_</span> <span class="bp">_</span> <span class="bp">_</span> <span class="n">infer_instance</span> <span class="bp">_</span>
+</code></pre></div>
+
+
+<p>But any other variations give a type error.</p>
+
+
+
+<a name="204544292"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/typeclass%20inference%20of%20%60add_comm_monoid%60%20vs%20%60add_comm_group%60/near/204544292" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Eric Wieser <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/typeclass.20inference.20of.20.60add_comm_monoid.60.20vs.20.60add_comm_group.60.html#204544292">(Jul 21 2020 at 13:03)</a>:</h4>
+<p>I don't have an understanding as to why, but relaxing a few more constraints seems to have set the linked PR on a possibly successful build... Guess I'll wait and see.</p>
+
+
+
+<a name="204551224"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/typeclass%20inference%20of%20%60add_comm_monoid%60%20vs%20%60add_comm_group%60/near/204551224" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Eric Wieser <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/typeclass.20inference.20of.20.60add_comm_monoid.60.20vs.20.60add_comm_group.60.html#204551224">(Jul 21 2020 at 14:02)</a>:</h4>
+<p>Yep, got it working <a href="https://github.com/leanprover-community/mathlib/issues/3490">#3490</a> is now passing. There's some really ugly <code>_</code> introductions that had to happen to make it work.</p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

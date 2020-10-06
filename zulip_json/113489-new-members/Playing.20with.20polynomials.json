@@ -1,0 +1,404 @@
+[
+    {
+        "content": "<p>Hello, in an effort to play with polynomials in Lean I came up with the following,</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"kn\">import</span> <span class=\"n\">data</span><span class=\"bp\">.</span><span class=\"n\">polynomial</span>\n\n<span class=\"kn\">open</span> <span class=\"n\">polynomial</span>\n\n<span class=\"n\">noncomputable</span> <span class=\"n\">def</span> <span class=\"n\">P</span> <span class=\"o\">:</span> <span class=\"n\">polynomial</span> <span class=\"bp\">ℤ</span> <span class=\"o\">:=</span> <span class=\"mi\">3</span> <span class=\"bp\">*</span> <span class=\"n\">X</span><span class=\"bp\">^</span><span class=\"mi\">2</span> <span class=\"bp\">+</span> <span class=\"mi\">1</span>\n<span class=\"n\">noncomputable</span> <span class=\"n\">def</span> <span class=\"n\">Q</span> <span class=\"o\">:</span> <span class=\"n\">polynomial</span> <span class=\"bp\">ℤ</span> <span class=\"o\">:=</span> <span class=\"mi\">4</span> <span class=\"bp\">*</span> <span class=\"n\">X</span><span class=\"bp\">^</span><span class=\"mi\">2</span> <span class=\"bp\">+</span> <span class=\"mi\">7</span> <span class=\"bp\">*</span> <span class=\"n\">X</span> <span class=\"bp\">+</span> <span class=\"mi\">6</span>\n\n<span class=\"bp\">#</span><span class=\"kn\">check</span> <span class=\"n\">P</span> <span class=\"bp\">+</span> <span class=\"n\">Q</span>\n<span class=\"bp\">#</span><span class=\"kn\">check</span> <span class=\"n\">P</span> <span class=\"bp\">-</span> <span class=\"n\">Q</span>\n<span class=\"bp\">#</span><span class=\"kn\">check</span> <span class=\"n\">P</span> <span class=\"bp\">*</span> <span class=\"n\">Q</span>\n<span class=\"bp\">#</span><span class=\"kn\">check</span> <span class=\"n\">P</span> <span class=\"bp\">/</span><span class=\"err\">ₘ</span> <span class=\"n\">Q</span>\n\n<span class=\"bp\">#</span><span class=\"kn\">eval</span> <span class=\"n\">P</span> <span class=\"bp\">+</span> <span class=\"n\">Q</span>\n<span class=\"bp\">#</span><span class=\"kn\">eval</span> <span class=\"n\">P</span> <span class=\"bp\">-</span> <span class=\"n\">Q</span>\n<span class=\"bp\">#</span><span class=\"kn\">eval</span> <span class=\"n\">P</span> <span class=\"bp\">*</span> <span class=\"n\">Q</span>\n<span class=\"bp\">#</span><span class=\"kn\">eval</span> <span class=\"n\">P</span> <span class=\"bp\">/</span><span class=\"err\">ₘ</span> <span class=\"n\">Q</span>\n</code></pre></div>\n\n\n<p>The <code>#eval</code> lines give the error \"code generation failed, VM does not have code for 'classical.choice'\", and the definitions of <code>P</code> and <code>Q</code> demand the <code>noncomputable</code>. Is there some way around the noncomputability of polynomials, so that <code>#eval P + Q</code> gives <code>7 * X^2 + 7 * X + 7</code>?</p>",
+        "id": 210652189,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600583213
+    },
+    {
+        "content": "<p>\"If you want to calculate, use Python\"</p>",
+        "id": 210652610,
+        "sender_full_name": "Kenny Lau",
+        "timestamp": 1600584215
+    },
+    {
+        "content": "<p>(or use an older version of Lean/mathlib before we decided to make everything noncomputable)</p>",
+        "id": 210652657,
+        "sender_full_name": "Kenny Lau",
+        "timestamp": 1600584246
+    },
+    {
+        "content": "<p>probably some version in 2018</p>",
+        "id": 210652660,
+        "sender_full_name": "Kenny Lau",
+        "timestamp": 1600584261
+    },
+    {
+        "content": "<p>Ok.</p>",
+        "id": 210653077,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600585045
+    },
+    {
+        "content": "<p>Or use a future version of Lean/mathlib with the <code>norm_poly</code> tactic</p>",
+        "id": 210660677,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1600599095
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"209436\">@Lucas Allen</span> can you please leave 2020, you've come to the wrong year. Please recalibrate a couple of years in either direction.</p>",
+        "id": 210662989,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600602282
+    },
+    {
+        "content": "<p>I need a telephone booth emoji</p>",
+        "id": 210663316,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1600602741
+    },
+    {
+        "content": "<p>Polynomials used to be computable but this caused trouble with reasoning. Now they're noncomputable but apparently this causes problems with computation. Is Reid right that this can be fixed with a tactic?</p>",
+        "id": 210663906,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600603616
+    },
+    {
+        "content": "<p>yes</p>",
+        "id": 210663966,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1600603700
+    },
+    {
+        "content": "<p>just like <code>norm_num</code> but for polynomials</p>",
+        "id": 210663969,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1600603711
+    },
+    {
+        "content": "<p>The trick is the kind of \"computation\" you want is not the same as the <code>noncomputable</code> kind. For example, <code>norm_num</code> works on the reals too</p>",
+        "id": 210663990,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1600603757
+    },
+    {
+        "content": "<p>that there are two meanings of \"computation\": the Lean meaning, which is that you write a program that does it; the mathematical meaning, which is that you reduce something to a normal form.</p>",
+        "id": 210666104,
+        "sender_full_name": "Kenny Lau",
+        "timestamp": 1600606686
+    },
+    {
+        "content": "<p>There's some trickery involved though, isn't there? Because norm_num doesn't _really_ work with reals, right? It can only make progress if all the reals are rational.</p>",
+        "id": 210669699,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600612686
+    },
+    {
+        "content": "<p>It really works with <code>expr</code>s that represent reals</p>",
+        "id": 210670016,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1600613311
+    },
+    {
+        "content": "<p>Aah!</p>",
+        "id": 210670025,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600613339
+    },
+    {
+        "content": "<p>So why don't we teach it that sqrt(x)*sqrt(x)=x :-)</p>",
+        "id": 210670032,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600613360
+    },
+    {
+        "content": "<p>Like this?</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"kn\">import</span> <span class=\"n\">data</span><span class=\"bp\">.</span><span class=\"n\">real</span><span class=\"bp\">.</span><span class=\"n\">basic</span>\n<span class=\"kn\">import</span> <span class=\"n\">tactic</span><span class=\"bp\">.</span><span class=\"n\">norm_num</span>\n\n<span class=\"kn\">example</span> <span class=\"o\">:</span> <span class=\"n\">real</span><span class=\"bp\">.</span><span class=\"n\">sqrt</span> <span class=\"mi\">5</span> <span class=\"bp\">*</span> <span class=\"n\">real</span><span class=\"bp\">.</span><span class=\"n\">sqrt</span> <span class=\"mi\">5</span> <span class=\"bp\">=</span> <span class=\"mi\">5</span> <span class=\"o\">:=</span> <span class=\"k\">by</span> <span class=\"n\">norm_num</span>\n</code></pre></div>",
+        "id": 210670104,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1600613483
+    },
+    {
+        "content": "<p>Thanks!</p>",
+        "id": 210670258,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600613695
+    },
+    {
+        "content": "<p>(I never knew it did that -- I had the wrong mental model)</p>",
+        "id": 210670266,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600613721
+    },
+    {
+        "content": "<p>I think the main obstruction to turning <code>norm_num</code> into something more like a computer algebra system is that it's not obvious (at least to me) what kind of organizational framework is appropriate</p>",
+        "id": 210670344,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1600613846
+    },
+    {
+        "content": "<p>along with perhaps a lack of specific applications at the moment</p>",
+        "id": 210670350,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1600613860
+    },
+    {
+        "content": "<p>I want to prove that <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn></mrow><annotation encoding=\"application/x-tex\">x^2-4</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.897438em;vertical-align:-0.08333em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">x</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8141079999999999em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222222222222222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.64444em;vertical-align:0em;\"></span><span class=\"mord\">4</span></span></span></span> is not irreduible without doing any work.</p>",
+        "id": 210670400,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600613898
+    },
+    {
+        "content": "<p>but for any computation you can do in a CAS, provided you can give a proof that the computation is correct (when it succeeds), there's no reason that something like <code>norm_num</code> couldn't be extended to do it</p>",
+        "id": 210670412,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1600613935
+    },
+    {
+        "content": "<p>Actually I don't really want to prove this at all, I just want to prove stuff about DVRs etc. I don't have a specific application.</p>",
+        "id": 210670417,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600613945
+    },
+    {
+        "content": "<p>This example is pretty trivial because <code>ring</code> can already do the correctness proof</p>",
+        "id": 210670421,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1600613954
+    },
+    {
+        "content": "<p>I guess sometimes I want to prove that y^2=x^3-4x has rank 0 (or 1 or whatever).</p>",
+        "id": 210670434,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600613984
+    },
+    {
+        "content": "<p>so you can \"just\" do the factorization in an untrusted program</p>",
+        "id": 210670435,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1600613989
+    },
+    {
+        "content": "<p>and Cremona's software is not spitting out a formally verifiable thing here</p>",
+        "id": 210670442,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600614002
+    },
+    {
+        "content": "<p>Right, I think you skipped over a large range of difficulties there <span aria-label=\"upside down\" class=\"emoji emoji-1f643\" role=\"img\" title=\"upside down\">:upside_down:</span></p>",
+        "id": 210670484,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1600614007
+    },
+    {
+        "content": "<p>Nobody can prove the algorithm terminates, for starters</p>",
+        "id": 210670506,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600614055
+    },
+    {
+        "content": "<p>Well that's not actually a problem</p>",
+        "id": 210670523,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1600614094
+    },
+    {
+        "content": "<p>Try telling that to the equation compiler</p>",
+        "id": 210670598,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600614204
+    },
+    {
+        "content": "<p>Of course I see what you mean, tactics are meta</p>",
+        "id": 210670608,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600614235
+    },
+    {
+        "content": "<p>For a procedure like this, there are two relevant outcomes:</p>\n<ul>\n<li>the procedure succeeds in producing an answer along with a correct proof</li>\n<li>all other behavior: nontermination, answer but no certificate, certificate but it doesn't type check somehow</li>\n</ul>",
+        "id": 210670742,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1600614404
+    },
+    {
+        "content": "<p>If you can build a procedure which provably always has the first behavior then great, but in practice it's fine to have tactics that can fail, as long as they work when you need them to</p>",
+        "id": 210670808,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1600614511
+    },
+    {
+        "content": "<p>since our goal is to compute the ranks of elliptic curves (or whatever), not prove an internal theorem \"there exists an algorithm which computes the rank of every elliptic curve\"</p>",
+        "id": 210670844,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1600614580
+    },
+    {
+        "content": "<p>which is good because that's an open problem</p>",
+        "id": 210670897,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600614617
+    },
+    {
+        "content": "<p>FYI, this was a surprise to me as well. <code>norm_num</code> doesn't know anything about square roots, that's all <code>simp</code>'s work</p>",
+        "id": 210683579,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1600633487
+    },
+    {
+        "content": "<p>aha!</p>",
+        "id": 210683682,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1600633624
+    },
+    {
+        "content": "<p>Returning to the initial question, right now <code>#simp [P,Q] P + Q</code> just returns <code>3 * X ^ 2 + 1 + (4 * X ^ 2 + 7 * X + 6)</code>, but maybe it's possible to add some simp lemmas (or make a simp set?) to make it more \"useful\".</p>",
+        "id": 210684454,
+        "sender_full_name": "Bryan Gin-ge Chen",
+        "timestamp": 1600634569
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"110038\">Kevin Buzzard</span> <a href=\"#narrow/stream/113489-new-members/topic/Playing.20with.20polynomials/near/210662989\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"209436\">Lucas Allen</span> can you please leave 2020, you've come to the wrong year. Please recalibrate a couple of years in either direction.</p>\n</blockquote>\n<p>I think practicing the art of impeccable timing is starting to pay off.</p>",
+        "id": 210701054,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600663201
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"123965\">Bryan Gin-ge Chen</span> <a href=\"#narrow/stream/113489-new-members/topic/Playing.20with.20polynomials/near/210684454\">said</a>:</p>\n<blockquote>\n<p>Returning to the initial question, right now <code>#simp [P,Q] P + Q</code> just returns <code>3 * X ^ 2 + 1 + (4 * X ^ 2 + 7 * X + 6)</code>, but maybe it's possible to add some simp lemmas (or make a simp set?) to make it more \"useful\".</p>\n</blockquote>\n<p>I had a go at adding a simp lemma to see if it worked,</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"bp\">@</span><span class=\"o\">[</span><span class=\"n\">simp</span><span class=\"o\">]</span> <span class=\"kn\">lemma</span> <span class=\"n\">X_add</span> <span class=\"o\">:</span> <span class=\"o\">(</span><span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"n\">polynomial</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"bp\">+</span> <span class=\"n\">X</span> <span class=\"bp\">=</span> <span class=\"mi\">2</span> <span class=\"bp\">*</span> <span class=\"n\">X</span> <span class=\"o\">:=</span> <span class=\"n\">sorry</span>\n\n<span class=\"bp\">#</span><span class=\"n\">simp</span> <span class=\"o\">[</span><span class=\"n\">X</span><span class=\"o\">]</span> <span class=\"n\">X</span> <span class=\"bp\">+</span> <span class=\"n\">X</span>\n</code></pre></div>\n\n\n<p>It gives \"monomial 1 1 + monomial 1 1\", but I want \"2 * X\". I also tried <code>#simp [(X : polynomial ℤ)] X + X</code> but this gives \"simplify tactic failed to simplify.\" Is there some way to get this to work?</p>",
+        "id": 210701161,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600663351
+    },
+    {
+        "content": "<p>Ooh, you don't want to put <code>X</code> in the simpset, rather put <code>X_add</code> between the <code>[]</code></p>",
+        "id": 210701181,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1600663403
+    },
+    {
+        "content": "<p><code>#simp [X_add] X + X</code> gives \"simplify tactic failed to simplify\". Do I need to say something about it being a <code>ℤ</code> polynomial?</p>",
+        "id": 210701314,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600663670
+    },
+    {
+        "content": "<p>Aah, I guess you do</p>",
+        "id": 210701358,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1600663695
+    },
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code><span class=\"bp\">@</span><span class=\"o\">[</span><span class=\"n\">simp</span><span class=\"o\">]</span> <span class=\"kn\">lemma</span> <span class=\"n\">X_add</span> <span class=\"o\">:</span> <span class=\"o\">(</span><span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"n\">polynomial</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"bp\">+</span> <span class=\"n\">X</span> <span class=\"bp\">=</span> <span class=\"mi\">2</span> <span class=\"bp\">*</span> <span class=\"n\">X</span> <span class=\"o\">:=</span> <span class=\"n\">sorry</span>\n\n<span class=\"bp\">#</span><span class=\"n\">simp</span> <span class=\"o\">[</span><span class=\"n\">X_add</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"n\">polynomial</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"bp\">+</span> <span class=\"n\">X</span>\n</code></pre></div>\n\n\n<p>does this work?</p>",
+        "id": 210701372,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1600663739
+    },
+    {
+        "content": "<p>Yes!</p>",
+        "id": 210701381,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600663760
+    },
+    {
+        "content": "<p>Why is this an invalid simp lemma?</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"kn\">lemma</span> <span class=\"n\">X_add</span> <span class=\"o\">(</span><span class=\"n\">m</span> <span class=\"o\">:</span> <span class=\"bp\">ℕ</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">a</span> <span class=\"n\">b</span> <span class=\"o\">:</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"o\">(</span><span class=\"n\">a</span> <span class=\"bp\">*</span> <span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"n\">polynomial</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"bp\">+</span> <span class=\"o\">(</span><span class=\"n\">b</span> <span class=\"bp\">*</span> <span class=\"n\">X</span><span class=\"o\">)</span> <span class=\"bp\">=</span> <span class=\"o\">(</span><span class=\"n\">a</span> <span class=\"bp\">+</span> <span class=\"n\">b</span><span class=\"o\">)</span> <span class=\"bp\">*</span> <span class=\"n\">X</span> <span class=\"o\">:=</span>\n<span class=\"k\">begin</span>\n  <span class=\"n\">exact</span> <span class=\"o\">(</span><span class=\"n\">add_mul</span> <span class=\"err\">↑</span><span class=\"n\">a</span> <span class=\"err\">↑</span><span class=\"n\">b</span> <span class=\"n\">X</span><span class=\"o\">)</span><span class=\"bp\">.</span><span class=\"n\">symm</span><span class=\"o\">,</span>\n<span class=\"kn\">end</span>\n</code></pre></div>",
+        "id": 210701694,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600664334
+    },
+    {
+        "content": "<p>Adding <code>@[simp]</code> gives a red squiggle.</p>",
+        "id": 210701699,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600664365
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"209436\">@Lucas Allen</span> because the statement doesn't use <code>m</code></p>",
+        "id": 210702743,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1600666157
+    },
+    {
+        "content": "<p>Oh no.</p>",
+        "id": 210702881,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600666417
+    },
+    {
+        "content": "<p>sorry.</p>",
+        "id": 210702883,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600666423
+    },
+    {
+        "content": "<p>I get a deterministic timeout with the following</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"bp\">@</span><span class=\"o\">[</span><span class=\"n\">simp</span><span class=\"o\">]</span> <span class=\"kn\">lemma</span> <span class=\"n\">X_add</span> <span class=\"o\">(</span><span class=\"n\">a</span> <span class=\"n\">b</span> <span class=\"o\">:</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"o\">(</span><span class=\"n\">a</span> <span class=\"bp\">*</span> <span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"n\">polynomial</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"bp\">+</span> <span class=\"o\">(</span><span class=\"n\">b</span> <span class=\"bp\">*</span> <span class=\"n\">X</span><span class=\"o\">)</span> <span class=\"bp\">=</span> <span class=\"o\">(</span><span class=\"n\">a</span> <span class=\"bp\">+</span> <span class=\"n\">b</span><span class=\"o\">)</span> <span class=\"bp\">*</span> <span class=\"n\">X</span> <span class=\"o\">:=</span>\n<span class=\"k\">begin</span>\n  <span class=\"n\">exact</span> <span class=\"o\">(</span><span class=\"n\">add_mul</span> <span class=\"err\">↑</span><span class=\"n\">a</span> <span class=\"err\">↑</span><span class=\"n\">b</span> <span class=\"n\">X</span><span class=\"o\">)</span><span class=\"bp\">.</span><span class=\"n\">symm</span><span class=\"o\">,</span>\n<span class=\"kn\">end</span>\n\n<span class=\"kn\">lemma</span> <span class=\"n\">test</span> <span class=\"o\">:</span> <span class=\"o\">(</span><span class=\"mi\">3</span> <span class=\"bp\">*</span> <span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"n\">polynomial</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"bp\">+</span> <span class=\"o\">(</span><span class=\"mi\">5</span> <span class=\"bp\">*</span> <span class=\"n\">X</span><span class=\"o\">)</span> <span class=\"bp\">=</span> <span class=\"mi\">8</span> <span class=\"bp\">*</span> <span class=\"n\">X</span> <span class=\"o\">:=</span>\n<span class=\"k\">begin</span>\n  <span class=\"n\">apply</span> <span class=\"n\">X_add</span><span class=\"o\">,</span>\n<span class=\"kn\">end</span>\n</code></pre></div>\n\n\n<p>I don't know why, and I hope it's not obvious again...</p>",
+        "id": 210703131,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600666784
+    },
+    {
+        "content": "<p>What happens if you <code>rw</code> instead of <code>apply</code>?</p>",
+        "id": 210703266,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1600666974
+    },
+    {
+        "content": "<p>I would have expected the apply to work though.</p>",
+        "id": 210703275,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1600666992
+    },
+    {
+        "content": "<p>\"rewrite tactic failed, did not find instance of the pattern in the target expression<br>\n  ↑?m_1 * X + ↑?m_2 * X<br>\nstate:<br>\n⊢ 3 * X + 5 * X = 8 * X\"</p>\n<p>no deterministic timeout though.</p>",
+        "id": 210703717,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600667569
+    },
+    {
+        "content": "<p>I'm wondering if it has something to do with the fact that <code>a * X</code> has type polynomial <code>ℤ</code>, and it's not <code>(a : ℤ) * X</code>.</p>",
+        "id": 210703779,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600667653
+    },
+    {
+        "content": "<p>But <code>(a : ℤ) * X</code> doesn't work.</p>",
+        "id": 210703788,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600667674
+    },
+    {
+        "content": "<p><code>lemma X_add (a b : ℤ) : a * (X : polynomial ℤ) + b * X = (a + b) * X :=</code>gives red squiggles under the <code>*</code>'s. It likes <code>lemma test : 3 * (X : polynomial ℤ) + 5 * (X) = 8 * X := </code> however.</p>",
+        "id": 210703875,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600667826
+    },
+    {
+        "content": "<p>Try <code>(3 : \\Z)</code> instead</p>",
+        "id": 210703878,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1600667836
+    },
+    {
+        "content": "<p>but rather, I think you should use <code>C</code> to create constant polynomials</p>",
+        "id": 210703893,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1600667873
+    },
+    {
+        "content": "<p>Arguably, we should consider making <code>a \\bu X</code> the standard way of multiplying by scalars, instead of <code>C a * X</code>.</p>",
+        "id": 210703940,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1600667903
+    },
+    {
+        "content": "<p><code>lemma xxx : (3 : ℤ) * (X : polynomial ℤ) + (5 : ℤ) * (X) = (8 : ℤ) * X := </code>gives red squiggles under the *'s type mismatch error.</p>",
+        "id": 210703943,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600667912
+    },
+    {
+        "content": "<p><code>((3 : \\Z) * X : ...)</code> ?</p>",
+        "id": 210703952,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1600667939
+    },
+    {
+        "content": "<p>I think it was<code> (3 : \\Z) * (X : ...)</code></p>",
+        "id": 210704020,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600668005
+    },
+    {
+        "content": "<p>It likes the <code>\\bu</code>. Everything works now.</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"bp\">@</span><span class=\"o\">[</span><span class=\"n\">simp</span><span class=\"o\">]</span> <span class=\"kn\">lemma</span> <span class=\"n\">X_add</span> <span class=\"o\">(</span><span class=\"n\">a</span> <span class=\"n\">b</span> <span class=\"o\">:</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"n\">a</span> <span class=\"err\">•</span> <span class=\"o\">(</span><span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"n\">polynomial</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"bp\">+</span> <span class=\"n\">b</span> <span class=\"err\">•</span> <span class=\"n\">X</span> <span class=\"bp\">=</span> <span class=\"o\">(</span><span class=\"n\">a</span> <span class=\"bp\">+</span> <span class=\"n\">b</span><span class=\"o\">)</span> <span class=\"err\">•</span> <span class=\"n\">X</span> <span class=\"o\">:=</span>\n<span class=\"k\">begin</span>\n  <span class=\"n\">exact</span> <span class=\"o\">(</span><span class=\"n\">add_smul</span> <span class=\"n\">a</span> <span class=\"n\">b</span> <span class=\"n\">X</span><span class=\"o\">)</span><span class=\"bp\">.</span><span class=\"n\">symm</span>\n<span class=\"kn\">end</span>\n\n<span class=\"kn\">lemma</span> <span class=\"n\">xxx</span> <span class=\"o\">:</span> <span class=\"o\">(</span><span class=\"mi\">3</span> <span class=\"o\">:</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"err\">•</span> <span class=\"o\">(</span><span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"n\">polynomial</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"bp\">+</span> <span class=\"o\">(</span><span class=\"mi\">5</span> <span class=\"o\">:</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"err\">•</span> <span class=\"o\">(</span><span class=\"n\">X</span><span class=\"o\">)</span> <span class=\"bp\">=</span> <span class=\"o\">(</span><span class=\"mi\">8</span> <span class=\"o\">:</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"err\">•</span> <span class=\"n\">X</span> <span class=\"o\">:=</span>\n<span class=\"k\">begin</span>\n  <span class=\"n\">apply</span> <span class=\"n\">X_add</span><span class=\"o\">,</span>\n<span class=\"kn\">end</span>\n\n<span class=\"bp\">#</span><span class=\"n\">simp</span> <span class=\"o\">[</span><span class=\"n\">X_add</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"mi\">3</span> <span class=\"o\">:</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"err\">•</span> <span class=\"o\">(</span><span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"n\">polynomial</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"bp\">+</span> <span class=\"o\">(</span><span class=\"mi\">5</span> <span class=\"o\">:</span> <span class=\"bp\">ℤ</span><span class=\"o\">)</span> <span class=\"err\">•</span> <span class=\"o\">(</span><span class=\"n\">X</span><span class=\"o\">)</span> <span class=\"c1\">--(3 + 5) • X</span>\n</code></pre></div>",
+        "id": 210704063,
+        "sender_full_name": "Lucas Allen",
+        "timestamp": 1600668097
+    }
+]

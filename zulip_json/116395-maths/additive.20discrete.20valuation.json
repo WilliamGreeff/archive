@@ -1,0 +1,110 @@
+[
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"250372\">@Ashvni Narayanan</span> raised the topic of discrete valuation fields, and \"the best way to do them\". A discrete valuation field is a field equipped with a non-trivial discrete valuation which almost universally in the literature is an additive valuation to <code>with_top int</code>. This issue is also holding me up with valuations on DVRs because the valuation we already have (<code>multiplicity</code> on the semiring of ideals) is valued in <code>enat</code> and I need to get to <code>multiplicative (with_top int)</code> somehow.</p>\n<p>I wonder whether a reasonable stopping point here is an API for additive discrete valuations, which can be defined to explicitly go from a ring R to <code>with_top int</code>, and follow the usual additive convention. There can be a coercion or function from additive discrete valuations to Lean's (hyper-general multiplicative) valuations, and conversely a predicate <code>is_discrete</code> on Lean's valuations, together with a proof that the two math-definitions ((1) : image discrete in non-zero part of tot ord gp with 0, (2) in the image of the additive discrete valuations) coincide.</p>\n<p>Now I can hear Johan worrying that fixing <code>int</code> instead of using something with a universal property might be a disaster -- but I'm thinking that all the general manipulation of valuations can happen using the multiplicative language, and the additive language would nick some of the API and also of course add more coming from the API of int. For example when we start thinking about extensions of valuations we change from <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi mathvariant=\"double-struck\">Z</mi></mrow><annotation encoding=\"application/x-tex\">\\mathbb{Z}</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.68889em;vertical-align:0em;\"></span><span class=\"mord\"><span class=\"mord mathbb\">Z</span></span></span></span></span> to <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mfrac><mn>1</mn><mi>n</mi></mfrac><mi mathvariant=\"double-struck\">Z</mi></mrow><annotation encoding=\"application/x-tex\">\\frac{1}{n}\\mathbb{Z}</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:1.190108em;vertical-align:-0.345em;\"></span><span class=\"mord\"><span class=\"mopen nulldelimiter\"></span><span class=\"mfrac\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.845108em;\"><span style=\"top:-2.6550000000000002em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">n</span></span></span></span><span style=\"top:-3.23em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"frac-line\" style=\"border-bottom-width:0.04em;\"></span></span><span style=\"top:-3.394em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">1</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.345em;\"><span></span></span></span></span></span><span class=\"mclose nulldelimiter\"></span></span><span class=\"mord\"><span class=\"mord mathbb\">Z</span></span></span></span></span> -- but this is the sort of calculation that should be going on using the multiplicative language perhaps. </p>\n<p>If the idea of making a new <code>additive_discrete_valuation</code> class does not appeal, then I could make a new type alias for <code>multiplicative (with_top int)</code> (and would need advice on the name) and use this, or I could just get abstract and try proving things directly using an <code>is_discrete</code> predicate on valuations, although in practice I would imagine I would run into situations where I would far rather be in <code>with_top int</code>. </p>\n<p>The structure which somehow doesn't care about whether the valuation is additive or multiplicative is the subset of <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow><annotation encoding=\"application/x-tex\">R^2</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:0.8141079999999999em;vertical-align:0em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.00773em;\">R</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8141079999999999em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span> associated to the valuation, defined as <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mo stretchy=\"false\">{</mo><mo stretchy=\"false\">(</mo><mi>x</mi><mo separator=\"true\">,</mo><mi>y</mi><mo stretchy=\"false\">)</mo><mo>:</mo><mi>v</mi><mo stretchy=\"false\">(</mo><mi>x</mi><mo stretchy=\"false\">)</mo><mo>≤</mo><mi>v</mi><mo stretchy=\"false\">(</mo><mi>y</mi><mo stretchy=\"false\">)</mo><mo stretchy=\"false\">}</mo></mrow><annotation encoding=\"application/x-tex\">\\{(x,y):v(x)\\leq v(y)\\}</annotation></semantics></math></span><span aria-hidden=\"true\" class=\"katex-html\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mopen\">{</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mpunct\">,</span><span class=\"mspace\" style=\"margin-right:0.16666666666666666em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mclose\">)</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span><span class=\"mrel\">:</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">v</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span><span class=\"mrel\">≤</span><span class=\"mspace\" style=\"margin-right:0.2777777777777778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">v</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mclose\">)</span><span class=\"mclose\">}</span></span></span></span>. Maybe one should pay more attention to this subset?</p>\n<p>Will <code>to_additive</code> get us from <code>with_top A</code> to <code>group_with_zero</code>?</p>",
+        "id": 209625201,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1599737431
+    },
+    {
+        "content": "<p>/me <span aria-label=\"worried\" class=\"emoji emoji-1f61f\" role=\"img\" title=\"worried\">:worried:</span></p>",
+        "id": 209625588,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1599737728
+    },
+    {
+        "content": "<p>The valuation ring itself is an mult/add independent way of speaking about the valuation <span aria-label=\"grinning face with smiling eyes\" class=\"emoji emoji-1f601\" role=\"img\" title=\"grinning face with smiling eyes\">:grinning_face_with_smiling_eyes:</span></p>",
+        "id": 209633521,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1599742325
+    },
+    {
+        "content": "<p>There is one place where I would argue that one needs to fix the value group as something concrete like Z, and that's the product formula.</p>",
+        "id": 209634173,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1599742594
+    },
+    {
+        "content": "<p>OK so Johan, what do you think about an API for discrete additive valuations taking values in <code>with_top int</code>?</p>",
+        "id": 209640255,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1599745002
+    },
+    {
+        "content": "<p>This is all taking so long to get right. Another question is whether <code>with_top X</code> should be redefined as an inductive type, or perhaps made irreducible.</p>",
+        "id": 209640360,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1599745053
+    },
+    {
+        "content": "<p>You have stuff like v(pi)=1, and 0&lt;v(x) implies 1 &lt;= v(x), so a little more API: DVRs is the story of <code>with_top nat</code> and DVFs the story of <code>with_top int</code>.</p>",
+        "id": 209641002,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1599745237
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"110038\">Kevin Buzzard</span> <a href=\"#narrow/stream/116395-maths/topic/additive.20discrete.20valuation/near/209640360\">said</a>:</p>\n<blockquote>\n<p>This is all taking so long to get right. Another question is whether <code>with_top X</code> should be redefined as an inductive type, or perhaps made irreducible.</p>\n</blockquote>\n<p>It's a wrapper around an inductive type, right?</p>",
+        "id": 209643066,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1599745653
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"110038\">Kevin Buzzard</span> <a href=\"#narrow/stream/116395-maths/topic/additive.20discrete.20valuation/near/209640255\">said</a>:</p>\n<blockquote>\n<p>OK so Johan, what do you think about an API for discrete additive valuations taking values in <code>with_top int</code>?</p>\n</blockquote>\n<p>I think we can't really get around it. So it will be important to have all the norm_cast lemmas that help when moving from <code>enat</code> to <code>with_top int</code>.</p>",
+        "id": 209643179,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1599745694
+    },
+    {
+        "content": "<p>Also, before embarking on anything, I guess the api for <code>enat / multiplicity</code> should be fleshed out.</p>",
+        "id": 209643227,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1599745719
+    },
+    {
+        "content": "<p>Are you imagining fleshing out this API for enat/multiplicity specifically within the context of DVRs or generally? For DVR's I was just going to make the API for the composition of <code>multiplicity</code> with the map to <code>with_top int</code>.</p>",
+        "id": 209645113,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1599746278
+    },
+    {
+        "content": "<p>I would make a dedicated map <code>enat -&gt; with_top int</code> and prove bunch of lemmas about it.</p>",
+        "id": 209645669,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1599746493
+    },
+    {
+        "content": "<p>But <code>enat</code>s generally seem to be a pain to use.</p>",
+        "id": 209645699,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1599746504
+    },
+    {
+        "content": "<p>So I think the <code>coe : nat -&gt; enat</code> is also missing some API</p>",
+        "id": 209645870,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1599746520
+    },
+    {
+        "content": "<p>OK I can certainly start with this, I know what I'm doing here. What is the name of the map <code>enat -&gt; with_top int</code>?</p>",
+        "id": 209646387,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1599746562
+    },
+    {
+        "content": "<p>Also, the API seems to be that you write <code>k \\in n</code> for <code>k : nat</code> and <code>n : enat</code>. I'm sure that computers like this. But for humans it is a very weird notation.</p>",
+        "id": 209646494,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1599746570
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"110038\">Kevin Buzzard</span> <a href=\"#narrow/stream/116395-maths/topic/additive.20discrete.20valuation/near/209646387\">said</a>:</p>\n<blockquote>\n<p>OK I can certainly start with this, I know what I'm doing here. What is the name of the map <code>enat -&gt; with_top int</code>?</p>\n</blockquote>\n<p>Maybe <code>coe</code>?</p>",
+        "id": 209646982,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1599746597
+    },
+    {
+        "content": "<p><a href=\"https://leanprover-community.github.io/mathlib_docs/find/multiplicity\">docs#multiplicity</a></p>",
+        "id": 209702493,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1599768484
+    }
+]

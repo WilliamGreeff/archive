@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>Hello, I was wondering if anyone knows of any work on trees in Lean? I have looked at rbtree and mathlib tree.</p>",
+        "id": 212314042,
+        "sender_full_name": "Callum August",
+        "timestamp": 1601910960
+    },
+    {
+        "content": "<p>Do you mean <code>tree</code> as in graph theory, or as in data structure?</p>",
+        "id": 212318614,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1601912979
+    },
+    {
+        "content": "<p>I think there is theoretical overlap, but probably not much practical overlap</p>",
+        "id": 212318654,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1601912995
+    },
+    {
+        "content": "<p>As in the data structure</p>",
+        "id": 212320126,
+        "sender_full_name": "Callum August",
+        "timestamp": 1601913612
+    },
+    {
+        "content": "<p>I don't really know much about this, and I don't really know what <code>tree</code> means, but I was under the impression that <code>W</code>-types subsume all possible definitions of <code>tree</code>.</p>",
+        "id": 212324562,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1601915611
+    },
+    {
+        "content": "<p><a href=\"https://leanprover-community.github.io/mathlib_docs/find/W/src\">src#W</a></p>",
+        "id": 212324647,
+        "sender_full_name": "Adam Topaz",
+        "timestamp": 1601915648
+    }
+]

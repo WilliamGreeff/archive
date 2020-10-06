@@ -1,0 +1,56 @@
+[
+    {
+        "content": "<p>What is the current state in mathlib of partial derivatives? Is anybody working on them / has suggestions on how to implement them?</p>",
+        "id": 207714038,
+        "sender_full_name": "Nicolò Cavalleri",
+        "timestamp": 1598084408
+    },
+    {
+        "content": "<p>What definition do you have in mind?</p>",
+        "id": 207731762,
+        "sender_full_name": "Yury G. Kudryashov",
+        "timestamp": 1598114128
+    },
+    {
+        "content": "<p>Well I'd want something that works on the charts of a manifold so my ideal definition would be for field valued function on a generic normed vector space and to define it as the total derivative in one variable of the function precomposed with a projection on a vector of a standard basis (a priori not necessarily orthonormal I'd say) but I'm open to any suggestion/generalization as I have no idea really</p>",
+        "id": 207734818,
+        "sender_full_name": "Nicolò Cavalleri",
+        "timestamp": 1598118759
+    },
+    {
+        "content": "<p>I did not really think if this is indeed a sensible idea</p>",
+        "id": 207734825,
+        "sender_full_name": "Nicolò Cavalleri",
+        "timestamp": 1598118780
+    },
+    {
+        "content": "<p>You can start with <code>def vec_deriv f x v := deriv (λ t, f (x + t • v)) 0</code>. Now that <code>vec_deriv f x v = deriv f x v</code> whenever <code>f</code> is differentiable at <code>x</code>.</p>",
+        "id": 207739010,
+        "sender_full_name": "Yury G. Kudryashov",
+        "timestamp": 1598125016
+    },
+    {
+        "content": "<p>If you do not care about partial derivatives of functions that are not differentiable, then <code>deriv f x</code> should work.</p>",
+        "id": 207739077,
+        "sender_full_name": "Yury G. Kudryashov",
+        "timestamp": 1598125106
+    },
+    {
+        "content": "<p>You can write this linear map in some basis but this is about linear algebra, not calculus</p>",
+        "id": 207739099,
+        "sender_full_name": "Yury G. Kudryashov",
+        "timestamp": 1598125170
+    },
+    {
+        "content": "<p>Ok I would also need to talk about derivatives of function defined on, say, a subset of the field only (I mean its coercion to subtype). I do not understand how to do this in mathlib as <code>deriv_within</code> assumes all the same the function to be defined on the whole field. Do you know how to do this?</p>",
+        "id": 207764957,
+        "sender_full_name": "Nicolò Cavalleri",
+        "timestamp": 1598176066
+    },
+    {
+        "content": "<p>The library is designed with total functions in mind. Can you just extend your function using garbage values outside of a set?</p>",
+        "id": 207787243,
+        "sender_full_name": "Yury G. Kudryashov",
+        "timestamp": 1598210283
+    }
+]

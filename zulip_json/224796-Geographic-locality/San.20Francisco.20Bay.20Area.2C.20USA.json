@@ -1,0 +1,56 @@
+[
+    {
+        "content": "<p>I know at least one person who has been active on this server and lives in the Bay. (If someone else comments on this thread claiming to be in the Bay, I'll try to connect the two of you.)</p>",
+        "id": 189281700,
+        "sender_full_name": "Jalex Stark",
+        "timestamp": 1582861975
+    },
+    {
+        "content": "<p>I'm in the East Bay (Berkeley) for the next few months.</p>",
+        "id": 189282420,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1582863221
+    },
+    {
+        "content": "<p>I am just starting with Lean. (In the process of getting the toolchain, emacs etc., setup). Currently in Cupertino. Once the shelter-in-place is over, will be heading to Bangalore, India.</p>",
+        "id": 193719144,
+        "sender_full_name": "Rajiv",
+        "timestamp": 1586708043
+    },
+    {
+        "content": "<p>I'm in Sunnyvale.</p>",
+        "id": 193722658,
+        "sender_full_name": "Nam",
+        "timestamp": 1586713774
+    },
+    {
+        "content": "<p>I'm in Santa Rosa :)</p>",
+        "id": 193850817,
+        "sender_full_name": "Grayson Burton",
+        "timestamp": 1586840629
+    },
+    {
+        "content": "<p>I’m in San Jose!</p>",
+        "id": 203672710,
+        "sender_full_name": "Noah Gundotra",
+        "timestamp": 1594607454
+    },
+    {
+        "content": "<p>I'm in Menlo Park until August 15, then Mountain View :)</p>",
+        "id": 205010998,
+        "sender_full_name": "Sam Estep",
+        "timestamp": 1595695020
+    },
+    {
+        "content": "<p>berkeley</p>",
+        "id": 211972358,
+        "sender_full_name": "Alok Singh (S1'17)",
+        "timestamp": 1601585243
+    },
+    {
+        "content": "<p>You're not the only one <span class=\"user-mention\" data-user-id=\"337670\">@Alok Singh (S1'17)</span>  -- have you seen <a class=\"stream\" data-stream-id=\"240192\" href=\"/#narrow/stream/240192-Berkeley-Lean-Seminar\">#Berkeley Lean Seminar</a> ?</p>",
+        "id": 211984756,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1601591795
+    }
+]

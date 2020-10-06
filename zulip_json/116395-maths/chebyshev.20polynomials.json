@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p><a href=\"https://github.com/leanprover-community/mathlib/tree/chebpoly\">branch#chebpoly</a> is a little experiment that I did for fun. And it turned out to be a lot of fun!<br>\nIt's 350 lines of code where I mix polynomials, trigonometric functions and zmod p.</p>\n<p>Everything fit pretty smoothly together, but it will need some cleaning up before it can be PR'd. In particular, it would benefit from having <a href=\"https://github.com/leanprover-community/mathlib/issues/4241\">#4241</a> and <a href=\"https://github.com/leanprover-community/mathlib/issues/4197\">#4197</a> merged.</p>\n<p>The end result is that we get a family of polynomials over Z, that commute with each other, and such that the <code>p</code>-th polynomial is congruent to <code>X ^ p</code> modulo <code>p</code>.</p>",
+        "id": 211231463,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1601023017
+    },
+    {
+        "content": "<p>Such a family is a Lambda structure, and there are only two such structures on <code>polynomial int</code>.</p>",
+        "id": 211231491,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1601023041
+    }
+]

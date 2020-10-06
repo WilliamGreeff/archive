@@ -1,0 +1,134 @@
+[
+    {
+        "content": "<p>Hey, I saw today's Quanta article about the IMO grand challenge. It sounds cool. I was wondering what the current status is - are there any teams working on an IMO problem solver with some work in progress? I'd be interested in helping out if there was some group open to outside contributors</p>",
+        "id": 210802841,
+        "sender_full_name": "Kevin Lacker",
+        "timestamp": 1600723900
+    },
+    {
+        "content": "<p>We are currently very interested in getting a nice collection of IMO problems formalised, both statements and proofs</p>",
+        "id": 210805259,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600725279
+    },
+    {
+        "content": "<p>is there a repo of this stuff somewhere</p>",
+        "id": 210805291,
+        "sender_full_name": "Kevin Lacker",
+        "timestamp": 1600725304
+    },
+    {
+        "content": "<p>There are a couple of Olympiad problems formalised in mathlib</p>",
+        "id": 210805376,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600725359
+    },
+    {
+        "content": "<p>is there a big list or is it like, the combinatorics ones are in the combinatorics directory, etc</p>",
+        "id": 210805481,
+        "sender_full_name": "Kevin Lacker",
+        "timestamp": 1600725426
+    },
+    {
+        "content": "<p><a href=\"https://github.com/leanprover-community/mathlib/blob/master/archive/imo1988_q6.lean\">https://github.com/leanprover-community/mathlib/blob/master/archive/imo1988_q6.lean</a></p>",
+        "id": 210805508,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600725450
+    },
+    {
+        "content": "<p>There are very few</p>",
+        "id": 210805514,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600725454
+    },
+    {
+        "content": "<p>It would be nice to start organising them like that</p>",
+        "id": 210805538,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600725468
+    },
+    {
+        "content": "<p>They will all live in the archive directory</p>",
+        "id": 210805551,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600725479
+    },
+    {
+        "content": "<p>src is for the standard maths library, this is entertainment</p>",
+        "id": 210805614,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1600725504
+    },
+    {
+        "content": "<p>i wonder what the very easiest IMO problem to formalize is...</p>",
+        "id": 210805894,
+        "sender_full_name": "Kevin Lacker",
+        "timestamp": 1600725707
+    },
+    {
+        "content": "<p>IMO 1972 b2 is quite easy and we chatted about its formalization in general a few weeks ago. I'll make a PR to add to to archive/</p>",
+        "id": 210832546,
+        "sender_full_name": "Stanislas Polu",
+        "timestamp": 1600756858
+    },
+    {
+        "content": "<p>Done here: <a href=\"https://github.com/leanprover-community/mathlib/pull/4209\">https://github.com/leanprover-community/mathlib/pull/4209</a></p>",
+        "id": 210834330,
+        "sender_full_name": "Stanislas Polu",
+        "timestamp": 1600758522
+    },
+    {
+        "content": "<p>For some problems that ask you to find a certain object (say IMO 2019 P1 &amp; P4), how would you write the statement in Lean?</p>",
+        "id": 210854349,
+        "sender_full_name": "Quang Dao",
+        "timestamp": 1600772198
+    },
+    {
+        "content": "<p>There has been quite some discussion about that (on this stream) without a satisfactory answer so far</p>",
+        "id": 210854386,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1600772228
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"246591\">@Quang Dao</span> see <a href=\"#narrow/stream/208328-IMO-grand-challenge/topic/How.20to.20help.3F/near/175254384\">https://leanprover.zulipchat.com/#narrow/stream/208328-IMO-grand-challenge/topic/How.20to.20help.3F/near/175254384</a></p>",
+        "id": 210854579,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1600772379
+    },
+    {
+        "content": "<p>(took some time to find that discussion)</p>",
+        "id": 210854590,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1600772389
+    },
+    {
+        "content": "<p>thanks! this link from the discussion is now unusable: <a href=\"https://github.com/IMO-grand-challenge/formal-encoding/blob/master/design/determine.lean\">https://github.com/IMO-grand-challenge/formal-encoding/blob/master/design/determine.lean</a></p>",
+        "id": 210855205,
+        "sender_full_name": "Quang Dao",
+        "timestamp": 1600772803
+    },
+    {
+        "content": "<p>do you know where it has moved to?</p>",
+        "id": 210855223,
+        "sender_full_name": "Quang Dao",
+        "timestamp": 1600772817
+    },
+    {
+        "content": "<p>anyway, I'm trying to find simpler instances in Lean where the problem is \"find something\". Could you solve a polynomial equation (say a quadratic) in Lean?</p>",
+        "id": 210855687,
+        "sender_full_name": "Quang Dao",
+        "timestamp": 1600773216
+    },
+    {
+        "content": "<p>Reposting my list of \"find something\" answers of shortlisted problems 2006 -- 2018: <a href=\"http://www.olsak.net/mirek/determine-answers.txt\">http://www.olsak.net/mirek/determine-answers.txt</a></p>",
+        "id": 210856199,
+        "sender_full_name": "Miroslav Olšák",
+        "timestamp": 1600773616
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"246591\">Quang Dao</span> <a href=\"#narrow/stream/208328-IMO-grand-challenge/topic/Current.20status.3F/near/210855205\">said</a>:</p>\n<blockquote>\n<p>thanks! this link from the discussion is now unusable: <a href=\"https://github.com/IMO-grand-challenge/formal-encoding/blob/master/design/determine.lean\">https://github.com/IMO-grand-challenge/formal-encoding/blob/master/design/determine.lean</a></p>\n</blockquote>\n<p><a href=\"https://gist.github.com/dselsam/da69f929de2d623b4a8b5d8ef8a278f9\">https://gist.github.com/dselsam/da69f929de2d623b4a8b5d8ef8a278f9</a></p>",
+        "id": 210867561,
+        "sender_full_name": "Daniel Selsam",
+        "timestamp": 1600780433
+    }
+]

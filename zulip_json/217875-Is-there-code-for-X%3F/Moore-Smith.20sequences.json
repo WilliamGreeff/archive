@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>Do we have nets in mathlib?</p>",
+        "id": 211012708,
+        "sender_full_name": "Pedro Minicz",
+        "timestamp": 1600871954
+    },
+    {
+        "content": "<p>I believe it may be defined in terms of filters somewhere.</p>",
+        "id": 211012882,
+        "sender_full_name": "Pedro Minicz",
+        "timestamp": 1600872029
+    },
+    {
+        "content": "<p>As far as I know, we don't have them (and use filters instead where one might use nets).</p>",
+        "id": 211015470,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1600873151
+    }
+]

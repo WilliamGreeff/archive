@@ -1,0 +1,140 @@
+[
+    {
+        "content": "<p>The website build is broken again because of <a href=\"https://github.com/leanprover-community/mathlib/commit/551cf8e215a7d5194a77b906a197429717f919e8\">https://github.com/leanprover-community/mathlib/commit/551cf8e215a7d5194a77b906a197429717f919e8</a> , <code>associates.prime</code> no longer exists. Could someone update <a href=\"https://github.com/leanprover-community/leanprover-community.github.io/blob/newsite/data/overview.yaml\">https://github.com/leanprover-community/leanprover-community.github.io/blob/newsite/data/overview.yaml</a> ?</p>",
+        "id": 208659351,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1598949675
+    },
+    {
+        "content": "<p>What do people think about moving the overview .yaml into mathlib so this stops happening?</p>",
+        "id": 208659376,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1598949693
+    },
+    {
+        "content": "<p>It makes more sense to update the yaml file at the time the definitions change, than to notice post-hoc that the website build is broken and try to figure out why.</p>",
+        "id": 208659476,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1598949749
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"110596\">Rob Lewis</span> <a href=\"#narrow/stream/113488-general/topic/website.20overview/near/208659376\">said</a>:</p>\n<blockquote>\n<p>What do people think about moving the overview .yaml into mathlib so this stops happening?</p>\n</blockquote>\n<p>I think this is really what we need to do.</p>",
+        "id": 208659604,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1598949864
+    },
+    {
+        "content": "<p>cc <span class=\"user-mention\" data-user-id=\"110031\">@Patrick Massot</span> / <span class=\"user-mention\" data-user-id=\"302826\">@Aaron Anderson</span></p>",
+        "id": 208659612,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1598949876
+    },
+    {
+        "content": "<p>This is purely a CI/doc-gen question, so that's a question for Rob and Bryan.</p>",
+        "id": 208659930,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1598950095
+    },
+    {
+        "content": "<p>It's a little roundabout, but I'd suggest this:</p>\n<ul>\n<li>move the overview, undergrad list, Freek list into mathlib with a CI script to check that all the declarations exist</li>\n<li>have doc-gen grab the yaml files and host them directly, no processing</li>\n<li>have the website build grab them from doc-gen along with the declaration info database</li>\n</ul>\n<p>That way the database and yaml files should always be consistent.</p>",
+        "id": 208660109,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1598950207
+    },
+    {
+        "content": "<p><a href=\"https://github.com/leanprover-community/mathlib/tree/decl-lists\">https://github.com/leanprover-community/mathlib/tree/decl-lists</a> should fail the tests stage if I did things right.</p>",
+        "id": 208667487,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1598954983
+    },
+    {
+        "content": "<p>The failing entry is in the undergrad list, <code>ring theory/divisibility in integral domains/prime nunbers</code>. It was set to <code>associates.prime</code> but that got deleted. Should it just become <code>prime</code>?</p>",
+        "id": 208667837,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1598955193
+    },
+    {
+        "content": "<p>Yes, I think so</p>",
+        "id": 208671050,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1598957665
+    },
+    {
+        "content": "<p><a href=\"https://github.com/leanprover-community/mathlib/commit/551cf8e215a7d5194a77b906a197429717f919e8\">https://github.com/leanprover-community/mathlib/commit/551cf8e215a7d5194a77b906a197429717f919e8</a> is the relevant commit</p>",
+        "id": 208671199,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1598957793
+    },
+    {
+        "content": "<p><a href=\"https://github.com/leanprover-community/mathlib/issues/4016\">#4016</a> moves and fixes the yaml files. Then there's a doc-gen PR lined up, then a website PR</p>",
+        "id": 208673311,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1598959489
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"110596\">@Rob Lewis</span> Thanks a lot for doing this!</p>",
+        "id": 208674408,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1598960055
+    },
+    {
+        "content": "<p>I reviewed the python code.</p>",
+        "id": 208676863,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1598961589
+    },
+    {
+        "content": "<p>Thanks, review addressed!</p>",
+        "id": 208678701,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1598962630
+    },
+    {
+        "content": "<p>borsed</p>",
+        "id": 208679956,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1598963366
+    },
+    {
+        "content": "<p>Seems like a good idea to me too, thanks Rob! Let me know if I can help with anything.</p>",
+        "id": 208685846,
+        "sender_full_name": "Bryan Gin-ge Chen",
+        "timestamp": 1598966679
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"123965\">@Bryan Gin-ge Chen</span> thanks for fixing the doc-gen PR! Now the website needs to be updated to pull the yaml files from there. Do you feel like doing that? If not I can later today.</p>",
+        "id": 208696244,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1598971174
+    },
+    {
+        "content": "<p>I'm happy to do it, but it'd be later tonight if that's all right.</p>",
+        "id": 208696487,
+        "sender_full_name": "Bryan Gin-ge Chen",
+        "timestamp": 1598971260
+    },
+    {
+        "content": "<p>Of course, it's not exactly urgent, hah. I have some other things to do this afternoon too, let's see who gets there first.</p>",
+        "id": 208696817,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1598971387
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"110596\">@Rob Lewis</span> FYI, I'm about to start working on this. Let me know if you've already got work in progress.</p>",
+        "id": 208750112,
+        "sender_full_name": "Bryan Gin-ge Chen",
+        "timestamp": 1598995063
+    },
+    {
+        "content": "<p>Nope, haven't had a chance, thanks!</p>",
+        "id": 208750264,
+        "sender_full_name": "Rob Lewis",
+        "timestamp": 1598995152
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"110596\">@Rob Lewis</span> <a href=\"https://github.com/leanprover-community/leanprover-community.github.io/pull/125\">https://github.com/leanprover-community/leanprover-community.github.io/pull/125</a></p>",
+        "id": 208753200,
+        "sender_full_name": "Bryan Gin-ge Chen",
+        "timestamp": 1598996841
+    }
+]

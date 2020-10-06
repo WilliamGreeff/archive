@@ -1,0 +1,142 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/index.html">new members</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html">Formalizing Dedekind cuts</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="205057707"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205057707" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Dan Stanescu <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205057707">(Jul 26 2020 at 16:14)</a>:</h4>
+<p>Since this was deemed worth pursuing, I may take a cut at it. To start with, I'm wondering if there's anyone else who's been planning that already. I also want to check if my choices for the structure fields and their names seem readable enough. BTW, what is happening with the <code>mathlib nursery</code>, there doesn't seem to be any contribution for the last two years?</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">structure</span> <span class="n">dedekind_cut</span> <span class="o">:=</span>
+<span class="o">(</span><span class="n">carrier</span>     <span class="o">:</span> <span class="n">set</span> <span class="n">ℚ</span><span class="o">)</span>
+<span class="o">(</span><span class="n">not_empty</span>   <span class="o">:</span> <span class="n">carrier</span><span class="bp">.</span><span class="n">nonempty</span><span class="o">)</span>
+<span class="o">(</span><span class="n">not_all</span>     <span class="o">:</span> <span class="bp">∃</span> <span class="n">r</span> <span class="o">:</span> <span class="n">ℚ</span><span class="o">,</span> <span class="n">r</span> <span class="err">∉</span> <span class="n">carrier</span><span class="o">)</span>
+<span class="o">(</span><span class="n">closed_down</span> <span class="o">:</span> <span class="bp">∀</span> <span class="n">s</span> <span class="err">∈</span> <span class="n">carrier</span><span class="o">,</span> <span class="bp">∀</span> <span class="n">r</span> <span class="o">:</span> <span class="n">ℚ</span><span class="o">,</span> <span class="n">r</span> <span class="bp">≤</span> <span class="n">s</span> <span class="bp">→</span> <span class="n">r</span> <span class="err">∈</span> <span class="n">carrier</span> <span class="o">)</span>
+<span class="o">(</span><span class="n">no_greatest</span> <span class="o">:</span> <span class="bp">∀</span> <span class="n">r</span> <span class="err">∈</span> <span class="n">carrier</span><span class="o">,</span> <span class="bp">∃</span> <span class="n">s</span> <span class="err">∈</span> <span class="n">carrier</span><span class="o">,</span>  <span class="n">r</span> <span class="bp">&lt;</span> <span class="n">s</span> <span class="o">)</span>
+</code></pre></div>
+
+
+
+<a name="205057833"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205057833" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205057833">(Jul 26 2020 at 16:18)</a>:</h4>
+<p>You could generalize <code>Q</code> in this definition</p>
+
+
+
+<a name="205057834"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205057834" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Bryan Gin-ge Chen <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205057834">(Jul 26 2020 at 16:18)</a>:</h4>
+<p>The nursery is effectively moribund. Probably we should formally "archive" it on GitHub.</p>
+
+
+
+<a name="205057848"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205057848" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205057848">(Jul 26 2020 at 16:19)</a>:</h4>
+<p>In particular, I think you will find that it is easier to define the positive reals as dedekind cuts of positive rationals than using all rationals (especially when it comes to multiplication)</p>
+
+
+
+<a name="205057893"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205057893" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205057893">(Jul 26 2020 at 16:20)</a>:</h4>
+<p>also, you will want to be able to talk about dedekind cuts of real numbers when showing completeness</p>
+
+
+
+<a name="205057975"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205057975" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205057975">(Jul 26 2020 at 16:22)</a>:</h4>
+<p>One technical problem with Dedekind cuts is what to with the rationals -- should the rational be in the top cut or the bottom one? Someone recently explained to me that one solution to this is to say "neither", and formalise Dedekind cuts with the axiom that if a&lt;b then either a is in the bottom cut or b is in the top cut. This forces the union of the two cuts to be either all the rationals, or all but one.</p>
+
+
+
+<a name="205057987"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205057987" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205057987">(Jul 26 2020 at 16:23)</a>:</h4>
+<p>In Dan's definition you don't bother with the top cut, and the bottom cut is open</p>
+
+
+
+<a name="205058030"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205058030" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205058030">(Jul 26 2020 at 16:24)</a>:</h4>
+<p>I think this is the Right Way to do it</p>
+
+
+
+<a name="205058034"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205058034" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Alex J. Best <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205058034">(Jul 26 2020 at 16:24)</a>:</h4>
+<p>I think defining cuts in general would be good. I did some related stuff in <a href="https://github.com/leanprover-community/mathlib/pull/3292">https://github.com/leanprover-community/mathlib/pull/3292</a> but without really defining cuts as a structure, just giving a cut as a set and proving those properties separately. Might be cool to go as general as <a href="https://en.wikipedia.org/wiki/Dedekind%E2%80%93MacNeille_completion">https://en.wikipedia.org/wiki/Dedekind%E2%80%93MacNeille_completion</a> though</p>
+
+
+
+<a name="205058056"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205058056" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205058056">(Jul 26 2020 at 16:25)</a>:</h4>
+<p>Aah I see -- yes, this is a nice slick way to do it. You'll still have to be careful when multiplying -sqrt(2) by itself.</p>
+
+
+
+<a name="205058103"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205058103" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205058103">(Jul 26 2020 at 16:26)</a>:</h4>
+<p>If you define positive reals then there is no -sqrt(2)</p>
+
+
+
+<a name="205058120"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205058120" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205058120">(Jul 26 2020 at 16:27)</a>:</h4>
+<p>Given positive reals, you can just define reals the same way you get int from nat</p>
+
+
+
+<a name="205058181"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205058181" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Buzzard <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205058181">(Jul 26 2020 at 16:28)</a>:</h4>
+<p>I agree that this looks like the most painless approach. I've had students doing Dedekind reals in the past and it's surprising how annoying it is compared to the Cauchy sequences approach.</p>
+
+
+
+<a name="205058286"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205058286" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Dan Stanescu <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205058286">(Jul 26 2020 at 16:31)</a>:</h4>
+<p>I was just looking at the Wikipedia definition and the one in P.J. Cameron's book "Sets, Logic and Categories".</p>
+
+
+
+<a name="205058336"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205058336" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205058336">(Jul 26 2020 at 16:32)</a>:</h4>
+<p>If you are aiming for mathlib, expect it to be generalized to unrecognizability <span aria-label="slight smile" class="emoji emoji-1f642" role="img" title="slight smile">:slight_smile:</span></p>
+
+
+
+<a name="205058339"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205058339" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Dan Stanescu <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205058339">(Jul 26 2020 at 16:32)</a>:</h4>
+<p>Although the latter favors using both the lower and the upper cut, Wiki goes for the lower only. Which I think it is an advantage.</p>
+
+
+
+<a name="205058405"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205058405" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205058405">(Jul 26 2020 at 16:34)</a>:</h4>
+<p>You can do the D-MN completion with only lower cuts</p>
+
+
+
+<a name="205058407"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205058407" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205058407">(Jul 26 2020 at 16:34)</a>:</h4>
+<p>in fact the wiki definition does it that way</p>
+
+
+
+<a name="205058608"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Formalizing%20Dedekind%20cuts/near/205058608" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Dan Stanescu <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Formalizing.20Dedekind.20cuts.html#205058608">(Jul 26 2020 at 16:41)</a>:</h4>
+<p>Dedekind cuts have their advantage (unique vs. equivalence class) so it's good to have them. </p>
+<p>Thank you all for the input and I'm glad I asked. Will take a look at the generalization pointed to by <span class="user-mention" data-user-id="127136">@Alex J. Best</span> . My dream goal is to have an undergraduate student working on this, so hopefully it can be PR'd into mathlib incrementally.</p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

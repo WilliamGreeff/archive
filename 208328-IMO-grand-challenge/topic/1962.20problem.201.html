@@ -1,0 +1,82 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/208328-IMO-grand-challenge/topic/1962.20problem.201.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/208328-IMO-grand-challenge/index.html">IMO-grand-challenge</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/208328-IMO-grand-challenge/topic/1962.20problem.201.html">1962 problem 1</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="212352661"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/208328-IMO-grand-challenge/topic/1962%20problem%201/near/212352661" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Lacker <a href="https://leanprover-community.github.io/archive/stream/208328-IMO-grand-challenge/topic/1962.20problem.201.html#212352661">(Oct 05 2020 at 20:30)</a>:</h4>
+<p>i got another formalization pull request out. <a href="https://github.com/leanprover-community/mathlib/pull/4450">https://github.com/leanprover-community/mathlib/pull/4450</a><br>
+it's interesting, i feel like i spend more effort on formalizing the parts that are "trivial" to a human mathematician, rather than the parts that are "difficult" to a human mathematician.</p>
+
+
+
+<a name="212362405"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/208328-IMO-grand-challenge/topic/1962%20problem%201/near/212362405" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/208328-IMO-grand-challenge/topic/1962.20problem.201.html#212362405">(Oct 05 2020 at 22:05)</a>:</h4>
+<p>Did <a href="#narrow/stream/113489-new-members/topic/simplifying.20nat.2Edigits/near/212152395"><code>norm_digits</code></a> get PR'd? If not it probably should be --- someone other that Mario can make the PR.</p>
+
+
+
+<a name="212362703"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/208328-IMO-grand-challenge/topic/1962%20problem%201/near/212362703" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Lacker <a href="https://leanprover-community.github.io/archive/stream/208328-IMO-grand-challenge/topic/1962.20problem.201.html#212362703">(Oct 05 2020 at 22:09)</a>:</h4>
+<p>i dont feel great about PRing in a big blob of code i dont understand. but i would love for someone else to</p>
+
+
+
+<a name="212362854"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/208328-IMO-grand-challenge/topic/1962%20problem%201/near/212362854" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Lacker <a href="https://leanprover-community.github.io/archive/stream/208328-IMO-grand-challenge/topic/1962.20problem.201.html#212362854">(Oct 05 2020 at 22:11)</a>:</h4>
+<p>actually, <span class="user-mention" data-user-id="266440">@Shing Tak Lam</span> commented on the other pull request with a one-liner with <code>rw</code> that does the same thing as <code>digit_recursion</code></p>
+
+
+
+<a name="212362867"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/208328-IMO-grand-challenge/topic/1962%20problem%201/near/212362867" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Lacker <a href="https://leanprover-community.github.io/archive/stream/208328-IMO-grand-challenge/topic/1962.20problem.201.html#212362867">(Oct 05 2020 at 22:11)</a>:</h4>
+<p>so... maybe there already <em>is</em> a way to do it in the existing library, it is just a complicated one</p>
+
+
+
+<a name="212363325"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/208328-IMO-grand-challenge/topic/1962%20problem%201/near/212363325" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Scott Morrison <a href="https://leanprover-community.github.io/archive/stream/208328-IMO-grand-challenge/topic/1962.20problem.201.html#212363325">(Oct 05 2020 at 22:16)</a>:</h4>
+<blockquote>
+<p>it's interesting, i feel like i spend more effort on formalizing the parts that are "trivial" to a human mathematician, rather than the parts that are "difficult" to a human mathematician.</p>
+</blockquote>
+<p>Do you have a feeling more tactics would help? (e.g. things like <code>interval_cases</code>)</p>
+
+
+
+<a name="212363364"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/208328-IMO-grand-challenge/topic/1962%20problem%201/near/212363364" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Shing Tak Lam <a href="https://leanprover-community.github.io/archive/stream/208328-IMO-grand-challenge/topic/1962.20problem.201.html#212363364">(Oct 05 2020 at 22:17)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="238605">Kevin Lacker</span> <a href="#narrow/stream/208328-IMO-grand-challenge/topic/1962.20problem.201/near/212362854">said</a>:</p>
+<blockquote>
+<p>actually, <span class="user-mention silent" data-user-id="266440">Shing Tak Lam</span> commented on the other pull request with a one-liner with <code>rw</code> that does the same thing as <code>digit_recursion</code></p>
+</blockquote>
+<p>Yes, but something like <code>digit_recursion</code> should still be in the library imo. I think <code>digits_aux</code> should really be treated as an implementation detail and the users should really only need <code>digits</code>.</p>
+
+
+
+<a name="212363490"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/208328-IMO-grand-challenge/topic/1962%20problem%201/near/212363490" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Lacker <a href="https://leanprover-community.github.io/archive/stream/208328-IMO-grand-challenge/topic/1962.20problem.201.html#212363490">(Oct 05 2020 at 22:18)</a>:</h4>
+<p>that makes sense - i ended up not being able to figure out how to use the digits aux stuff, and so i just wrote digits_helper because that was the form i wished the lemmas were in</p>
+
+
+
+<a name="212363506"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/208328-IMO-grand-challenge/topic/1962%20problem%201/near/212363506" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kevin Lacker <a href="https://leanprover-community.github.io/archive/stream/208328-IMO-grand-challenge/topic/1962.20problem.201.html#212363506">(Oct 05 2020 at 22:18)</a>:</h4>
+<p>also because i was sick of proving 10 &gt; 2 so many times</p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

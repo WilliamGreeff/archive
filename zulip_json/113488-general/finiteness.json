@@ -1,0 +1,578 @@
+[
+    {
+        "content": "<p>Do mathlib have something that behaves like:</p>\n<div class=\"codehilite\"><pre><span></span>class  Finite (α : Type u) :=\n  (cardinality : nat)\n  (bijection : trunc (equiv α (fin cardinality)))\n</pre></div>",
+        "id": 124610398,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1522822200
+    },
+    {
+        "content": "<p>Is this gross for some reason, and should be avoided?</p>",
+        "id": 124610440,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1522822214
+    },
+    {
+        "content": "<p>It is in my category theory repo (the category “set”)</p>",
+        "id": 124610449,
+        "sender_full_name": "Kenny Lau",
+        "timestamp": 1522822274
+    },
+    {
+        "content": "<p>and it’s called fintype</p>",
+        "id": 124610450,
+        "sender_full_name": "Kenny Lau",
+        "timestamp": 1522822282
+    },
+    {
+        "content": "<p>It can't be called fintype, because mathlib already has a fintype which is slightly different (but equivalent, of course).</p>",
+        "id": 124610479,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1522822323
+    },
+    {
+        "content": "<p>I guess I'm asking if there is a strong reason to (bite the bullet and learn how to use multisets and) use mathlib's fintype, or if it's okay to use something like this.</p>",
+        "id": 124610492,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1522822358
+    },
+    {
+        "content": "<p>oops i meant the category is called set and uses fintype</p>",
+        "id": 124610554,
+        "sender_full_name": "Kenny Lau",
+        "timestamp": 1522822549
+    },
+    {
+        "content": "<p>but I guess I didn’t notice that you used trunc</p>",
+        "id": 124610595,
+        "sender_full_name": "Kenny Lau",
+        "timestamp": 1522822566
+    },
+    {
+        "content": "<p>That's <code>fintype</code>. If you want to use such an interface to it, prove it and use it</p>",
+        "id": 124610881,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1522823264
+    },
+    {
+        "content": "<p>Okay, I  guess that's a good point. In the meantime I'm discovering <code>fintype</code> is pretty easy to use anyway.</p>",
+        "id": 124610925,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1522823304
+    },
+    {
+        "content": "<p>What is the lemma that says <code>fintype</code> gives <code>decidable_eq</code>?</p>",
+        "id": 124611257,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1522824094
+    },
+    {
+        "content": "<p>I don't think it's true. So your formulation is a bit stronger, since it equips the set with a function to <code>fin</code>; in mathlib's <code>fintype</code>, this function is <code>index_of</code>, but it requires a separate proof of <code>decidable_eq</code></p>",
+        "id": 124611576,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1522824763
+    },
+    {
+        "content": "<p>your <code>Finite</code> should be equivalent to the conjunction of <code>fintype</code> and <code>decidable_eq</code></p>",
+        "id": 124611584,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1522824789
+    },
+    {
+        "content": "<p>ah, okay.</p>",
+        "id": 124611585,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1522824800
+    },
+    {
+        "content": "<p>Is there any way we could get to a world in which</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">def</span> <span class=\"n\">finite</span> <span class=\"o\">{</span><span class=\"n\">a</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"o\">}</span> <span class=\"o\">(</span><span class=\"n\">s</span> <span class=\"o\">:</span> <span class=\"n\">set</span> <span class=\"n\">a</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"kt\">Prop</span> <span class=\"o\">:=</span> <span class=\"c1\">-- any definition of finiteness</span>\n\n<span class=\"kn\">structure</span> <span class=\"n\">finset</span> <span class=\"o\">(</span><span class=\"n\">a</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"o\">)</span> <span class=\"o\">:=</span>\n<span class=\"o\">(</span><span class=\"n\">s</span> <span class=\"o\">:</span> <span class=\"n\">set</span> <span class=\"n\">a</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"n\">finite</span> <span class=\"n\">s</span><span class=\"o\">)</span>\n\n<span class=\"n\">class</span> <span class=\"n\">fintype</span> <span class=\"o\">(</span><span class=\"n\">a</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"kt\">Prop</span> <span class=\"o\">:=</span>\n<span class=\"o\">(</span><span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"n\">finite</span> <span class=\"o\">(</span><span class=\"n\">set</span><span class=\"bp\">.</span><span class=\"n\">univ</span> <span class=\"o\">:</span> <span class=\"n\">set</span> <span class=\"n\">a</span><span class=\"o\">))</span>\n</code></pre></div>",
+        "id": 206179081,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1596738588
+    },
+    {
+        "content": "<p>cons: all <code>big_operators</code> stuff becomes noncomputable<br>\npros: API becomes comprehensible by humans, and no more instance diamonds for <code>fintype</code></p>",
+        "id": 206181704,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1596739871
+    },
+    {
+        "content": "<p>(I also dream of a world where <code>decidable</code>would disappear, but I know this won't happen)</p>",
+        "id": 206182245,
+        "sender_full_name": "Sebastien Gouezel",
+        "timestamp": 1596740134
+    },
+    {
+        "content": "<p>Up to <del>proof irrelevance</del> propositional equivalence, none of these definitions are different except you replaced <code>fintype A</code> with <code>nonempty (fintype A)</code>. Maybe we should just have a class for that, replacing <code>set.finite</code></p>",
+        "id": 206182616,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1596740316
+    },
+    {
+        "content": "<p>actually do we lose anything by just changing <code>fintype</code> to the nonempty version of what it currently is? <code>fintype.univ</code> becomes noncomputable but it fixes the instance diamonds</p>",
+        "id": 206182980,
+        "sender_full_name": "Bhavik Mehta",
+        "timestamp": 1596740470
+    },
+    {
+        "content": "<p><code>fintype.card</code> also becomes noncomputable</p>",
+        "id": 206183036,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1596740499
+    },
+    {
+        "content": "<p>My bigger issue is that I find it really difficult to find what I'm looking for in <code>data.finset</code>/<code>data.fintype</code>/<code>data.set.finite</code>; it's possible this could be improved without any representation changes</p>",
+        "id": 206183487,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1596740688
+    },
+    {
+        "content": "<p>But a related issue is that there are three different ways to express the same ideas and they are connected by constructions that are not that simple</p>",
+        "id": 206183748,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1596740800
+    },
+    {
+        "content": "<p>It's my completely unsubstantiated opinion that if we proved a bunch of things for <code>finite</code>, say, we could systematically deduce the consequences for <code>finset</code> and <code>fintype</code> and end up with a more organized API</p>",
+        "id": 206183881,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1596740869
+    },
+    {
+        "content": "<p>Here is some pure fantasy: a universe level for only finite types</p>",
+        "id": 206184647,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1596741294
+    },
+    {
+        "content": "<p><code>Type (1/2:\\Q)</code></p>",
+        "id": 206185310,
+        "sender_full_name": "Jalex Stark",
+        "timestamp": 1596741674
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"110038\">@Kevin Buzzard</span></p>",
+        "id": 206211134,
+        "sender_full_name": "Kenny Lau",
+        "timestamp": 1596758013
+    },
+    {
+        "content": "<p>We must make finiteness easier for mathematicians. Counting is all over Sylow's theorems and if people can't knock them off in Lean using what we have, then I think we don't have the right things. I recently had two distinct proofs that the trivial subgroup of a group was a fintype and it was annoying.</p>",
+        "id": 206214294,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1596761421
+    },
+    {
+        "content": "<p>OK I have just spent some time trying to understand the issues here. I'm trying to prove Sylow's theorems with students. Sylow's theorems are theorems about finite groups with no mention of decidable equality or ever explicitly attempting to write down elements -- they apply to all finite groups. Hence it seems to me that computability is irrelevant, so <code>fintype</code> and <code>finset</code> are not the right classes. But <code>set.finite</code> isn't either, because it is unbundled finiteness. Reid is proposing a bundled version of finiteness which he also calls <code>finset</code> but how about for now we call it <code>finset2</code>.</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"kn\">structure</span> <span class=\"n\">finset2</span> <span class=\"o\">(</span><span class=\"n\">a</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span> <span class=\"n\">u</span><span class=\"o\">)</span> <span class=\"o\">:=</span>\n<span class=\"o\">(</span><span class=\"n\">s</span> <span class=\"o\">:</span> <span class=\"n\">set</span> <span class=\"n\">a</span><span class=\"o\">)</span>\n<span class=\"o\">(</span><span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"n\">finite</span> <span class=\"n\">s</span><span class=\"o\">)</span>\n</code></pre></div>\n\n\n<p>Is there an argument for developing an API for this? It is bundled noncomputable finiteness which seems to me to be the best for Lean and the best for Sylow. Have I understood things correctly? Are people just going to tell me to go ahead and try?</p>",
+        "id": 206450031,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597058278
+    },
+    {
+        "content": "<p>As for cardinality some non-cardinal options would be finset2.card, <code>set.fincard : set X -&gt; nat</code> or <code>fincard : Type u -&gt; nat</code>. These are all functions we don't have, right? <span class=\"user-mention\" data-user-id=\"110031\">@Patrick Massot</span> you were complaining about fintype in another thread and it's got to the point where I just want to fix it. Sylow's theorems are about finite groups and I don't care whether they have decidable equality, I just want to be able to count subsets and not run into diamonds -- this is not an unreasonable request I don't think but perhaps the infrastructure is not yet there for this kind of thing.</p>",
+        "id": 206451212,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597059392
+    },
+    {
+        "content": "<p>More thoughts about finiteness and cardinality for sets and types.</p>\n<p>Let's start with sets. Now <code>set.finite</code> exists in mathlib already; its definition is</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">def</span> <span class=\"n\">finite</span> <span class=\"o\">(</span><span class=\"n\">s</span> <span class=\"o\">:</span> <span class=\"n\">set</span> <span class=\"n\">α</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"kt\">Prop</span> <span class=\"o\">:=</span> <span class=\"n\">nonempty</span> <span class=\"o\">(</span><span class=\"n\">fintype</span> <span class=\"n\">s</span><span class=\"o\">)</span>\n</code></pre></div>\n\n\n<p>. It's not a class. Why is <code>set.finite</code> not a class? <code>is_subgroup</code> was a class. Could both <code>set.finite</code> and <code>set.infinite</code> be classes? This would be unbundled finiteness for sets (<code>normal</code> is unbundled Prop-valued normality for subgroups and we tried bundling it in the group theory game but it's quite inconvenient because you either reproduce a bunch of <code>subgroup.*</code> in <code>normal.*</code> or you put <code>to_subgroup</code> everywhere). The definition of bundled finiteness for sets I'm working with is</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">def</span> <span class=\"n\">finset2</span> <span class=\"o\">(</span><span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span> <span class=\"n\">u</span><span class=\"o\">)</span> <span class=\"o\">:=</span> <span class=\"o\">{</span><span class=\"n\">S</span> <span class=\"o\">:</span> <span class=\"n\">set</span> <span class=\"n\">X</span> <span class=\"bp\">//</span> <span class=\"n\">finite</span> <span class=\"n\">S</span><span class=\"o\">}</span>\n</code></pre></div>\n\n\n<p>The idea would be to develop some API for <code>set.finite</code> and encourage mathematicians who don't <code>#eval</code> to either use <code>set.finite</code> or <code>finset2</code> as their standard concept of finiteness for sets depending on whether they like bundled or unbundled -- and in particular to avoid <code>finset</code> completely because this is constructible finiteness.</p>\n<p>For set cardinality the issue is that I don't know whether unbundled or bundled will be best, so I have had to introduce two nat-valued cardinalities -- firstly note that we have</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">noncomputable</span> <span class=\"n\">def</span> <span class=\"n\">equiv_finset</span> <span class=\"o\">(</span><span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"bp\">*</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"n\">finset2</span> <span class=\"n\">X</span> <span class=\"err\">≃</span> <span class=\"o\">(</span><span class=\"n\">finset</span> <span class=\"n\">X</span><span class=\"o\">)</span> <span class=\"o\">:=</span> <span class=\"bp\">...</span>\n</code></pre></div>\n\n\n<p>and so we can define</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">noncomputable</span> <span class=\"n\">def</span> <span class=\"n\">finset2</span><span class=\"bp\">.</span><span class=\"n\">card</span> <span class=\"o\">(</span><span class=\"n\">F</span> <span class=\"o\">:</span> <span class=\"n\">finset2</span> <span class=\"n\">X</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"bp\">ℕ</span> <span class=\"o\">:=</span>\n<span class=\"o\">((</span><span class=\"n\">finset2</span><span class=\"bp\">.</span><span class=\"n\">equiv_finset</span> <span class=\"n\">X</span><span class=\"o\">)</span><span class=\"bp\">.</span><span class=\"n\">to_fun</span> <span class=\"n\">F</span><span class=\"o\">)</span><span class=\"bp\">.</span><span class=\"n\">card</span>\n</code></pre></div>\n\n\n<p>i.e. finset2.card is just finset.card but ported over the canonical bijection. This is cardinality for bundled finite sets. For unbundled finite sets there is the issue of trying to find the <code>finite</code> instance, and experience seems to show that this can be hard work, so I introduce</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">def</span> <span class=\"n\">sum</span> <span class=\"o\">[</span><span class=\"n\">add_comm_monoid</span> <span class=\"n\">β</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">s</span> <span class=\"o\">:</span> <span class=\"n\">set</span> <span class=\"n\">α</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">f</span> <span class=\"o\">:</span> <span class=\"n\">α</span> <span class=\"bp\">→</span> <span class=\"n\">β</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"n\">β</span> <span class=\"o\">:=</span>\n<span class=\"k\">if</span> <span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"n\">finite</span> <span class=\"n\">s</span> <span class=\"k\">then</span> <span class=\"n\">h</span><span class=\"bp\">.</span><span class=\"n\">to_finset</span><span class=\"bp\">.</span><span class=\"n\">sum</span> <span class=\"n\">f</span> <span class=\"k\">else</span> <span class=\"mi\">37</span>\n</code></pre></div>\n\n\n<p>and then define</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">def</span> <span class=\"n\">set</span><span class=\"bp\">.</span><span class=\"n\">card</span> <span class=\"o\">(</span><span class=\"n\">s</span> <span class=\"o\">:</span> <span class=\"n\">set</span> <span class=\"n\">α</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"bp\">ℕ</span> <span class=\"o\">:=</span>\n<span class=\"n\">s</span><span class=\"bp\">.</span><span class=\"n\">sum</span> <span class=\"o\">(</span><span class=\"bp\">λ</span> <span class=\"n\">x</span><span class=\"o\">,</span> <span class=\"mi\">1</span><span class=\"o\">)</span>\n</code></pre></div>\n\n\n<p>These functions are really easy to apply because they don't check finiteness. Under finiteness conditions you can relate the card to finset2.card and this is your route back to finset.card if you want to port API.</p>\n<p>Earlier on in my Lean career I was concerned about all this <code>noncomputable</code> stuff because I didn't really know how important computability was. The thing to understand about noncomputable cards is that you can still prove Sylow's theorems which are all about cards, you just can't <code>#eval</code>, and because I never <code>#eval</code> anyway I'm not bothered.</p>\n<hr>\n<p>Now onto types. For unbundled finiteness for types I'm using</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">def</span> <span class=\"n\">is_finite</span> <span class=\"o\">(</span><span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span> <span class=\"n\">u</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"kt\">Prop</span> <span class=\"o\">:=</span> <span class=\"n\">nonempty</span> <span class=\"o\">(</span><span class=\"n\">fintype</span> <span class=\"n\">X</span><span class=\"o\">)</span>\n\n<span class=\"n\">attribute</span> <span class=\"o\">[</span><span class=\"n\">class</span><span class=\"o\">]</span> <span class=\"n\">is_finite</span>\n</code></pre></div>\n\n\n<p>and again the idea is to encourage non-#eval mathematicians to use <code>is_finite</code> instead of <code>fintype</code>, because using it is strictly easier, modulo the fact that of course a whole load of the <code>fintype</code> library needs to be ported over. </p>\n<p>Bundling finite types seems like the sort of thing that the category theory library might want to do, but I'm not doing it right now.</p>\n<p>For cardinality again I follow the principle that the fewer inputs your function has, the easier it is to use it, so I have gone for </p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">def</span> <span class=\"n\">fincard</span> <span class=\"o\">(</span><span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"bp\">*</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"bp\">ℕ</span> <span class=\"o\">:=</span>\n<span class=\"k\">if</span> <span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"n\">is_finite</span> <span class=\"n\">X</span> <span class=\"k\">then</span> <span class=\"bp\">@</span><span class=\"n\">fintype</span><span class=\"bp\">.</span><span class=\"n\">card</span> <span class=\"n\">X</span> <span class=\"o\">(</span><span class=\"n\">classical</span><span class=\"bp\">.</span><span class=\"n\">choice</span> <span class=\"n\">h</span><span class=\"o\">)</span> <span class=\"k\">else</span> <span class=\"mi\">0</span>\n</code></pre></div>\n\n\n<p>and of course there's a route back to fintype.card in the <code>is_finite</code> setting, which enables noncomputational API (e.g. all theorems) to be ported.</p>\n<p>All this work is piling up in the group-theory-game repo because we have got to the point where we want to prove Sylow's theorems. I think it might be sensible to start sending some of it to mathlib. Before I start, does anyone have any comments about the proposal, naming conventions, or anything else? I feel bad adding more definitions of finiteness but I think these are the things we need for reasoning. When I was refactoring subgroups I ran into an issue in the proof of Sylow's theorem where we are proving there are subgroups of order p^n for all n&lt;=v_p(G); the n=0 case used <code>bot</code> and at some point I wanted to rewrite <code>card_bot</code> but unfortunately there are two proofs that the bot subgroup of a finite group is finite in mathlib -- one coming from the fact that it's the trivial group and one coming from the fact that a subset of a finite type is finite. This is just silly -- we don't need these subsingleton diamonds getting in the way when we are reasoning.</p>",
+        "id": 206614920,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597171685
+    },
+    {
+        "content": "<p>What ever happened to definition irrelevance / API making? Instead of defining <code>finset2</code>, make an api that lets you treat a <code>finset</code> like a <code>finset2</code></p>",
+        "id": 206618412,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597173328
+    },
+    {
+        "content": "<p>Agree with Mario here, nothing about finset forces you to be constructive.</p>",
+        "id": 206618856,
+        "sender_full_name": "Chris Hughes",
+        "timestamp": 1597173586
+    },
+    {
+        "content": "<p>I think my definition of <code>finsum</code> is strictly more powerful than your <code>sum</code> too. If you are going to have no well definedness assumptions, you may as well have it give a reasonable result on the widest possible domain</p>",
+        "id": 206619038,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597173639
+    },
+    {
+        "content": "<p>Oops, it appears this is a thread-spanning topic now. I'm referring to <a href=\"#narrow/stream/116395-maths/topic/universe.20hell.20in.20linear.20algebra/near/206415746\">https://leanprover.zulipchat.com/#narrow/stream/116395-maths/topic/universe.20hell.20in.20linear.20algebra/near/206415746</a></p>",
+        "id": 206619278,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597173773
+    },
+    {
+        "content": "<p>Yeah sorry, I had to choose whether to go with this thread or that one.</p>",
+        "id": 206619862,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597174077
+    },
+    {
+        "content": "<p>finsum is fine by me -- I was just using something Jeremy knocked up for MIL. I'm not sure I understand the finset2 thing though. I was 100% sure I used finset2 to make is_finite but I just removed the import and don't use it at all. So should I ditch finset2? I'm not sure I even need it now.</p>",
+        "id": 206621224,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597174745
+    },
+    {
+        "content": "<p>So is the point that we just don't define <code>finset2</code> at all, prove that <code>{S : set X // finite S} ≃ (finset X)</code> and then for every lemma about finsets I prove some analogous lemma for set.finite?</p>",
+        "id": 206621416,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597174840
+    },
+    {
+        "content": "<p>In what sense is that not already done in mathlib?</p>",
+        "id": 206621784,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597175030
+    },
+    {
+        "content": "<p>set.finite has lots of lemmas generated exactly that way, and they are all very easy</p>",
+        "id": 206621847,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597175049
+    },
+    {
+        "content": "<p>so you can add more if something is missing without too much trouble</p>",
+        "id": 206621865,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597175065
+    },
+    {
+        "content": "<p>I am confused about why we don't want <code>finset2</code>. What were the problems with <code>is_subgroup</code> which made us switch to <code>subgroup</code>? Were there actually no problems and we just decided that we wanted the cool dot notation?</p>",
+        "id": 206622282,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597175314
+    },
+    {
+        "content": "<p>it was a class</p>",
+        "id": 206622352,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1597175360
+    },
+    {
+        "content": "<p>So <code>set.finite</code> and <code>set.infinite</code> should not be classes? Here's the current definitions (mostly due to other people):</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"kn\">import</span> <span class=\"n\">data</span><span class=\"bp\">.</span><span class=\"n\">finsupp</span>\n\n<span class=\"kn\">universe</span> <span class=\"n\">u</span>\n\n<span class=\"n\">open_locale</span> <span class=\"n\">classical</span>\n\n<span class=\"n\">attribute</span> <span class=\"o\">[</span><span class=\"n\">class</span><span class=\"o\">]</span> <span class=\"n\">set</span><span class=\"bp\">.</span><span class=\"n\">finite</span> <span class=\"n\">set</span><span class=\"bp\">.</span><span class=\"n\">infinite</span>\n\n<span class=\"n\">noncomputable</span> <span class=\"n\">def</span> <span class=\"n\">finsum</span> <span class=\"o\">{</span><span class=\"n\">ι</span> <span class=\"n\">α</span><span class=\"o\">}</span> <span class=\"o\">[</span><span class=\"n\">add_comm_monoid</span> <span class=\"n\">α</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">f</span> <span class=\"o\">:</span> <span class=\"n\">ι</span> <span class=\"bp\">→</span> <span class=\"n\">α</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"n\">α</span> <span class=\"o\">:=</span>\n<span class=\"k\">if</span> <span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"bp\">∃</span> <span class=\"n\">f&#39;</span> <span class=\"o\">:</span> <span class=\"n\">ι</span> <span class=\"bp\">→</span><span class=\"err\">₀</span> <span class=\"n\">α</span><span class=\"o\">,</span> <span class=\"n\">f</span> <span class=\"bp\">=</span> <span class=\"n\">f&#39;</span> <span class=\"k\">then</span> <span class=\"o\">(</span><span class=\"n\">classical</span><span class=\"bp\">.</span><span class=\"n\">some</span> <span class=\"n\">h</span><span class=\"o\">)</span><span class=\"bp\">.</span><span class=\"n\">sum</span> <span class=\"o\">(</span><span class=\"bp\">λ</span> <span class=\"bp\">_</span> <span class=\"n\">a</span><span class=\"o\">,</span> <span class=\"n\">a</span><span class=\"o\">)</span> <span class=\"k\">else</span> <span class=\"mi\">0</span>\n\n<span class=\"n\">noncomputable</span> <span class=\"n\">def</span> <span class=\"n\">finsum_in</span> <span class=\"o\">{</span><span class=\"n\">ι</span> <span class=\"n\">α</span><span class=\"o\">}</span> <span class=\"o\">[</span><span class=\"n\">add_comm_monoid</span> <span class=\"n\">α</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">s</span> <span class=\"o\">:</span> <span class=\"n\">set</span> <span class=\"n\">ι</span><span class=\"o\">)</span> <span class=\"o\">(</span><span class=\"n\">f</span> <span class=\"o\">:</span> <span class=\"n\">ι</span> <span class=\"bp\">→</span> <span class=\"n\">α</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"n\">α</span> <span class=\"o\">:=</span>\n<span class=\"n\">finsum</span> <span class=\"o\">(</span><span class=\"bp\">λ</span> <span class=\"n\">i</span><span class=\"o\">,</span> <span class=\"k\">if</span> <span class=\"n\">i</span> <span class=\"err\">∈</span> <span class=\"n\">s</span> <span class=\"k\">then</span> <span class=\"n\">f</span> <span class=\"n\">i</span> <span class=\"k\">else</span> <span class=\"mi\">0</span><span class=\"o\">)</span>\n\n<span class=\"n\">localized</span> <span class=\"s2\">&quot;notation `∑` binders `, ` r:(scoped:67 f, finsum f) := r&quot;</span> <span class=\"k\">in</span> <span class=\"n\">finsum</span>\n<span class=\"n\">localized</span> <span class=\"s2\">&quot;notation `∑` binders ` in ` s `, ` r:(scoped:67 f, finsum_in s f) := r&quot;</span> <span class=\"k\">in</span> <span class=\"n\">finsum</span>\n\n<span class=\"n\">noncomputable</span> <span class=\"n\">def</span> <span class=\"n\">set</span><span class=\"bp\">.</span><span class=\"n\">card</span> <span class=\"o\">{</span><span class=\"n\">ι</span><span class=\"o\">}</span> <span class=\"o\">(</span><span class=\"n\">s</span> <span class=\"o\">:</span> <span class=\"n\">set</span> <span class=\"n\">ι</span><span class=\"o\">)</span> <span class=\"o\">:=</span> <span class=\"err\">∑</span> <span class=\"n\">x</span> <span class=\"k\">in</span> <span class=\"n\">s</span><span class=\"o\">,</span> <span class=\"mi\">1</span>\n\n<span class=\"n\">def</span> <span class=\"n\">is_finite</span> <span class=\"o\">(</span><span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span> <span class=\"n\">u</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"kt\">Prop</span> <span class=\"o\">:=</span> <span class=\"n\">nonempty</span> <span class=\"o\">(</span><span class=\"n\">fintype</span> <span class=\"n\">X</span><span class=\"o\">)</span>\n\n<span class=\"n\">attribute</span> <span class=\"o\">[</span><span class=\"n\">class</span><span class=\"o\">]</span> <span class=\"n\">is_finite</span>\n\n<span class=\"n\">noncomputable</span> <span class=\"n\">def</span> <span class=\"n\">fincard</span> <span class=\"o\">(</span><span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span> <span class=\"n\">u</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"bp\">ℕ</span> <span class=\"o\">:=</span>\n<span class=\"k\">if</span> <span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"n\">is_finite</span> <span class=\"n\">X</span> <span class=\"k\">then</span> <span class=\"bp\">@</span><span class=\"n\">fintype</span><span class=\"bp\">.</span><span class=\"n\">card</span> <span class=\"n\">X</span> <span class=\"o\">(</span><span class=\"n\">classical</span><span class=\"bp\">.</span><span class=\"n\">choice</span> <span class=\"n\">h</span><span class=\"o\">)</span> <span class=\"k\">else</span> <span class=\"mi\">0</span>\n</code></pre></div>",
+        "id": 206630145,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597179353
+    },
+    {
+        "content": "<p>I think <code>set.card</code> should be defined directly rather than by summing ones, but the definition will be equivalent regardless so it's not that important</p>",
+        "id": 206630312,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597179434
+    },
+    {
+        "content": "<p><code>set.card s := fincard (\\u s)</code> for example</p>",
+        "id": 206630380,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597179471
+    },
+    {
+        "content": "<p>also <code>set.finite</code> can be refactored on top of <code>is_finite</code></p>",
+        "id": 206630474,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597179503
+    },
+    {
+        "content": "<p>As for making <code>is_finite</code> a class, I think it will work okay, but it will be about as good as <code>fintype</code> for what it does</p>",
+        "id": 206630585,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597179586
+    },
+    {
+        "content": "<p>In particular, AFAICT all the gripes about <code>fintype</code> are eliminated if it is excised from definitions such as <code>fincard</code></p>",
+        "id": 206630713,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597179638
+    },
+    {
+        "content": "<p>wait -- are you telling me that the def of <code>fincard</code> should be rethought?</p>",
+        "id": 206630869,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597179711
+    },
+    {
+        "content": "<p>no, I'm saying that it solves the bulk of the problems on its own</p>",
+        "id": 206630935,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597179730
+    },
+    {
+        "content": "<p>As long as the <code>fintype</code> instance doesn't occur in the statement of theorems using finiteness, it should be fine to appear as a hypothesis</p>",
+        "id": 206631019,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597179780
+    },
+    {
+        "content": "<p>so perhaps the <code>is_finite</code> class isn't so important</p>",
+        "id": 206631103,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597179829
+    },
+    {
+        "content": "<p>This is not just navel-gazing for its own sake -- I'm trying to use finiteness to prove results in group theory. The idea of decreeing that \"we will only take sizes of sets\" or \"...of types\" sounded appealing to me, but I've seen explicit examples today where you really have to move between sets and types.</p>",
+        "id": 206631172,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597179847
+    },
+    {
+        "content": "<p>I'm still not convinced that you can't just use <code>fintype (\\u s)</code> for talking about sets in a world of classes on types</p>",
+        "id": 206631258,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597179894
+    },
+    {
+        "content": "<p>The main use of <code>is_finite</code> is not as a class but as a hypothesis, a proposition to be used however you use propositions</p>",
+        "id": 206631338,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597179944
+    },
+    {
+        "content": "<p>How are you proposing saying things like \"if p is a partition of the finite type X then the sum of the sizes of the blocks of p equals the size of X\"?</p>",
+        "id": 206631364,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597179958
+    },
+    {
+        "content": "<p><code>theorem foo [fintype X] : ... fincard X</code></p>",
+        "id": 206631452,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597179998
+    },
+    {
+        "content": "<p>But you need to count all the subsets too</p>",
+        "id": 206631499,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597180030
+    },
+    {
+        "content": "<p>you have a set of subsets -- you don't really want to convert all of these to types, do you?</p>",
+        "id": 206631530,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597180051
+    },
+    {
+        "content": "<p><code>finsum (\\lam p, fincard p) = fincard X</code></p>",
+        "id": 206631532,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597180053
+    },
+    {
+        "content": "<p>it's fine, let coercion do its magic</p>",
+        "id": 206631550,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597180072
+    },
+    {
+        "content": "<p>In practice I was using <code>is_finite</code> in the fincard proofs because most of them are case splits on whether something is finite or not. So it was very convenient to have <code>is_finite</code> as a class because i could just dump it into the inference system and then not worry about it. But I guess that given that I had it, I could just feed it into the theorems I need rather than doing the <code>resetI</code> dance</p>",
+        "id": 206631698,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597180196
+    },
+    {
+        "content": "<p>Amusing thing: when doing some set lemmas I realised I was constantly splitting on whether something was finite or infinite, and they were both classes, so I proved that every set was finite or infinite and then was doing <code>cases; resetI</code>. I then joked that I should just be doing <code>casesI</code> so I wrote it for a joke and then it turned out that it existed :P</p>",
+        "id": 206631843,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597180278
+    },
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">def</span> <span class=\"n\">partition</span> <span class=\"o\">(</span><span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"bp\">*</span><span class=\"o\">)</span> <span class=\"o\">:=</span> <span class=\"o\">{</span><span class=\"n\">P</span> <span class=\"o\">:</span> <span class=\"n\">set</span> <span class=\"o\">(</span><span class=\"n\">set</span> <span class=\"n\">X</span><span class=\"o\">)</span> <span class=\"bp\">//</span> <span class=\"bp\">∀</span> <span class=\"n\">x</span><span class=\"o\">,</span> <span class=\"bp\">∃!</span> <span class=\"n\">p</span><span class=\"o\">,</span> <span class=\"n\">p</span> <span class=\"err\">∈</span> <span class=\"n\">P</span> <span class=\"bp\">∧</span> <span class=\"n\">x</span> <span class=\"err\">∈</span> <span class=\"n\">p</span><span class=\"o\">}</span>\n\n<span class=\"kn\">theorem</span> <span class=\"n\">partition_sum</span> <span class=\"o\">{</span><span class=\"n\">X</span><span class=\"o\">}</span> <span class=\"o\">[</span><span class=\"n\">fintype</span> <span class=\"n\">X</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">P</span> <span class=\"o\">:</span> <span class=\"n\">partition</span> <span class=\"n\">X</span><span class=\"o\">)</span> <span class=\"o\">:</span>\n  <span class=\"n\">finsum_in</span> <span class=\"n\">P</span><span class=\"bp\">.</span><span class=\"mi\">1</span> <span class=\"o\">(</span><span class=\"bp\">λ</span> <span class=\"n\">p</span><span class=\"o\">,</span> <span class=\"n\">fincard</span> <span class=\"n\">p</span><span class=\"o\">)</span> <span class=\"bp\">=</span> <span class=\"n\">fincard</span> <span class=\"n\">X</span> <span class=\"o\">:=</span> <span class=\"n\">sorry</span>\n</code></pre></div>\n\n\n<p>easy peasy</p>",
+        "id": 206632005,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597180325
+    },
+    {
+        "content": "<p>(I won't prove it right now because <code>fincard</code> et al don't have an API yet)</p>",
+        "id": 206632046,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597180360
+    },
+    {
+        "content": "<p>that's a bad theorem, it uses the forbidden fintype</p>",
+        "id": 206632059,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597180378
+    },
+    {
+        "content": "<p>No, the fintype does not appear in the statement of the theorem, so you can just get it from wherever you like</p>",
+        "id": 206632084,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597180399
+    },
+    {
+        "content": "<p>you won't have unification problems as a result</p>",
+        "id": 206632124,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597180422
+    },
+    {
+        "content": "<p>Oh I see. But you should prove this for <code>is_finite</code> because it's more general</p>",
+        "id": 206632150,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597180438
+    },
+    {
+        "content": "<p>it's (constructively, even) equivalent</p>",
+        "id": 206632225,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597180462
+    },
+    {
+        "content": "<p>then you should prove it for <code>is_finite</code> because fintype is deprecated?</p>",
+        "id": 206632330,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597180512
+    },
+    {
+        "content": "<p>the idea with this proposal is that you use <code>fintype</code> for your typeclass needs and reserve <code>is_finite</code> as a regular hypothesis that you can pop open when you want to teach the typeclass system</p>",
+        "id": 206632338,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597180518
+    },
+    {
+        "content": "<p>I thought I never wanted to use <code>fintype</code> ever again?</p>",
+        "id": 206632435,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597180566
+    },
+    {
+        "content": "<p>It already has all the \"structural\" instances you want</p>",
+        "id": 206632463,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597180587
+    },
+    {
+        "content": "<p>the bad thing about fintype is that because it is a Type, you can get into unification issues like patrick mentioned at the start of the other thread</p>",
+        "id": 206632512,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597180626
+    },
+    {
+        "content": "<p>but as long as you use <code>fincard</code> instead of <code>fintype.card</code> that problem goes away</p>",
+        "id": 206632545,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597180646
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"110038\">Kevin Buzzard</span> <a href=\"#narrow/stream/113488-general/topic/finiteness/near/206631843\">said</a>:</p>\n<blockquote>\n<p>I then joked that I should just be doing <code>casesI</code> so I wrote it for a joke and then it turned out that it existed :P</p>\n</blockquote>\n<p>on a related note, I just discovered <code>fconstructor</code></p>",
+        "id": 206735086,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1597258349
+    },
+    {
+        "content": "<p>Jason wanted to make an API for <code>finsum</code> (which was defined by Mario to be)</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">noncomputable</span> <span class=\"n\">def</span> <span class=\"n\">finsum</span> <span class=\"o\">{</span><span class=\"n\">ι</span> <span class=\"n\">α</span><span class=\"o\">}</span> <span class=\"o\">[</span><span class=\"n\">add_comm_monoid</span> <span class=\"n\">α</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">f</span> <span class=\"o\">:</span> <span class=\"n\">ι</span> <span class=\"bp\">→</span> <span class=\"n\">α</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"n\">α</span> <span class=\"o\">:=</span>\n<span class=\"k\">if</span> <span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"bp\">∃</span> <span class=\"n\">f&#39;</span> <span class=\"o\">:</span> <span class=\"n\">ι</span> <span class=\"bp\">→</span><span class=\"err\">₀</span> <span class=\"n\">α</span><span class=\"o\">,</span> <span class=\"n\">f</span> <span class=\"bp\">=</span> <span class=\"n\">f&#39;</span> <span class=\"k\">then</span> <span class=\"o\">(</span><span class=\"n\">classical</span><span class=\"bp\">.</span><span class=\"n\">some</span> <span class=\"n\">h</span><span class=\"o\">)</span><span class=\"bp\">.</span><span class=\"n\">sum</span> <span class=\"o\">(</span><span class=\"bp\">λ</span> <span class=\"bp\">_</span> <span class=\"n\">a</span><span class=\"o\">,</span> <span class=\"n\">a</span><span class=\"o\">)</span> <span class=\"k\">else</span> <span class=\"mi\">0</span>\n</code></pre></div>\n\n\n<p>and he realised that what he wanted was to prove that it equalled finset.sum. This would be easier if we used the following definition:</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">noncomputable</span> <span class=\"n\">def</span> <span class=\"n\">finsum2</span> <span class=\"o\">{</span><span class=\"n\">ι</span> <span class=\"n\">α</span><span class=\"o\">}</span> <span class=\"o\">[</span><span class=\"n\">add_comm_monoid</span> <span class=\"n\">α</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">f</span> <span class=\"o\">:</span> <span class=\"n\">ι</span> <span class=\"bp\">→</span> <span class=\"n\">α</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"n\">α</span> <span class=\"o\">:=</span>\n<span class=\"k\">if</span> <span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"o\">(</span><span class=\"n\">function</span><span class=\"bp\">.</span><span class=\"n\">support</span> <span class=\"n\">f</span><span class=\"o\">)</span><span class=\"bp\">.</span><span class=\"n\">finite</span> <span class=\"k\">then</span> <span class=\"err\">∑</span> <span class=\"n\">x</span> <span class=\"k\">in</span> <span class=\"n\">h</span><span class=\"bp\">.</span><span class=\"n\">to_finset</span><span class=\"o\">,</span> <span class=\"n\">f</span> <span class=\"n\">x</span> <span class=\"k\">else</span> <span class=\"mi\">0</span>\n</code></pre></div>\n\n\n<p>Are there disadvantages to <code>finsum2</code> <span class=\"user-mention\" data-user-id=\"110049\">@Mario Carneiro</span> ?</p>",
+        "id": 206839142,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597336897
+    },
+    {
+        "content": "<p>which one has less imports?</p>",
+        "id": 206843947,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597339421
+    },
+    {
+        "content": "<p>Either way you want to prove both definitions are the same</p>",
+        "id": 206843977,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597339438
+    },
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code><span class=\"kn\">import</span> <span class=\"n\">data</span><span class=\"bp\">.</span><span class=\"n\">finsupp</span> <span class=\"n\">data</span><span class=\"bp\">.</span><span class=\"n\">support</span>\n\n<span class=\"n\">noncomputable</span> <span class=\"n\">theory</span>\n\n<span class=\"n\">open_locale</span> <span class=\"n\">classical</span> <span class=\"n\">big_operators</span>\n\n<span class=\"n\">noncomputable</span> <span class=\"n\">def</span> <span class=\"n\">finsum</span> <span class=\"o\">{</span><span class=\"n\">ι</span> <span class=\"n\">α</span><span class=\"o\">}</span> <span class=\"o\">[</span><span class=\"n\">add_comm_monoid</span> <span class=\"n\">α</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">f</span> <span class=\"o\">:</span> <span class=\"n\">ι</span> <span class=\"bp\">→</span> <span class=\"n\">α</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"n\">α</span> <span class=\"o\">:=</span>\n<span class=\"k\">if</span> <span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"bp\">∃</span> <span class=\"n\">f&#39;</span> <span class=\"o\">:</span> <span class=\"n\">ι</span> <span class=\"bp\">→</span><span class=\"err\">₀</span> <span class=\"n\">α</span><span class=\"o\">,</span> <span class=\"n\">f</span> <span class=\"bp\">=</span> <span class=\"n\">f&#39;</span> <span class=\"k\">then</span> <span class=\"o\">(</span><span class=\"n\">classical</span><span class=\"bp\">.</span><span class=\"n\">some</span> <span class=\"n\">h</span><span class=\"o\">)</span><span class=\"bp\">.</span><span class=\"n\">sum</span> <span class=\"o\">(</span><span class=\"bp\">λ</span> <span class=\"bp\">_</span> <span class=\"n\">a</span><span class=\"o\">,</span> <span class=\"n\">a</span><span class=\"o\">)</span> <span class=\"k\">else</span> <span class=\"mi\">0</span>\n\n<span class=\"n\">noncomputable</span> <span class=\"n\">def</span> <span class=\"n\">finsum2</span> <span class=\"o\">{</span><span class=\"n\">ι</span> <span class=\"n\">α</span><span class=\"o\">}</span> <span class=\"o\">[</span><span class=\"n\">add_comm_monoid</span> <span class=\"n\">α</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">f</span> <span class=\"o\">:</span> <span class=\"n\">ι</span> <span class=\"bp\">→</span> <span class=\"n\">α</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"n\">α</span> <span class=\"o\">:=</span>\n<span class=\"k\">if</span> <span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"o\">(</span><span class=\"n\">function</span><span class=\"bp\">.</span><span class=\"n\">support</span> <span class=\"n\">f</span><span class=\"o\">)</span><span class=\"bp\">.</span><span class=\"n\">finite</span> <span class=\"k\">then</span> <span class=\"err\">∑</span> <span class=\"n\">x</span> <span class=\"k\">in</span> <span class=\"n\">h</span><span class=\"bp\">.</span><span class=\"n\">to_finset</span><span class=\"o\">,</span> <span class=\"n\">f</span> <span class=\"n\">x</span> <span class=\"k\">else</span> <span class=\"mi\">0</span>\n\n<span class=\"kn\">theorem</span> <span class=\"n\">finsum_eq_finsum2</span> <span class=\"o\">{</span><span class=\"n\">ι</span> <span class=\"n\">α</span><span class=\"o\">}</span> <span class=\"o\">[</span><span class=\"n\">add_comm_monoid</span> <span class=\"n\">α</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">f</span> <span class=\"o\">:</span> <span class=\"n\">ι</span> <span class=\"bp\">→</span> <span class=\"n\">α</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"n\">finsum</span> <span class=\"n\">f</span> <span class=\"bp\">=</span> <span class=\"n\">finsum2</span> <span class=\"n\">f</span> <span class=\"o\">:=</span>\n<span class=\"k\">begin</span>\n  <span class=\"n\">unfold</span> <span class=\"n\">finsum</span><span class=\"o\">,</span>\n  <span class=\"n\">unfold</span> <span class=\"n\">finsum2</span><span class=\"o\">,</span>\n  <span class=\"n\">split_ifs</span> <span class=\"k\">with</span> <span class=\"n\">h1</span> <span class=\"n\">h2</span> <span class=\"n\">h3</span><span class=\"o\">,</span>\n  <span class=\"o\">{</span> <span class=\"n\">unfold</span> <span class=\"n\">finsupp</span><span class=\"bp\">.</span><span class=\"n\">sum</span><span class=\"o\">,</span>\n    <span class=\"n\">congr&#39;</span><span class=\"o\">,</span>\n    <span class=\"o\">{</span> <span class=\"n\">ext</span> <span class=\"n\">x</span><span class=\"o\">,</span>\n      <span class=\"n\">rw</span> <span class=\"n\">finsupp</span><span class=\"bp\">.</span><span class=\"n\">mem_support_iff</span><span class=\"o\">,</span>\n      <span class=\"n\">rw</span> <span class=\"o\">(</span><span class=\"n\">classical</span><span class=\"bp\">.</span><span class=\"n\">some_spec</span> <span class=\"n\">h1</span><span class=\"o\">)</span><span class=\"bp\">.</span><span class=\"n\">symm</span><span class=\"o\">,</span>\n      <span class=\"n\">rw</span> <span class=\"n\">set</span><span class=\"bp\">.</span><span class=\"n\">finite</span><span class=\"bp\">.</span><span class=\"n\">mem_to_finset</span><span class=\"o\">,</span>\n      <span class=\"n\">refl</span> <span class=\"o\">},</span>\n    <span class=\"o\">{</span> <span class=\"n\">exact</span> <span class=\"o\">(</span><span class=\"n\">classical</span><span class=\"bp\">.</span><span class=\"n\">some_spec</span> <span class=\"n\">h1</span><span class=\"o\">)</span><span class=\"bp\">.</span><span class=\"n\">symm</span> <span class=\"o\">}</span> <span class=\"o\">},</span>\n  <span class=\"o\">{</span> <span class=\"n\">exfalso</span><span class=\"o\">,</span>\n    <span class=\"n\">apply</span> <span class=\"n\">h2</span><span class=\"o\">,</span>\n    <span class=\"n\">clear</span> <span class=\"n\">h2</span><span class=\"o\">,</span>\n    <span class=\"n\">rcases</span> <span class=\"n\">h1</span> <span class=\"k\">with</span> <span class=\"bp\">⟨</span><span class=\"n\">h1</span><span class=\"o\">,</span> <span class=\"n\">rfl</span><span class=\"bp\">⟩</span><span class=\"o\">,</span>\n    <span class=\"n\">exact</span> <span class=\"n\">h1</span><span class=\"bp\">.</span><span class=\"n\">finite_supp</span> <span class=\"o\">},</span>\n  <span class=\"o\">{</span> <span class=\"n\">exfalso</span><span class=\"o\">,</span>\n    <span class=\"n\">apply</span> <span class=\"n\">h1</span><span class=\"o\">,</span>\n    <span class=\"n\">clear</span> <span class=\"n\">h1</span><span class=\"o\">,</span>\n    <span class=\"k\">let</span> <span class=\"n\">f&#39;</span> <span class=\"o\">:</span> <span class=\"n\">ι</span> <span class=\"bp\">→</span><span class=\"err\">₀</span> <span class=\"n\">α</span> <span class=\"o\">:=</span>\n    <span class=\"o\">{</span> <span class=\"n\">support</span> <span class=\"o\">:=</span> <span class=\"n\">h3</span><span class=\"bp\">.</span><span class=\"n\">to_finset</span><span class=\"o\">,</span>\n      <span class=\"n\">to_fun</span> <span class=\"o\">:=</span> <span class=\"n\">f</span><span class=\"o\">,</span>\n      <span class=\"n\">mem_support_to_fun</span> <span class=\"o\">:=</span> <span class=\"k\">begin</span>\n        <span class=\"n\">intro</span> <span class=\"n\">i</span><span class=\"o\">,</span>\n        <span class=\"n\">simp</span> <span class=\"n\">only</span> <span class=\"o\">[</span><span class=\"n\">function</span><span class=\"bp\">.</span><span class=\"n\">mem_support</span><span class=\"o\">,</span> <span class=\"n\">set</span><span class=\"bp\">.</span><span class=\"n\">finite</span><span class=\"bp\">.</span><span class=\"n\">mem_to_finset</span><span class=\"o\">],</span>\n      <span class=\"kn\">end</span> <span class=\"o\">},</span>\n    <span class=\"n\">use</span> <span class=\"n\">f&#39;</span><span class=\"o\">,</span>\n    <span class=\"n\">refl</span> <span class=\"o\">},</span>\n  <span class=\"o\">{</span> <span class=\"n\">refl</span> <span class=\"o\">}</span>\n<span class=\"kn\">end</span> <span class=\"bp\">.</span>\n</code></pre></div>",
+        "id": 206844082,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597339478
+    },
+    {
+        "content": "<p>what is <code>finiteness.is_finite</code>?</p>",
+        "id": 206844370,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597339615
+    },
+    {
+        "content": "<p>wow, I thought <code>function.support</code> would have an easy definition but the file that defines it has a ton of imports</p>",
+        "id": 206844810,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597339828
+    },
+    {
+        "content": "<p>I thought we stopped caring about the import hierarchy 37 days ago</p>",
+        "id": 206845842,
+        "sender_full_name": "Kenny Lau",
+        "timestamp": 1597340317
+    },
+    {
+        "content": "<p>This file has many imports because it was added after these imports</p>",
+        "id": 206859914,
+        "sender_full_name": "Yury G. Kudryashov",
+        "timestamp": 1597347323
+    },
+    {
+        "content": "<p>It's easy to remove all imports if you move lemmas to other files</p>",
+        "id": 206860011,
+        "sender_full_name": "Yury G. Kudryashov",
+        "timestamp": 1597347373
+    },
+    {
+        "content": "<p>Another insight from Chris at Xena this evening; how about this:</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">def</span> <span class=\"n\">finset</span><span class=\"bp\">.</span><span class=\"n\">univ&#39;</span> <span class=\"o\">(</span><span class=\"n\">ι</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"bp\">*</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"n\">finset</span> <span class=\"n\">ι</span> <span class=\"o\">:=</span> <span class=\"k\">if</span> <span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"n\">nonempty</span> <span class=\"o\">(</span><span class=\"n\">fintype</span> <span class=\"n\">ι</span><span class=\"o\">)</span> <span class=\"k\">then</span>\n  <span class=\"o\">(</span><span class=\"n\">classical</span><span class=\"bp\">.</span><span class=\"n\">choice</span> <span class=\"n\">h</span><span class=\"o\">)</span><span class=\"bp\">.</span><span class=\"n\">elems</span> <span class=\"k\">else</span> <span class=\"err\">∅</span>\n\n<span class=\"n\">def</span> <span class=\"n\">fincard&#39;</span> <span class=\"o\">(</span><span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span> <span class=\"n\">u</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"bp\">ℕ</span> <span class=\"o\">:=</span> <span class=\"n\">finset</span><span class=\"bp\">.</span><span class=\"n\">card</span> <span class=\"err\">$</span> <span class=\"n\">finset</span><span class=\"bp\">.</span><span class=\"n\">univ&#39;</span> <span class=\"n\">X</span>\n</code></pre></div>\n\n\n<p><span class=\"user-mention\" data-user-id=\"110049\">@Mario Carneiro</span> you had suggested</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">def</span> <span class=\"n\">fincard</span> <span class=\"o\">(</span><span class=\"n\">X</span> <span class=\"o\">:</span> <span class=\"kt\">Type</span><span class=\"bp\">*</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"bp\">ℕ</span> <span class=\"o\">:=</span>\n<span class=\"k\">if</span> <span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"n\">nonempty</span> <span class=\"o\">(</span><span class=\"n\">fintype</span> <span class=\"n\">X</span><span class=\"o\">)</span> <span class=\"k\">then</span> <span class=\"bp\">@</span><span class=\"n\">fintype</span><span class=\"bp\">.</span><span class=\"n\">card</span> <span class=\"n\">X</span> <span class=\"o\">(</span><span class=\"n\">classical</span><span class=\"bp\">.</span><span class=\"n\">choice</span> <span class=\"n\">h</span><span class=\"o\">)</span> <span class=\"k\">else</span> <span class=\"mi\">0</span>\n</code></pre></div>\n\n\n<p>-- does this variant meet with your approval?</p>",
+        "id": 206867649,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597350875
+    },
+    {
+        "content": "<p>ha, clever</p>",
+        "id": 206871712,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597352821
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"110038\">@Kevin Buzzard</span> <span class=\"user-mention\" data-user-id=\"110049\">@Mario Carneiro</span> I would go as far as saying that the <code>finset.univ</code> in mathlib should be replaced with your new <code>finset.univ'</code> etc.</p>",
+        "id": 206871749,
+        "sender_full_name": "Kenny Lau",
+        "timestamp": 1597352844
+    },
+    {
+        "content": "<p>that finset.univ' could be useful for many things</p>",
+        "id": 206871752,
+        "sender_full_name": "Mario Carneiro",
+        "timestamp": 1597352846
+    },
+    {
+        "content": "<p>(etc. = the same for other definitions depending <strong>directly</strong> on fintype)</p>",
+        "id": 206871817,
+        "sender_full_name": "Kenny Lau",
+        "timestamp": 1597352876
+    },
+    {
+        "content": "<p>OK so <span class=\"user-mention\" data-user-id=\"243312\">@Jason KY.</span> and I have been hacking away on this stuff, and we ran into something which presumably has been run into before. Recall we've been talking about these definitions (either will do for me but the finset one is easier to port with):</p>\n<div class=\"codehilite\"><pre><span></span><code><span class=\"n\">noncomputable</span> <span class=\"n\">def</span> <span class=\"n\">finsum</span> <span class=\"o\">{</span><span class=\"n\">ι</span> <span class=\"n\">α</span><span class=\"o\">}</span> <span class=\"o\">[</span><span class=\"n\">add_comm_monoid</span> <span class=\"n\">α</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">f</span> <span class=\"o\">:</span> <span class=\"n\">ι</span> <span class=\"bp\">→</span> <span class=\"n\">α</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"n\">α</span> <span class=\"o\">:=</span>\n<span class=\"k\">if</span> <span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"bp\">∃</span> <span class=\"n\">f&#39;</span> <span class=\"o\">:</span> <span class=\"n\">ι</span> <span class=\"bp\">→</span><span class=\"err\">₀</span> <span class=\"n\">α</span><span class=\"o\">,</span> <span class=\"n\">f</span> <span class=\"bp\">=</span> <span class=\"n\">f&#39;</span> <span class=\"k\">then</span> <span class=\"o\">(</span><span class=\"n\">classical</span><span class=\"bp\">.</span><span class=\"n\">some</span> <span class=\"n\">h</span><span class=\"o\">)</span><span class=\"bp\">.</span><span class=\"n\">sum</span> <span class=\"o\">(</span><span class=\"bp\">λ</span> <span class=\"bp\">_</span> <span class=\"n\">a</span><span class=\"o\">,</span> <span class=\"n\">a</span><span class=\"o\">)</span> <span class=\"k\">else</span> <span class=\"mi\">0</span>\n\n<span class=\"n\">noncomputable</span> <span class=\"n\">def</span> <span class=\"n\">finsum2</span> <span class=\"o\">{</span><span class=\"n\">ι</span> <span class=\"n\">α</span><span class=\"o\">}</span> <span class=\"o\">[</span><span class=\"n\">add_comm_monoid</span> <span class=\"n\">α</span><span class=\"o\">]</span> <span class=\"o\">(</span><span class=\"n\">f</span> <span class=\"o\">:</span> <span class=\"n\">ι</span> <span class=\"bp\">→</span> <span class=\"n\">α</span><span class=\"o\">)</span> <span class=\"o\">:</span> <span class=\"n\">α</span> <span class=\"o\">:=</span>\n<span class=\"k\">if</span> <span class=\"n\">h</span> <span class=\"o\">:</span> <span class=\"o\">(</span><span class=\"n\">function</span><span class=\"bp\">.</span><span class=\"n\">support</span> <span class=\"n\">f</span><span class=\"o\">)</span><span class=\"bp\">.</span><span class=\"n\">finite</span> <span class=\"k\">then</span> <span class=\"err\">∑</span> <span class=\"n\">x</span> <span class=\"k\">in</span> <span class=\"n\">h</span><span class=\"bp\">.</span><span class=\"n\">to_finset</span><span class=\"o\">,</span> <span class=\"n\">f</span> <span class=\"n\">x</span> <span class=\"k\">else</span> <span class=\"mi\">0</span>\n</code></pre></div>\n\n\n<p>Jason pointed out that we should probably do products too -- but then we run into the following issue: finsupp and support both want a zero. Is there an analogous construction in Lean which does either of these things but with a 1?</p>",
+        "id": 207073922,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597588432
+    },
+    {
+        "content": "<p>We can make <code>one_support</code> or whatever -- <code>function.one_support f</code> is the things which don't get mapped to one -- but then <code>to_additive</code> will turn this into <code>zero_support</code>. Presumably we can work around this? But do we want <code>one_support</code> at all?</p>",
+        "id": 207074096,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1597588691
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"110038\">Kevin Buzzard</span> <a href=\"#narrow/stream/113488-general/topic/finiteness/near/206631843\">said</a>:</p>\n<blockquote>\n<p>so I proved that every set was finite or infinite and then was doing <code>cases; resetI</code>. I then joked that I should just be doing <code>casesI</code> so I wrote it for a joke and then it turned out that it existed :P</p>\n</blockquote>\n<p>I also just learned you can use it instead of unfreezing local instances.</p>",
+        "id": 207733621,
+        "sender_full_name": "Reid Barton",
+        "timestamp": 1598116735
+    },
+    {
+        "content": "<p>We can define <code>set.to_finset</code> using the same trick, then <code>finset.univ = univ.to_finset</code>, <code>fincard = finset.univ.card</code></p>",
+        "id": 207735502,
+        "sender_full_name": "Yury G. Kudryashov",
+        "timestamp": 1598119787
+    },
+    {
+        "content": "<p>There's a <code>fincard</code> branch of mathlib by the way.</p>",
+        "id": 207736793,
+        "sender_full_name": "Kevin Buzzard",
+        "timestamp": 1598121596
+    }
+]

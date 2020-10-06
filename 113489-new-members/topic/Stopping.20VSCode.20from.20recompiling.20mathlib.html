@@ -1,0 +1,72 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/113489-new-members/topic/Stopping.20VSCode.20from.20recompiling.20mathlib.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/index.html">new members</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Stopping.20VSCode.20from.20recompiling.20mathlib.html">Stopping VSCode from recompiling mathlib</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="212212567"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Stopping%20VSCode%20from%20recompiling%20mathlib/near/212212567" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Donald Sebastian Leung <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Stopping.20VSCode.20from.20recompiling.20mathlib.html#212212567">(Oct 04 2020 at 08:23)</a>:</h4>
+<p>I just created a new project by executing <code>leanproject new kata</code>, edited <code>leanpkg.toml</code> to contain the following:</p>
+<div class="codehilite" data-code-language="TOML"><pre><span></span><code><span class="k">[package]</span>
+<span class="n">name</span> <span class="o">=</span> <span class="s">"kata"</span>
+<span class="n">version</span> <span class="o">=</span> <span class="s">"0.1"</span>
+<span class="n">lean_version</span> <span class="o">=</span> <span class="s">"leanprover-community/lean:3.20.0"</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s">"src"</span>
+
+<span class="k">[dependencies]</span>
+<span class="n">mathlib</span> <span class="o">=</span> <span class="p">{</span><span class="n">git</span> <span class="o">=</span> <span class="s">"https://github.com/leanprover-community/mathlib"</span><span class="p">,</span> <span class="n">rev</span> <span class="o">=</span> <span class="s">"da66bb81bf0466335bae82077f0c335dfe53aeb3"</span><span class="p">}</span>
+</code></pre></div>
+
+<p>and executed <code>leanproject get-mathlib-cache</code>. I then opened my project folder in VSCode and created a new file <code>Preloaded.lean</code> with the following contents:</p>
+<div class="codehilite" data-code-language="Lean"><pre><span></span><code><span class="kn">import</span> <span class="n">data.equiv.basic</span> <span class="n">data.pnat.basic</span>
+</code></pre></div>
+
+<p>The orange bar at the <code>import</code> line stays for well over a minute, and system statistics indicate that CPU usage increases to 100%, with all 4G of RAM and 1.5G of swap (of 2G total) being used in the meantime, suggesting that (parts of) mathlib was being recompiled. How do I stop this from happening? I thought that <code>leanproject get-mathlib-cache</code> used to do the job but maybe I misremembered.</p>
+
+
+
+<a name="212215910"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Stopping%20VSCode%20from%20recompiling%20mathlib/near/212215910" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Patrick Massot <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Stopping.20VSCode.20from.20recompiling.20mathlib.html#212215910">(Oct 04 2020 at 10:00)</a>:</h4>
+<p>Why did you edit the <code>leanpkg.toml</code>?</p>
+
+
+
+<a name="212216715"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Stopping%20VSCode%20from%20recompiling%20mathlib/near/212216715" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Donald Sebastian Leung <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Stopping.20VSCode.20from.20recompiling.20mathlib.html#212216715">(Oct 04 2020 at 10:24)</a>:</h4>
+<p>The <a href="https://github.com/DonaldKellett/CW-Lean3-Examples">toy Lean examples</a> I use for Codewars have been tested with a version of mathlib from about a week ago and I've just been asked to add an example involving a mathlib dependency. I thought it would be easier to pin mathlib and build my new example on that specific commit instead of running all of my previous examples with the newest mathlib.</p>
+<p>But now that I think about it, it would probably be easier to just use the newest mathlib and run all of the existing examples against it, especially considering that none of them have any meaningful dependency on mathlib AFAIK.</p>
+
+
+
+<a name="212216812"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Stopping%20VSCode%20from%20recompiling%20mathlib/near/212216812" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Patrick Massot <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Stopping.20VSCode.20from.20recompiling.20mathlib.html#212216812">(Oct 04 2020 at 10:27)</a>:</h4>
+<p>That being said I'm not able to reproduce your issue.</p>
+
+
+
+<a name="212216817"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Stopping%20VSCode%20from%20recompiling%20mathlib/near/212216817" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Patrick Massot <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Stopping.20VSCode.20from.20recompiling.20mathlib.html#212216817">(Oct 04 2020 at 10:27)</a>:</h4>
+<p>I did exactly what you wrote and everything works fine.</p>
+
+
+
+<a name="212216829"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113489-new%20members/topic/Stopping%20VSCode%20from%20recompiling%20mathlib/near/212216829" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Patrick Massot <a href="https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Stopping.20VSCode.20from.20recompiling.20mathlib.html#212216829">(Oct 04 2020 at 10:28)</a>:</h4>
+<p>What happens if you quit VSCode and type <code>leanproject build</code> in the <code>kata</code> folder?</p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

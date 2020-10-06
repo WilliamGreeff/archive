@@ -1,0 +1,60 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/113488-general/topic/get-mathlib-at-commit.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/113488-general/index.html">general</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/get-mathlib-at-commit.html">get-mathlib-at-commit</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="208729247"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/get-mathlib-at-commit/near/208729247" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Yakov Pechersky <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/get-mathlib-at-commit.html#208729247">(Sep 01 2020 at 18:39)</a>:</h4>
+<p>We've had a lot of messages recently about people wanting to point their mathlib dep at a certain branch or commit. The directions have sometimes been: descend into the mathlib dep repo, git checkout the commit, make sure the toml points to that commit, leanproject get-m, possibly other steps. Should there be a <code>leanproject get-m-at ...</code> that can take a branch name, PR #, or commit hash? It would also fetch the built oleans. I'm starting to take a look at the git python library to see how leanproject currently does HEAD fetching.</p>
+
+
+
+<a name="208733252"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/get-mathlib-at-commit/near/208733252" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Floris van Doorn <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/get-mathlib-at-commit.html#208733252">(Sep 01 2020 at 19:07)</a>:</h4>
+<p>I have a related request: in the <code>mathlib</code> directory, I often want to do <code>leanproject get-cache</code> at a certain commit. My current workflow is the following, but I would also like something like <code>leanproject get-cache origin/foo</code> or something. (This typically happens when I have a few commits on top of a branch <code>origin/foo</code>.)</p>
+<div class="codehilite"><pre><span></span><code><span class="n">git</span> <span class="n">checkout</span> <span class="n">origin</span><span class="bp">/</span><span class="n">foo</span>
+<span class="n">leanproject</span> <span class="n">get</span><span class="bp">-</span><span class="n">cache</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="bp">&lt;</span><span class="n">previous</span><span class="bp">-</span><span class="n">branch</span><span class="bp">&gt;</span>
+</code></pre></div>
+
+
+
+<a name="208734170"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/get-mathlib-at-commit/near/208734170" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Gabriel Ebner <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/get-mathlib-at-commit.html#208734170">(Sep 01 2020 at 19:14)</a>:</h4>
+<p>It would be great if <code>get-cache</code> could default to <code>HEAD</code> and try any of the last 10 commits.</p>
+
+
+
+<a name="208736941"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/get-mathlib-at-commit/near/208736941" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Patrick Massot <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/get-mathlib-at-commit.html#208736941">(Sep 01 2020 at 19:37)</a>:</h4>
+<p>Please open issues (or PRs!). I'll try to find some leanproject time soonish.</p>
+
+
+
+<a name="208737975"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/get-mathlib-at-commit/near/208737975" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Yakov Pechersky <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/get-mathlib-at-commit.html#208737975">(Sep 01 2020 at 19:46)</a>:</h4>
+<p><a href="https://github.com/leanprover-community/mathlib-tools/issues/77">https://github.com/leanprover-community/mathlib-tools/issues/77</a></p>
+
+
+
+<a name="208738097"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/get-mathlib-at-commit/near/208738097" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Yakov Pechersky <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/get-mathlib-at-commit.html#208738097">(Sep 01 2020 at 19:47)</a>:</h4>
+<p>I've been trying to understand how <code>get-mathlib-cache</code> works currently, there's some implicit reliance on <code>HEAD</code> that I've been trying to understand how to modify. No PR yet, unfortunately.</p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>

@@ -1,0 +1,146 @@
+[
+    {
+        "content": "<p>Hi, I'm pretending to be a new user who wants to make a pull request to mathlib. Could someone please give me permission to push a branch?</p>",
+        "id": 203388134,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1594303067
+    },
+    {
+        "content": "<p>Hey Scott, sure! One second.</p>",
+        "id": 203388255,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1594303097
+    },
+    {
+        "content": "<p>Oh --- my username is semorrison</p>",
+        "id": 203388297,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1594303112
+    },
+    {
+        "content": "<p>Ok, you should have an invitation email.</p>",
+        "id": 203388299,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1594303112
+    },
+    {
+        "content": "<p>Yeah, I figured that out (-;</p>",
+        "id": 203388320,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1594303122
+    },
+    {
+        "content": "<p>Hi, I'm working on some linear algebra theorems to mathlib (hoping to get to Spectral theorem) and need to make a pull-request to add documentation to linear_algebra/direct_sum_module and close <a href=\"https://github.com/leanprover-community/mathlib/pull/3418\">#3418</a>.  Could I get permission to push a branch? My Github username is <strong>apurvnakade</strong></p>",
+        "id": 204157057,
+        "sender_full_name": "Apurva Nakade",
+        "timestamp": 1594943287
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"245078\">@Apurva Nakade</span> <a href=\"https://github.com/leanprover-community/mathlib/invitations\">https://github.com/leanprover-community/mathlib/invitations</a></p>",
+        "id": 204157262,
+        "sender_full_name": "Bryan Gin-ge Chen",
+        "timestamp": 1594943479
+    },
+    {
+        "content": "<p>Thank you!</p>",
+        "id": 204157283,
+        "sender_full_name": "Apurva Nakade",
+        "timestamp": 1594943515
+    },
+    {
+        "content": "<p>Hi, I am a \"semi-new\" user currently following Scott Morrison's tutorial. I have a project with Professor Buzzard with regards to local fields. The last two months, I have just been practicing Lean, but I now plan to start making some pull requests to mathlib. Would it be possible to request that someone may give me permission to push a branch? I believe my git username is: FrederickThogersen</p>",
+        "id": 206126859,
+        "sender_full_name": "Frederick Eidsnes Thøgersen",
+        "timestamp": 1596711723
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"310032\">@Frederick Eidsnes Thøgersen</span>, done!</p>",
+        "id": 206127075,
+        "sender_full_name": "Scott Morrison",
+        "timestamp": 1596711922
+    },
+    {
+        "content": "<p>Thank you very much <span aria-label=\"+1\" class=\"emoji emoji-1f44d\" role=\"img\" title=\"+1\">:+1:</span></p>",
+        "id": 206127148,
+        "sender_full_name": "Frederick Eidsnes Thøgersen",
+        "timestamp": 1596711980
+    },
+    {
+        "content": "<p>Hi, I'm working on some ring theory things, such as a third Noetherian definition, and adding a  few facts about integral domains (and hopefully eventually dedekind domain things). Can I get permission to push a branch?  My github username is mushokunosora</p>",
+        "id": 207098426,
+        "sender_full_name": "Kenji Nakagawa",
+        "timestamp": 1597626409
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"319839\">@Kenji Nakagawa</span> Invite sent! <a href=\"https://github.com/leanprover-community/mathlib/invitations\">https://github.com/leanprover-community/mathlib/invitations</a></p>",
+        "id": 207098442,
+        "sender_full_name": "Bryan Gin-ge Chen",
+        "timestamp": 1597626447
+    },
+    {
+        "content": "<p>Thanks!</p>",
+        "id": 207098451,
+        "sender_full_name": "Kenji Nakagawa",
+        "timestamp": 1597626471
+    },
+    {
+        "content": "<p>Hello! I'm snooping around order.lattice and thought I could make some small improvements, may I have permission to push a branch to mathlib? My username is jiaminglimjm</p>",
+        "id": 210920991,
+        "sender_full_name": "Jia Ming",
+        "timestamp": 1600803599
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"338284\">@Jia Ming</span> invite sent! <a href=\"https://github.com/leanprover-community/mathlib/invitations\">https://github.com/leanprover-community/mathlib/invitations</a></p>",
+        "id": 210921424,
+        "sender_full_name": "Bryan Gin-ge Chen",
+        "timestamp": 1600803816
+    },
+    {
+        "content": "<p>Thank you!</p>",
+        "id": 210921450,
+        "sender_full_name": "Jia Ming",
+        "timestamp": 1600803825
+    },
+    {
+        "content": "<p>You should discuss a bit your improvement ideas here before spending too much time coding, just to make sure you won't waste time.</p>",
+        "id": 210921573,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1600803867
+    },
+    {
+        "content": "<p>Ah right, noted, i was just too excited hahah. It's a really small change, so i hope i dont waste anyone else's time too much</p>",
+        "id": 210923347,
+        "sender_full_name": "Jia Ming",
+        "timestamp": 1600804706
+    },
+    {
+        "content": "<p>Oh I meant <em>your</em> time.</p>",
+        "id": 210923409,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1600804737
+    },
+    {
+        "content": "<p>I don't want you to invest too much time only to find out that what you had in mind is already in mathlib somewhere or undesirable for some reason.</p>",
+        "id": 210923474,
+        "sender_full_name": "Patrick Massot",
+        "timestamp": 1600804775
+    },
+    {
+        "content": "<p>Hi  all, can I have permission to push to github? My username is riccardobrasca</p>\n<p>Thank you!</p>",
+        "id": 212316609,
+        "sender_full_name": "Riccardo Brasca",
+        "timestamp": 1601912094
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"130384\">@Riccardo Brasca</span> Invite sent! <a href=\"https://github.com/leanprover-community/mathlib/invitations\">https://github.com/leanprover-community/mathlib/invitations</a></p>",
+        "id": 212319417,
+        "sender_full_name": "Bryan Gin-ge Chen",
+        "timestamp": 1601913342
+    },
+    {
+        "content": "<p>Thank you!</p>",
+        "id": 212319560,
+        "sender_full_name": "Riccardo Brasca",
+        "timestamp": 1601913397
+    }
+]

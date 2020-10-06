@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>It seems that widgets don't work in conv mode. How hard would it be to enable them there?</p>",
+        "id": 204596013,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1595361606
+    },
+    {
+        "content": "<p>They're really good! As soon as they're not there... I miss them, and I'm completely stuck and helpless <span aria-label=\"oops\" class=\"emoji emoji-1f643\" role=\"img\" title=\"oops\">:oops:</span></p>",
+        "id": 204596098,
+        "sender_full_name": "Johan Commelin",
+        "timestamp": 1595361645
+    },
+    {
+        "content": "<p>It'd also be nice to upgrade <code>#print</code>, <code>#eval</code>, <code>#reduce</code>, etc. to output widgets as well...</p>\n<p><span class=\"user-mention\" data-user-id=\"121918\">@Edward Ayers</span> wanna give us some hints?</p>",
+        "id": 204596915,
+        "sender_full_name": "Bryan Gin-ge Chen",
+        "timestamp": 1595362035
+    },
+    {
+        "content": "<p>Yeah you should be able to get widgets for other interactive modes by overriding <code>conv.save_info</code></p>",
+        "id": 204597096,
+        "sender_full_name": "Edward Ayers",
+        "timestamp": 1595362133
+    },
+    {
+        "content": "<p>The #xs sound a little more fiddly because if I recall correctly they are implemented in c++</p>",
+        "id": 204597173,
+        "sender_full_name": "Edward Ayers",
+        "timestamp": 1595362176
+    }
+]

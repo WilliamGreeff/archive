@@ -1,0 +1,65 @@
+---
+layout: archive
+title: Zulip Chat Archive
+permalink: /stream/113488-general/topic/failed.20to.20synthesize.20type.20class.20instance.html
+---
+
+<h2>Stream: <a href="https://leanprover-community.github.io/archive/stream/113488-general/index.html">general</a></h2>
+<h3>Topic: <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/failed.20to.20synthesize.20type.20class.20instance.html">failed to synthesize type class instance</a></h3>
+
+<hr>
+
+<base href="https://leanprover.zulipchat.com/">
+
+<head><link href="/style.css" rel="stylesheet"></head>
+
+{% raw %}
+
+<a name="204996128"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/failed%20to%20synthesize%20type%20class%20instance/near/204996128" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kenny Lau <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/failed.20to.20synthesize.20type.20class.20instance.html#204996128">(Jul 25 2020 at 09:12)</a>:</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">class</span> <span class="n">foo</span> <span class="o">:</span> <span class="kt">Type</span><span class="bp">.</span>
+
+<span class="kn">theorem</span> <span class="n">zero_eq_zero_of_foo</span> <span class="o">[</span><span class="n">foo</span><span class="o">]</span> <span class="o">:</span> <span class="mi">0</span> <span class="bp">=</span> <span class="mi">0</span> <span class="o">:=</span> <span class="n">rfl</span>
+
+<span class="kn">example</span> <span class="o">:</span> <span class="mi">0</span> <span class="bp">=</span> <span class="mi">0</span> <span class="o">:=</span> <span class="k">by</span> <span class="n">rw</span> <span class="n">zero_eq_zero_of_foo</span>
+</code></pre></div>
+
+
+
+<a name="204996136"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/failed%20to%20synthesize%20type%20class%20instance/near/204996136" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kenny Lau <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/failed.20to.20synthesize.20type.20class.20instance.html#204996136">(Jul 25 2020 at 09:12)</a>:</h4>
+<p>error:</p>
+<div class="codehilite"><pre><span></span><code>invalid rewrite tactic, failed to synthesize type class instance
+state:
+⊢ 0 = 0
+</code></pre></div>
+
+
+
+<a name="204996140"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/failed%20to%20synthesize%20type%20class%20instance/near/204996140" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Kenny Lau <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/failed.20to.20synthesize.20type.20class.20instance.html#204996140">(Jul 25 2020 at 09:12)</a>:</h4>
+<p>is it possible to know which type class instance it failed to synthesize?</p>
+
+
+
+<a name="205010769"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/failed%20to%20synthesize%20type%20class%20instance/near/205010769" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/failed.20to.20synthesize.20type.20class.20instance.html#205010769">(Jul 25 2020 at 16:30)</a>:</h4>
+<p>I think it failed to synthesize <code>foo</code></p>
+
+
+
+<a name="205010840"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/failed%20to%20synthesize%20type%20class%20instance/near/205010840" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/failed.20to.20synthesize.20type.20class.20instance.html#205010840">(Jul 25 2020 at 16:32)</a>:</h4>
+<p>more to the point, you can just provide the explicit args to the rewrite, and that should be enough to get typeclass inference to trigger</p>
+
+
+
+<a name="205010860"></a>
+<h4><a href="https://leanprover.zulipchat.com/#narrow/stream/113488-general/topic/failed%20to%20synthesize%20type%20class%20instance/near/205010860" class="zl"><img src="https://leanprover-community.github.io/archive/assets/img/zulip2.png" alt="view this post on Zulip"></a> Mario Carneiro <a href="https://leanprover-community.github.io/archive/stream/113488-general/topic/failed.20to.20synthesize.20type.20class.20instance.html#205010860">(Jul 25 2020 at 16:33)</a>:</h4>
+<p>I think you can also write something like <code>rw @zero_eq_zero_of_foo _</code> so that the typeclass inference is done beforehand instead of in the rewrite</p>
+
+
+
+{% endraw %}
+
+<hr><p>Last updated: Oct 06 2020 at 10:10 UTC</p>
